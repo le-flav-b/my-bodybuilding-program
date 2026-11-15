@@ -11,7 +11,7 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 1. **Specifications**: done.
 2. **Design** ← *next*: update Figma to match the spec and produce a clickable preview.
 3. **Catalogue seed** (data task, separate): produce the seed JSON and images in the format defined in Notion > Technical.
-4. **App**: milestones M0–M7, one branch + PR each, following `CLAUDE.md`, Notion and Figma.
+4. **App**: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and Figma.
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -20,20 +20,20 @@ A "master" session coordinates the work and the move from one session to the nex
 - **Notion (master spec):** https://app.notion.com/p/40481ac8bb2b80f0be49f0e0e814be30
   - **Features**: one toggle per feature (MVP / Later / Dropped)
   - **Screens & Navigation**: navigation diagram + one toggle per screen, with the mapping from the old Figma
-  - **Data & Sync**: the four data layers, tables, seed rules, images, derived data, Firebase sync
+  - **Data & Sync**: the four data layers, tables, seed rules, images, derived data, cloud sync (after v1.0)
   - **Technical**: stack, architecture, seed file format, testing, decisions log
-  - **Development** database: specs, design, data task, M0–M7 and later items, with status
+  - **Development** database: specs, design, data task, M0–M6, later items; sorted by version, so the first row not Done is the next step
 - **Figma:** https://www.figma.com/design/ut2qBne1bdpEzGoDeNldNK/My-Bodybuilding-Program (file key `ut2qBne1bdpEzGoDeNldNK`)
 - **`CLAUDE.md`**: rules for coding sessions. **`README.md`**: summary and links.
 
 ## Key decisions (details in Notion)
 
-- **Basics:** English only, single user, Android/Flutter, offline-first. Firebase backup with optional Google sign-in; one phone.
-- **Catalogue:** a flat exercise catalogue (name, description, image, reps-or-time measure, muscles, movement pattern) with **no variants and no equipment**. I can add exercises in the app, with a photo. Exercises are editable; an exercise with history can only be archived. Muscle and pattern lists ship pre-filled and are editable.
-- **My exercise data** (notes/setup, favourite, hidden) is kept separate from the catalogue.
+- **Basics:** English only, single user, Android/Flutter, offline-first. No account in v1; Firebase backup with optional Google sign-in comes right after v1.0 (data is sync-ready from day one).
+- **Catalogue:** a flat exercise catalogue (name, description, image, reps-or-time measure, muscles) with **no variants, no equipment, no movement patterns**. I can add exercises in the app, with a photo. Exercises are editable; an exercise with history can only be archived. The muscle list ships pre-filled and is editable.
+- **Personal exercise notes** (setup, e.g. "seat 4, pin 7") are kept separate from the catalogue.
 - **Load units** are a user-managed list (kg built in, plus custom units such as "level" with a step and decimals). The unit is chosen per planned set and logged per set, never converted.
 - **Program:** one program = an ordered loop of sessions with a "next session" pointer that follows what I actually did. Skip is possible, there are no rest days in the loop, and the program starts empty.
-- **Sessions:** a flat list of exercises (no blocks), each with **per-set targets**: reps or time as a number or "max", optional load + unit, warm-up flag. Rest time is set per exercise.
+- **Sessions:** a flat list of exercises (no blocks), each with **per-set targets**: reps or time as a number or "max", optional load + unit. Rest time is set per exercise.
 - **Workout:**
   - Guided player plus a list view, with jump, reorder, skip and swap.
   - Changes apply to this workout only; at the end the app asks "Update the program?".
@@ -47,8 +47,8 @@ A "master" session coordinates the work and the move from one session to the nex
   - Calendar, plus a weekly streak (≥ N workouts per week, default 3).
 - **Navigation:** 4 tabs, Today · Program · Progress · Profile. Settings opens from Profile. The exercise catalogue lives inside Program.
 - **Profile:** bodyweight log + chart, and stats (totals, streaks, last 5 PRs, this month vs last).
-- **Later:** progress photos (pose tags, private, linked bodyweight), then reminders, supersets, media controls and export.
-- **Dropped:** music, random session, manual max load, fixed weekly split, progression suggestions, variants, equipment, blocks, phases, several programs.
+- **Later (after v1.0):** cloud sync (1.1), progress photos (1.2: pose tags, private, linked bodyweight), reminders (1.3), then supersets, media controls and export.
+- **Dropped:** music, random session, manual max load, fixed weekly split, progression suggestions, variants, equipment, movement patterns, favourites/hidden, warm-up and failure flags, blocks, phases, several programs.
 
 ## Brief for the DESIGN session
 
@@ -61,14 +61,14 @@ Goal: turn the old French Figma (single "Page 1") into the design for this spec,
    - Define everything as Figma variables (colour, type, spacing, radius); the app maps them 1:1.
 3. **Components:**
    - bottom nav (4 tabs), session card, exercise row (image, name, planned sets)
-   - set row: target, last time, steppers, unit selector, warm-up/failure toggles, done
+   - set row: target, last time, steppers, unit selector, done
    - rest timer: circular countdown, ±15 s, skip; timed-set timer with 3-2-1
    - multi-unit chart (one colour/scale per unit), PR trophy overlay, calendar month, streak chip
    - stat tiles, empty states, dialogs, bottom-sheet exercise picker, filter chips, unit editor
 4. **Screens:** every screen listed in Notion > Screens & Navigation (toggles describe content and states), in light and dark, all text in English. Include the states:
    - Today: normal / in progress / empty program
    - Player: rep-based / time-based / resting
-   - Settings: signed out / signed in
+   - Settings (no cloud section in v1; design the signed out / signed in states as a later extra)
 5. **Images:**
    - Exercise illustrations in `legacy/some_images/` show the visual style to keep for catalogue images.
    - Exercises without an image get a placeholder by primary muscle; the old `abdominals`, `back_biceps`, `legs` and `pectorals_triceps` images can inspire it.
@@ -95,4 +95,4 @@ Goal: turn the old French Figma (single "Page 1") into the design for this spec,
 - [x] Specifications: Notion spec (4 pages + Development database), `README.md`, `CLAUDE.md` (specs session, 2026-11-15)
 - [ ] Design
 - [ ] Catalogue seed (data task)
-- [ ] App (M0–M7)
+- [ ] App (M0–M6 → v1.0)

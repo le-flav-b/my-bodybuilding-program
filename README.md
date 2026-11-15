@@ -3,10 +3,10 @@
 A personal Android app (Flutter) to plan my training, guide me through each workout set by set, and see my progress over time.
 
 - **Single user**, **English only**
-- **Offline-first**: everything works without a network. An optional Google sign-in backs up and syncs to Firebase.
+- **Offline-first**: everything works without a network. Optional cloud backup (Firebase) comes after v1.0.
 - **One program**: a loop of sessions, so the app always knows what's next.
 - **Guided workouts**: one-tap set logging and a rest timer that works with the phone locked.
-- **Modular**: exercises, muscles, movement patterns and load units (kg or custom, e.g. machine "levels") are managed in the app.
+- **Modular**: exercises, muscles and load units (kg or custom, e.g. machine "levels") are managed in the app.
 - **Progress from the logs**: charts, personal records, calendar and streak, bodyweight, stats.
 
 ## Links
@@ -18,7 +18,7 @@ A personal Android app (Flutter) to plan my training, guide me through each work
 
 ## Build
 
-> To be filled in during M0 (setup) and M7 (release).
+> To be filled in during M0 (setup) and M6 (release).
 
 ```bash
 flutter pub get
@@ -28,5 +28,5 @@ flutter run
 ```
 
 - Prerequisites: *TBD (M0)*
-- Firebase configuration (`google-services.json`, not committed): *TBD (M6)*
-- Release APK: *TBD (M7)*
+- Release APK: *TBD (M6)*
+- Firebase configuration (`google-services.json`, not committed): *TBD (Cloud sync, v1.1)*
