@@ -119,5 +119,6 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - [x] Repo started, legacy assets imported (master session)
 - [x] Specifications: Notion spec (4 pages + Development database), `README.md`, `CLAUDE.md` (specs session, 2026-11-15)
 - [ ] Design
-- [ ] Catalogue seed (data task)
+- [x] Catalogue seed (data task)
+  - Seed in `assets/seed/` (`catalogue.json` v1: 13 muscles, 82 exercises, 44 WebP images); validator and how-to in `tools/seed/`.
 - [ ] App (M0–M6 → v1.0)
