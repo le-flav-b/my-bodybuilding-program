@@ -20,7 +20,7 @@ class PlanDao extends DatabaseAccessor<AppDatabase>
             ..where((t) => t.deletedAt.isNull())
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 
@@ -40,7 +40,7 @@ class PlanDao extends DatabaseAccessor<AppDatabase>
             )
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 
@@ -48,10 +48,9 @@ class PlanDao extends DatabaseAccessor<AppDatabase>
   Future<List<SessionExerciseRow>> sessionExerciseSlots(String sessionId) =>
       (select(sessionExercises)
             ..where((t) => t.sessionId.equals(sessionId))
-            ..orderBy([
-              (t) => OrderingTerm.asc(t.createdAt),
-              (t) => OrderingTerm.asc(t.id),
-            ]))
+            // Insertion order: stable even for rows created in the same
+            // millisecond (ids are random within one).
+            ..orderBy([(t) => OrderingTerm.asc(t.rowId)]))
           .get();
 
   /// Planned sets of the given session exercises, in order.
@@ -66,7 +65,7 @@ class PlanDao extends DatabaseAccessor<AppDatabase>
             )
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 
@@ -74,10 +73,7 @@ class PlanDao extends DatabaseAccessor<AppDatabase>
   Future<List<PlannedSetRow>> plannedSetSlots(String sessionExerciseId) =>
       (select(plannedSets)
             ..where((t) => t.sessionExerciseId.equals(sessionExerciseId))
-            ..orderBy([
-              (t) => OrderingTerm.asc(t.createdAt),
-              (t) => OrderingTerm.asc(t.id),
-            ]))
+            ..orderBy([(t) => OrderingTerm.asc(t.rowId)]))
           .get();
 
   /// Number of planned sets that use each unit.

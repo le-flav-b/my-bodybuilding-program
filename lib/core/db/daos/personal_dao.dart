@@ -18,7 +18,7 @@ class PersonalDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([
               (t) => OrderingTerm.desc(t.isBuiltin),
               (t) => OrderingTerm.asc(t.createdAt),
-              (t) => OrderingTerm.asc(t.id),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 

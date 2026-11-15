@@ -54,7 +54,7 @@ class HistoryDao extends DatabaseAccessor<AppDatabase>
             ..where((t) => t.deletedAt.isNull() & t.workoutId.isIn(workoutIds))
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 
@@ -72,7 +72,7 @@ class HistoryDao extends DatabaseAccessor<AppDatabase>
             )
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 

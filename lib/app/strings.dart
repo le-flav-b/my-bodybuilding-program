@@ -2,6 +2,8 @@
 abstract final class Strings {
   static const String appName = 'My Bodybuilding Program';
 
+  static const String startupError = "The app couldn't open its database.";
+
   // Tabs
   static const String tabToday = 'Today';
   static const String tabProgram = 'Program';

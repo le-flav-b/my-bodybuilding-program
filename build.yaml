@@ -16,6 +16,8 @@ targets:
           - lib/**/domain/**
           - lib/core/**
       json_serializable:
+        options:
+          explicit_to_json: true
         generate_for:
           - lib/**/domain/**
           - lib/core/**

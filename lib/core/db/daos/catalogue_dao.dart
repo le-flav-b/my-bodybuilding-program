@@ -54,7 +54,7 @@ class CatalogueDao extends DatabaseAccessor<AppDatabase>
             )
             ..orderBy([
               (t) => OrderingTerm.asc(t.position),
-              (t) => OrderingTerm.asc(t.createdAt),
+              (t) => OrderingTerm.asc(t.rowId),
             ]))
           .get();
 
@@ -62,7 +62,7 @@ class CatalogueDao extends DatabaseAccessor<AppDatabase>
   Future<List<ExerciseMuscleRow>> muscleLinkSlots(String exerciseId) =>
       (select(exerciseMuscles)
             ..where((t) => t.exerciseId.equals(exerciseId))
-            ..orderBy([(t) => OrderingTerm.asc(t.createdAt)]))
+            ..orderBy([(t) => OrderingTerm.asc(t.rowId)]))
           .get();
 
   Future<ExerciseNoteRow?> noteOf(String exerciseId) => (select(
