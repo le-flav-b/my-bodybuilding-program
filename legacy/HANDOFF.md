@@ -11,7 +11,7 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 1. **Specifications**: done.
 2. **Design**: done (see "Design session outcome" below).
 3. **Catalogue seed** (data task, separate): done (`assets/seed/`, `tools/seed/`).
-4. **App** ← *next*: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma).
+4. **App** ← *in progress*: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma). See "App session: current state / next step" at the end.
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -139,3 +139,37 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - [x] Catalogue seed (data task)
   - Seed in `assets/seed/` (`catalogue.json` v1: 13 muscles, 82 exercises, 44 WebP images); validator and how-to in `tools/seed/`.
 - [ ] App (M0–M6 → v1.0)
+  - [x] M0 Setup (v0.1.0)
+  - [ ] M1 Data layer ← *next*
+  - [ ] M2 Catalogue & program
+  - [ ] M3 Workout
+  - [ ] M4 Progress
+  - [ ] M5 Profile
+  - [ ] M6 Release
+
+## App session: current state / next step
+
+*Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
+
+**Done so far:** M0 Setup. The app launches with the 4 tabs (Today · Program · Progress · Profile) as empty states, in light and dark, themed from `design/tokens.json`. CI runs on PRs.
+
+**Next step:** M1 Data layer (Drift tables + migrations + schema dump, repositories, seed import, domain rules with unit tests). Set its Notion row to In progress first.
+
+**How the app session works (owner's instructions):**
+- One PR per milestone from the session's branch, CI green, squash-merge, then bring the branch back in line with `main`. Notion Development row: In progress → Done. Report in chat + push notification after each milestone.
+- Decisions go to Notion > Technical > Decisions first, then the code.
+- After M3 and every later milestone: build a signed release APK and send it to the owner.
+
+**Toolchain facts (Flutter 3.50 / Dart 3.14):**
+- Material lives in the `material_ui` package: import `package:material_ui/material_ui.dart`, never `package:flutter/material.dart` (deprecated). Icons are `Symbols.*_rounded` from `material_symbols_icons` (`fill: 1` for the filled variant).
+- Dart 3.14 constructor style is enforced by the lints: `const new({...})` and `factory name(...)` inside the class. `dart fix --apply` rewrites the old style.
+- Generated code (`*.g.dart`, `*.freezed.dart`) is git-ignored: run `dart run build_runner build --delete-conflicting-outputs` after cloning or changing annotated files.
+- Android: `compileSdk 37` (androidx.core needs it), target = Flutter default (36), `minSdk 26`, core library desugaring on (needed by `flutter_local_notifications`). Application id `com.leflavb.mybodybuildingprogram`: never change it.
+- In the Claude cloud environment, Gradle needs two init scripts in `~/.gradle/init.d/`: the environment's own `maven-mirror.gradle`, plus `tools/env/gradle-plugin-mirror.gradle` from this repo (copy it there). Without the second one the Flutter Gradle plugin fails to resolve Kotlin artifacts. The Android platform/build-tools/NDK/CMake are downloaded by the first Gradle build.
+
+**Design checks:** `flutter test tool/screenshots` renders real screens (412 × 915 dp @2x, real fonts) to `build/screenshots/`; compare with `design/screens/*.png`. `tool/screenshots/harness.dart` has the helpers; add one `*_test.dart` per milestone.
+
+**Release signing:**
+- The release keystore (`mbp-release.jks`, alias `mbp-release`) was generated in the M0 session and **given to the owner**; it is not in the repo and never will be. SHA-256 of the certificate: `34:A1:93:EC:C4:C9:C9:55:4C:71:8C:EE:44:67:DB:92:B3:0B:D3:39:C5:49:A8:61:0A:AF:7A:07:59:20:64:D7`.
+- Local signing reads `android/key.properties` (git-ignored). **A new session/container does not have the keystore**: either ask the owner to upload `mbp-release.jks` + passwords again, or (if the owner added the secrets) run the `Release APK` workflow and fetch its artifact. Never generate a new key: an APK signed with another key cannot update the installed app.
+- `.github/workflows/release.yml` signs from the secrets `RELEASE_KEYSTORE_BASE64`, `RELEASE_KEYSTORE_PASSWORD`, `RELEASE_KEY_ALIAS`, `RELEASE_KEY_PASSWORD` (optional for the owner).

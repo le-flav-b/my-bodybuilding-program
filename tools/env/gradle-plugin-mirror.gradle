@@ -1,0 +1,17 @@
+// Gradle init script for sandboxed build machines where repo.maven.apache.org
+// is unreliable (404/429). NOT needed on a normal machine or on GitHub Actions.
+//
+// The Gradle Plugin Portal redirects Maven Central artifacts to
+// repo.maven.apache.org, so builds that only declare the portal (Flutter's own
+// Gradle plugin build does) fail there. This adds Google's Maven Central
+// mirror in front of the portal for plugin resolution in every build.
+//
+// Install: cp tools/env/gradle-plugin-mirror.gradle ~/.gradle/init.d/
+def mirror = 'https://maven-central.storage-download.googleapis.com/maven2/'
+beforeSettings { s ->
+    s.pluginManagement.repositories {
+        maven { url = mirror }
+        google()
+        gradlePluginPortal()
+    }
+}
