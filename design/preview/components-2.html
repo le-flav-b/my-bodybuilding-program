@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components 2 · Workout: set rows, unit selector, timers</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="review">
+<template id="tpl">
+  <div class="spec-h">Set rows · rep-based exercise</div>
+  <div class="frame" style="padding:16px">
+    <div class="sets">
+      <div class="set done"><div class="n"><span class="i s18">check</span></div><div class="val">10 × 40<small>kg</small></div><div class="prev">last 10 × 40</div></div>
+      <div class="set done"><div class="n"><span class="i s18">check</span></div><div class="val">10 × 42.5<small>kg</small> <span class="pr-chip" style="margin-left:6px"><span class="i fill">trophy</span>PR</span></div><div class="prev">last 10 × 40</div></div>
+      <div class="set-current">
+        <div class="head">
+          <div class="n">3</div>
+          <div class="t">Target 10 × 40 kg</div>
+          <div class="prev"><span class="i">history</span>Last 9 × 40 kg</div>
+        </div>
+        <div class="steppers">
+          <div class="stepper">
+            <div class="lbl">Reps</div>
+            <div class="ctl"><button><span class="i">remove</span></button><span class="v">10</span><button><span class="i">add</span></button></div>
+          </div>
+          <div class="stepper">
+            <div class="lbl">Load <span class="unit-chip">kg<span class="i">arrow_drop_down</span></span></div>
+            <div class="ctl"><button><span class="i">remove</span></button><span class="v">40</span><button><span class="i">add</span></button></div>
+          </div>
+        </div>
+        <button class="btn big filled block"><span class="i">check</span>Done</button>
+      </div>
+      <div class="set upcoming"><div class="n">4</div><div class="val">10 × 40<small>kg</small></div><div class="prev">last 8 × 40</div></div>
+      <button class="btn text" style="align-self:flex-start"><span class="i">add</span>Add set</button>
+    </div>
+  </div>
+  <p class="spec-n">Done sets: success ✓, logged values, PR chip if a record was beaten. Current set: card with the target, last time, two steppers pre-filled with the target (a changed value turns primary), and a 64 dp <b>Done</b>: one tap when the target is hit. Steppers: ±1 rep, ± unit step for load; long-press = edit field. Tap a done set to edit it; swipe left to remove.</p>
+
+  <div class="spec-h">Current set · bodyweight / assisted / max</div>
+  <div class="frame stack" style="padding:16px">
+    <div class="set-current">
+      <div class="head"><div class="n">1</div><div class="t">Target max reps</div><div class="prev"><span class="i">history</span>Last 14</div></div>
+      <div class="steppers">
+        <div class="stepper">
+          <div class="lbl">Reps</div>
+          <div class="ctl"><button><span class="i">remove</span></button><span class="v">14</span><button><span class="i">add</span></button></div>
+        </div>
+        <div class="stepper">
+          <div class="lbl">Load <span class="unit-chip">kg<span class="i">arrow_drop_down</span></span></div>
+          <div class="ctl"><button><span class="i">remove</span></button><span class="v" style="font-size:20px;color:var(--con-surface-variant)">Body</span><button><span class="i">add</span></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="spec-n">"max" target: reps pre-filled with last time's value. No load shows "Body"; below zero shows "−10" (assisted).</p>
+
+  <div class="spec-h">Unit selector</div>
+  <div class="frame hrow" style="padding:16px;align-items:flex-start">
+    <div class="menu">
+      <div class="it sel"><span class="i">check</span>kg<small>step 0.5</small></div>
+      <div class="it"><span class="i" style="visibility:hidden">check</span>level<small>step 1</small></div>
+      <div class="it"><span class="i" style="visibility:hidden">check</span>plates<small>step 1</small></div>
+      <div class="sep"></div>
+      <div class="it"><span class="i">tune</span>Manage units</div>
+    </div>
+    <p class="spec-n" style="flex:1;margin:0">Tapping the unit chip opens this menu. Changing it applies to the remaining sets of this exercise (spec). The load value is kept as is, never converted.</p>
+  </div>
+
+  <div class="spec-h">Set rows · time-based exercise</div>
+  <div class="frame" style="padding:16px">
+    <div class="sets">
+      <div class="set done"><div class="n"><span class="i s18">check</span></div><div class="val">0:45</div><div class="prev">last 0:45</div></div>
+      <div class="set-current">
+        <div class="head"><div class="n">2</div><div class="t">Target 0:45</div><div class="prev"><span class="i">history</span>Last 0:40</div></div>
+        <div class="steppers">
+          <div class="stepper">
+            <div class="lbl">Time</div>
+            <div class="ctl"><button><span class="i">remove</span></button><span class="v">0:45</span><button><span class="i">add</span></button></div>
+          </div>
+          <div class="stepper">
+            <div class="lbl">Load <span class="unit-chip">kg<span class="i">arrow_drop_down</span></span></div>
+            <div class="ctl"><button><span class="i">remove</span></button><span class="v" style="font-size:20px;color:var(--con-surface-variant)">Body</span><button><span class="i">add</span></button></div>
+          </div>
+        </div>
+        <div class="hrow" style="flex-wrap:nowrap">
+          <button class="btn big outlined" style="padding:0 20px"><span class="i">edit</span>Log</button>
+          <button class="btn big filled" style="flex:1"><span class="i fill">timer</span>Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="spec-n">Time stepper ±5 s. <b>Start</b> runs the 3-2-1 lead-in then the countdown; <b>Log</b> records the value without the timer.</p>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+
+<div class="review">
+<template id="tpl2">
+  <div class="spec-h">Rest timer</div>
+  <div class="frame stack" style="padding:16px 16px 20px;gap:20px">
+    <div class="timer">
+      <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="130" fill="none" stroke-width="12"/>
+        <circle class="prog" cx="140" cy="140" r="130" fill="none" stroke-width="12" stroke-dasharray="816.8" stroke-dashoffset="163.4"/></svg>
+      <div class="center"><div class="lbl">Rest</div><div class="big">1:12</div><div class="sub">of 1:30</div></div>
+    </div>
+    <div class="timer-ctl">
+      <button class="round">−15</button>
+      <button class="btn big tonal" style="min-width:150px"><span class="i fill">skip_next</span>Skip</button>
+      <button class="round">+15</button>
+    </div>
+    <div class="next-up">
+      <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+      <div class="body"><div class="overline">Next · set 4 of 4</div><div class="t">10 × 40 kg</div><div class="s">Bench press · last 8 × 40</div></div>
+    </div>
+  </div>
+  <p class="spec-n">Ring 280 dp, stroke 12, brand coral draining clockwise. Time 96 sp. ±15 s round buttons 64 dp. Next-up card: next set, or next exercise after the last set.</p>
+
+  <div class="spec-h">Timed set · 3-2-1 lead-in → hold → max</div>
+  <div class="frame hrow" style="padding:16px;flex-wrap:nowrap;gap:0;justify-content:space-between">
+    <div class="timer lead" style="width:124px;height:124px;margin:0">
+      <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="126" fill="none" stroke-width="20"/>
+        <circle class="prog" cx="140" cy="140" r="126" fill="none" stroke-width="20" stroke-dasharray="791.7" stroke-dashoffset="263.9"/></svg>
+      <div class="center"><div class="lbl" style="font-size:9px;line-height:12px">Get ready</div><div class="big" style="font-size:48px;line-height:52px">2</div></div>
+    </div>
+    <div class="timer hold" style="width:124px;height:124px;margin:0">
+      <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="126" fill="none" stroke-width="20"/>
+        <circle class="prog" cx="140" cy="140" r="126" fill="none" stroke-width="20" stroke-dasharray="791.7" stroke-dashoffset="316.7"/></svg>
+      <div class="center"><div class="lbl" style="font-size:9px;line-height:12px">Hold</div><div class="big" style="font-size:36px;line-height:44px">0:27</div></div>
+    </div>
+    <div class="timer hold" style="width:124px;height:124px;margin:0">
+      <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="126" fill="none" stroke-width="20" style="stroke:var(--cprimary-container)"/></svg>
+      <div class="center"><div class="lbl" style="font-size:9px;line-height:12px">Max</div><div class="big" style="font-size:36px;line-height:44px">1:04</div><div class="sub" style="font-size:10px;line-height:14px">best 1:20</div></div>
+    </div>
+  </div>
+  <p class="spec-n">Same ring as the rest timer, shown at full size in the player (here scaled down). Lead-in: secondary (yellow) ring, 3 → 2 → 1 with a beep each. Hold: primary ring counts down to the target, beep at 0, set logged automatically. Max: no ring progress, counts up until <b>Stop</b>, shows the best time. Stop early logs the actual time.</p>
+
+  <div class="spec-h">PR chip · trophy</div>
+  <div class="frame hrow" style="padding:16px">
+    <span class="pr-chip"><span class="i fill">trophy</span>PR</span>
+    <span class="pr-chip"><span class="i fill">trophy</span>Heaviest · 42.5 kg</span>
+    <span class="pr-chip"><span class="i fill">trophy</span>Longest hold · 1:20</span>
+  </div>
+  <p class="spec-n">Yellow fill with dark text in both themes. The full-screen trophy overlay comes with the dialogs batch.</p>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script>
+  // two templates on this page
+  const t2 = document.getElementById('tpl2');
+  document.querySelectorAll('.review')[1].querySelectorAll('section').forEach(s => s.append(t2.content.cloneNode(true)));
+  document.querySelectorAll('.review')[0].querySelectorAll('section').forEach(s => s.append(document.getElementById('tpl').content.cloneNode(true)));
+</script>
+</body>
+</html>
