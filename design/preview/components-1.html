@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components 1 · Navigation, buttons, cards, rows</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="review">
+<template id="tpl">
+  <div class="spec-h">Bottom navigation · NavigationBar, 80 dp</div>
+  <div class="frame">
+    <nav class="navbar">
+      <a class="on"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+  </div>
+  <p class="spec-n">Active tab: filled icon in a primaryContainer pill (64 × 32). Labels always shown.</p>
+
+  <div class="spec-h">Buttons</div>
+  <div class="stack">
+    <button class="btn big filled block"><span class="i fill">play_arrow</span>Start workout</button>
+    <div class="hrow">
+      <button class="btn filled">Filled</button>
+      <button class="btn tonal">Tonal</button>
+      <button class="btn outlined">Outlined</button>
+      <button class="btn text">Text</button>
+    </div>
+    <div class="hrow">
+      <button class="btn filled"><span class="i">add</span>With icon</button>
+      <button class="btn filled" disabled>Disabled</button>
+      <button class="btn text danger">Delete</button>
+    </div>
+    <div class="hrow">
+      <button class="iconbtn"><span class="i">more_vert</span></button>
+      <button class="iconbtn tonal"><span class="i">view_list</span></button>
+      <button class="iconbtn filled"><span class="i fill">play_arrow</span></button>
+      <button class="fab"><span class="i">add</span>Add session</button>
+    </div>
+  </div>
+  <p class="spec-n">All 48 dp high, pill-shaped. "Big" (64 dp, 18 sp) is for the one main action on a screen: Start, Done, Finish. FAB: extended, radius 16.</p>
+
+  <div class="spec-h">Session card · Today hero</div>
+  <div class="frame" style="padding:16px">
+    <div class="session-card">
+      <div class="overline primary">Next session · 2 of 3</div>
+      <h2 class="name">Push A</h2>
+      <div class="meta">
+        <span><span class="i">exercise</span>6 exercises</span>
+        <span><span class="i">schedule</span>~55 min</span>
+        <span><span class="i">history</span>4 days ago</span>
+      </div>
+      <div class="thumbs">
+        <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+        <div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div>
+        <div class="well"><img src="assets/img/overhead_press.png" alt=""></div>
+        <div class="well"><img src="assets/img/dips.png" alt=""></div>
+        <div class="well"><img src="assets/img/dumbbell_fly.png" alt=""></div>
+        <div class="more">+1</div>
+      </div>
+      <button class="btn big filled block"><span class="i fill">play_arrow</span>Start</button>
+      <div class="actions">
+        <button class="btn text"><span class="i">swap_horiz</span>Other session</button>
+        <button class="btn text"><span class="i">add</span>Empty</button>
+        <button class="btn text"><span class="i">skip_next</span>Skip</button>
+      </div>
+    </div>
+  </div>
+  <p class="spec-n">surfaceContainer, radius 28, padding 20. Thumbnails: first 5 exercises + "+n". Text actions: Pick another session · Empty workout · Skip.</p>
+
+  <div class="spec-h">Session row · Program list</div>
+  <div class="frame stack" style="padding:16px; gap:8px">
+    <div class="session-row">
+      <div class="handle"><span class="i">drag_indicator</span></div>
+      <div class="num">1</div>
+      <div class="body"><div class="title">Pull A</div><div class="meta">6 exercises · ~50 min</div></div>
+      <button class="iconbtn"><span class="i">play_circle</span></button>
+    </div>
+    <div class="session-row next">
+      <div class="handle"><span class="i">drag_indicator</span></div>
+      <div class="num">2</div>
+      <div class="body"><div class="title">Push A <span class="badge">Next</span></div><div class="meta">6 exercises · ~55 min</div></div>
+      <button class="iconbtn"><span class="i">play_circle</span></button>
+    </div>
+    <div class="session-row">
+      <div class="handle"><span class="i">drag_indicator</span></div>
+      <div class="num">3</div>
+      <div class="body"><div class="title">Legs</div><div class="meta">5 exercises · ~45 min</div></div>
+      <button class="iconbtn"><span class="i">play_circle</span></button>
+    </div>
+  </div>
+  <p class="spec-n">72 dp min. Drag handle reorders; tap opens the editor; play icon opens the preview. The next session is tinted primaryContainer with a "Next" badge.</p>
+
+  <div class="spec-h">Exercise row · variants</div>
+  <div class="frame" style="padding:0 16px">
+    <div class="ex-row">
+      <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+      <div class="body">
+        <div class="name">Bench press</div>
+        <div class="plan">4 × 10 · 40 kg</div>
+        <div class="last"><span class="i">history</span>Last: 10, 10, 9, 8 · 40 kg</div>
+      </div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="divider"></div>
+    <div class="ex-row">
+      <div class="well"><img src="assets/img/plank.png" alt=""></div>
+      <div class="body">
+        <div class="name">Plank</div>
+        <div class="plan">3 × max</div>
+        <div class="last"><span class="i">history</span>Last: 1:20, 1:05, 0:58</div>
+      </div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="divider"></div>
+    <div class="ex-row">
+      <div class="well"><img src="assets/img/leg_curl.png" alt=""></div>
+      <div class="body">
+        <div class="name">Leg curl</div>
+        <div class="plan">12, 10, 8 · 5–7 level</div>
+        <div class="last"><span class="i">history</span>First time</div>
+      </div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="divider"></div>
+    <div class="ex-row">
+      <div class="well ph" data-muscle="Chest"><img src="assets/img/placeholder_chest.png" alt=""></div>
+      <div class="body">
+        <div class="name">Cable crossover</div>
+        <div class="last" style="font-size:14px;line-height:20px">Chest · Shoulders</div>
+      </div>
+      <span class="i" style="color:var(--con-surface-variant)">chevron_right</span>
+    </div>
+  </div>
+  <p class="spec-n">Image well 64. Line 1 name, line 2 planned sets (straight: "4 × 10 · 40 kg"; pyramid: "12, 10, 8 · 5–7 level"; time: "3 × 45 s" / "3 × max"), line 3 last time. Last row: catalogue variant (muscles instead of sets), with the no-image placeholder.</p>
+
+  <div class="spec-h">Exercise row · workout list status</div>
+  <div class="frame" style="padding:0 16px">
+    <div class="ex-row">
+      <div class="status done"><span class="i s18">check</span></div>
+      <div class="well" style="width:48px;height:48px"><img src="assets/img/bench_press.png" alt=""></div>
+      <div class="body"><div class="name">Bench press</div><div class="plan">4 / 4 sets</div></div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="ex-row current">
+      <div class="status now"><span class="i s18 fill">play_arrow</span></div>
+      <div class="well" style="width:48px;height:48px"><img src="assets/img/incline_dumbbell_press.png" alt=""></div>
+      <div class="body"><div class="name">Incline dumbbell press</div><div class="plan">1 / 3 sets</div></div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="ex-row">
+      <div class="status todo"></div>
+      <div class="well" style="width:48px;height:48px"><img src="assets/img/overhead_press.png" alt=""></div>
+      <div class="body"><div class="name">Overhead press</div><div class="plan">0 / 3 sets</div></div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+    <div class="ex-row skipped">
+      <div class="status skip"><span class="i s18">block</span></div>
+      <div class="well" style="width:48px;height:48px"><img src="assets/img/dips.png" alt=""></div>
+      <div class="body"><div class="name">Dips</div><div class="plan">Skipped</div></div>
+      <span class="i handle">drag_indicator</span>
+    </div>
+  </div>
+  <p class="spec-n">Status: done (success ✓) · in progress (primary ▶, row tinted) · to do (outline ring) · skipped (struck through). Swipe or ⋮ for skip / remove / swap.</p>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>
