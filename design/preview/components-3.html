@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components 3 · Progress: chart, calendar, streak, stat tiles</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="review">
+<template id="tpl">
+  <div class="spec-h">Multi-unit chart · exercise progress</div>
+  <div class="frame" style="padding:16px">
+    <div class="chips" style="margin-bottom:12px">
+      <span class="chip on"><span class="dot" style="background:var(--cchart1)"></span>kg</span>
+      <span class="chip on"><span class="dot" style="background:var(--cchart2)"></span>level</span>
+      <span class="chip" style="margin-left:auto;border:0;color:var(--con-surface-variant)"><span class="i fill" style="color:var(--ctrophy)">circle</span>PR</span>
+    </div>
+    <div class="chart-card" style="position:relative">
+      <svg class="mu-chart" data-cursor="[1,4]"></svg>
+      <div class="tip" style="left:202px;top:6px"><b>10 Nov</b><br>7 level × 12 · PR</div>
+      <div class="range"><span>1M</span><span class="on">3M</span><span>6M</span><span>1Y</span><span>All</span></div>
+    </div>
+  </div>
+  <p class="spec-n">One point per workout: best load (loaded sets), best reps (no load) or best time (time-based). Each unit has its own colour and scale: left axis = first unit, right axis = second. With 3+ units, tapping a legend chip hides/shows a unit and the two first visible units own the axes. Lines join only points of the same unit. PR points: yellow. Tap/drag shows the cursor + tooltip. Range: 1M · 3M · 6M · 1Y · All.</p>
+
+  <div class="spec-h">Calendar month</div>
+  <div class="frame" style="padding:16px">
+    <div class="cal-head">
+      <h3>November 2026</h3>
+      <button class="iconbtn"><span class="i">chevron_left</span></button>
+      <button class="iconbtn" disabled style="opacity:.38"><span class="i">chevron_right</span></button>
+    </div>
+    <div class="cal">
+      <div class="wd">M</div><div class="wd">T</div><div class="wd">W</div><div class="wd">T</div><div class="wd">F</div><div class="wd">S</div><div class="wd">S</div><div class="wd"><span class="i s18" style="vertical-align:middle">local_fire_department</span></div>
+      <div class="c out"><span>26</span></div><div class="c out"><span>27</span></div><div class="c out on"><span>28</span></div><div class="c out"><span>29</span></div><div class="c out on"><span>30</span></div><div class="c out"><span>31</span></div><div class="c on"><span>1</span></div><div class="wk"><span class="i fill">check_circle</span></div>
+      <div class="c on"><span>2</span></div><div class="c "><span>3</span></div><div class="c on"><span>4</span></div><div class="c "><span>5</span></div><div class="c on two"><span>6</span></div><div class="c "><span>7</span></div><div class="c "><span>8</span></div><div class="wk"><span class="i fill">check_circle</span></div>
+      <div class="c "><span>9</span></div><div class="c on"><span>10</span></div><div class="c "><span>11</span></div><div class="c "><span>12</span></div><div class="c "><span>13</span></div><div class="c on"><span>14</span></div><div class="c today"><span>15</span></div><div class="wk miss"><span class="i" style="color:var(--con-surface-variant)">more_horiz</span></div>
+      <div class="c "><span>16</span></div><div class="c "><span>17</span></div><div class="c "><span>18</span></div><div class="c "><span>19</span></div><div class="c "><span>20</span></div><div class="c "><span>21</span></div><div class="c "><span>22</span></div><div class="wk"></div>
+      <div class="c "><span>23</span></div><div class="c "><span>24</span></div><div class="c "><span>25</span></div><div class="c "><span>26</span></div><div class="c "><span>27</span></div><div class="c "><span>28</span></div><div class="c "><span>29</span></div><div class="wk"></div>
+      <div class="c "><span>30</span></div><div class="c out"><span>1</span></div><div class="c out"><span>2</span></div><div class="c out"><span>3</span></div><div class="c out"><span>4</span></div><div class="c out"><span>5</span></div><div class="c out"><span>6</span></div><div class="wk"></div>
+    </div>
+    <div class="hrow" style="margin-top:12px;justify-content:space-between">
+      <span class="streak"><span class="i fill">local_fire_department</span>2 week streak</span>
+      <span class="meta">Best: 11 weeks</span>
+    </div>
+  </div>
+  <p class="spec-n">Weeks start Monday. Trained day: primary circle (dot = 2 workouts). Today: ring. Right column: ✓ week reached the target, ○ missed, … current week in progress. Tap a trained day → Workout detail (or a list if 2). Swipe for months.</p>
+
+  <div class="spec-h">Streak chip · week strip (Today)</div>
+  <div class="frame stack" style="padding:16px">
+    <div class="hrow"><span class="streak"><span class="i fill">local_fire_department</span>2 weeks</span><span class="streak zero"><span class="i">local_fire_department</span>No streak</span></div>
+    <div class="card">
+      <div class="hrow" style="justify-content:space-between;margin-bottom:12px">
+        <div class="overline">This week · 2 / 3</div>
+        <span class="streak"><span class="i fill">local_fire_department</span>2 weeks</span>
+      </div>
+      <div class="week">
+        <div class="d"><b>9</b>Mon</div><div class="d on"><b>10</b>Tue</div><div class="d"><b>11</b>Wed</div><div class="d"><b>12</b>Thu</div><div class="d"><b>13</b>Fri</div><div class="d on"><b>14</b>Sat</div><div class="d today"><b>15</b>Sun</div>
+      </div>
+    </div>
+  </div>
+  <p class="spec-n">Streak = consecutive weeks with ≥ N workouts (weekly target). Week strip: trained days filled primary, today ringed, future days dashed.</p>
+
+  <div class="spec-h">Stat tiles (Profile)</div>
+  <div class="frame stack" style="padding:16px">
+    <div class="tiles">
+      <div class="tile"><div class="k"><span class="i">exercise</span>Workouts</div><div class="v">128</div></div>
+      <div class="tile"><div class="k"><span class="i">schedule</span>Time trained</div><div class="v">104<small>h</small> 20<small>m</small></div></div>
+      <div class="tile"><div class="k"><span class="i">done_all</span>Sets</div><div class="v">2,451</div></div>
+      <div class="tile"><div class="k"><span class="i">local_fire_department</span>Streak · best</div><div class="v">2<small>wk</small> · 11<small>wk</small></div></div>
+      <div class="tile"><div class="k">Workouts this month</div><div class="v">12</div><div class="d up"><span class="i">arrow_upward</span>+2 vs October</div></div>
+      <div class="tile"><div class="k">Time this month</div><div class="v">9<small>h</small> 40<small>m</small></div><div class="d down"><span class="i">arrow_downward</span>−35 min vs October</div></div>
+    </div>
+  </div>
+  <p class="spec-n">surfaceContainerLow tiles, radius 16, value 28 sp tabular. Comparison line: success ↑ / error ↓ / neutral =.</p>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+<script src="chart.js"></script>
+</body>
+</html>

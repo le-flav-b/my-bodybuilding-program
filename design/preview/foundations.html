@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Foundations · My Bodybuilding Program</title>
+<link rel="stylesheet" href="tokens.css">
+<script src="tokens.js"></script>
+<style>
+  body { margin: 0; font-family: Inter, sans-serif; background: #9aa0a6; }
+  .sheets { display: flex; gap: 0; }
+  .sheet { flex: 1; padding: 32px; background: var(--csurface); color: var(--con-surface); min-width: 560px; }
+  h1 { margin: 0 0 4px; }
+  h2 { margin: 32px 0 12px; color: var(--con-surface-variant); text-transform: uppercase; }
+  .sub { color: var(--con-surface-variant); margin: 0 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .sw { border-radius: var(--r-md); padding: 10px; height: 64px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--coutline-variant); }
+  .sw b { font-size: 12px; font-weight: 600; }
+  .sw span { font-size: 11px; opacity: .85; font-variant-numeric: tabular-nums; }
+  .wide { grid-column: span 2; }
+  .row { display: flex; gap: 8px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--coutline-variant); }
+  .row .meta { width: 150px; flex: none; color: var(--con-surface-variant); font: 500 11px/16px Inter; }
+  .sp { display: flex; align-items: flex-end; gap: 14px; }
+  .sp div { background: var(--cprimary); }
+  .sp figure, .rd figure { margin: 0; text-align: center; font: 500 11px Inter; color: var(--con-surface-variant); }
+  .rd { display: flex; gap: 14px; }
+  .rd div { width: 56px; height: 56px; background: var(--cprimary-container); border: 2px solid var(--cprimary); }
+  .contrast { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pill { border-radius: var(--r-full); height: 48px; display: flex; align-items: center; justify-content: center; font: 600 14px Inter; gap: 8px; }
+  .note { font: 400 12px/16px Inter; color: var(--con-surface-variant); margin-top: 4px; }
+  .bad { text-decoration: line-through; }
+  .chart { display: flex; gap: 8px; }
+  .chart div { flex: 1; height: 32px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; font: 600 12px Inter; color: var(--csurface); }
+  .well { display: flex; gap: 12px; align-items: center; }
+  .well img { width: 88px; height: 88px; object-fit: contain; background: var(--cimage-well); border-radius: var(--r-md); border: 1px solid var(--coutline-variant); }
+</style>
+</head>
+<body>
+<div class="sheets">
+<template id="tpl">
+  <h1 class="t-headline-medium">Foundations</h1>
+  <p class="sub t-body-medium"><span class="theme"></span> theme · Material 3 · Inter + Kameron (logo)</p>
+  <div class="t-logo" style="color:var(--cbrand);margin:12px 0">My Bodybuilding Program</div>
+
+  <h2 class="t-label-medium">Colour roles</h2>
+  <div class="grid">
+    <div class="sw" style="background:var(--cprimary);color:var(--con-primary)"><b>primary</b><span class="hex" data-k="primary"></span></div>
+    <div class="sw" style="background:var(--con-primary);color:var(--cprimary)"><b>onPrimary</b><span class="hex" data-k="onPrimary"></span></div>
+    <div class="sw" style="background:var(--cprimary-container);color:var(--con-primary-container)"><b>primaryContainer</b><span class="hex" data-k="primaryContainer"></span></div>
+    <div class="sw" style="background:var(--cbrand);color:#181B1E"><b>brand (coral)</b><span class="hex" data-k="brand"></span></div>
+    <div class="sw" style="background:var(--csecondary);color:var(--con-secondary)"><b>secondary / trophy</b><span class="hex" data-k="secondary"></span></div>
+    <div class="sw" style="background:var(--csecondary-container);color:var(--con-secondary-container)"><b>secondaryContainer</b><span class="hex" data-k="secondaryContainer"></span></div>
+    <div class="sw" style="background:var(--csurface);color:var(--ctrophy-text)"><b>trophyText</b><span class="hex" data-k="trophyText"></span></div>
+    <div class="sw" style="background:var(--csurface);color:var(--csuccess)"><b>success</b><span class="hex" data-k="success"></span></div>
+    <div class="sw" style="background:var(--csurface);color:var(--con-surface)"><b>surface</b><span class="hex" data-k="surface"></span></div>
+    <div class="sw" style="background:var(--csurface-container-low);color:var(--con-surface)"><b>surfaceContainerLow</b><span class="hex" data-k="surfaceContainerLow"></span></div>
+    <div class="sw" style="background:var(--csurface-container);color:var(--con-surface)"><b>surfaceContainer</b><span class="hex" data-k="surfaceContainer"></span></div>
+    <div class="sw" style="background:var(--csurface-container-high);color:var(--con-surface)"><b>surfaceContainerHigh</b><span class="hex" data-k="surfaceContainerHigh"></span></div>
+    <div class="sw" style="background:var(--con-surface);color:var(--csurface)"><b>onSurface</b><span class="hex" data-k="onSurface"></span></div>
+    <div class="sw" style="background:var(--con-surface-variant);color:var(--csurface)"><b>onSurfaceVariant</b><span class="hex" data-k="onSurfaceVariant"></span></div>
+    <div class="sw" style="background:var(--coutline);color:var(--csurface)"><b>outline</b><span class="hex" data-k="outline"></span></div>
+    <div class="sw" style="background:var(--cerror);color:var(--con-error)"><b>error</b><span class="hex" data-k="error"></span></div>
+  </div>
+
+  <h2 class="t-label-medium">Contrast (WCAG AA)</h2>
+  <div class="contrast">
+    <div>
+      <div class="pill" style="background:#F55E42;color:#FCFCFC"><span class="bad">White on #F55E42</span> 3.1:1</div>
+      <div class="note">Fails AA for normal text. Coral #F55E42 is kept as <b>brand</b> (logo, timer ring, big graphics), never under small white text.</div>
+    </div>
+    <div>
+      <div class="pill" style="background:var(--cprimary);color:var(--con-primary)">Start workout <span class="ratio"></span></div>
+      <div class="note"><b>Light:</b> primary = deep coral #C23E27 with white (5.1:1). <b>Dark:</b> primary = light coral #F68974 with dark text (7.2:1).</div>
+    </div>
+  </div>
+
+  <h2 class="t-label-medium">Chart series (one per load unit)</h2>
+  <div class="chart">
+    <div style="background:var(--cchart1)">1 · kg</div>
+    <div style="background:var(--cchart2)">2 · level</div>
+    <div style="background:var(--cchart3)">3</div>
+    <div style="background:var(--cchart4)">4</div>
+  </div>
+  <div class="note">Each ≥ 3:1 against the surface. Unit order = order of first use on that exercise.</div>
+
+  <h2 class="t-label-medium">Image well</h2>
+  <div class="well">
+    <img src="assets/img/bench_press.png" alt="">
+    <img src="assets/img/placeholder_chest.png" alt="">
+    <div class="note" style="flex:1">Catalogue illustrations have white backgrounds, so they always sit on a #FCFCFC rounded well, in both themes. Second image: placeholder by primary muscle (exercise without image).</div>
+  </div>
+
+  <h2 class="t-label-medium">Type scale (Inter)</h2>
+  <div class="row"><span class="meta">timer · 96/104 · 600</span><span class="t-timer">1:30</span></div>
+  <div class="row"><span class="meta">displaySmall · 40/48 · 600</span><span class="t-display-small">12 × 40</span></div>
+  <div class="row"><span class="meta">headlineLarge · 32/40 · 700</span><span class="t-headline-large">Today</span></div>
+  <div class="row"><span class="meta">headlineMedium · 28/36 · 700</span><span class="t-headline-medium">Bench press</span></div>
+  <div class="row"><span class="meta">headlineSmall · 24/32 · 600</span><span class="t-headline-small">Push A</span></div>
+  <div class="row"><span class="meta">titleLarge · 22/28 · 600</span><span class="t-title-large">Session preview</span></div>
+  <div class="row"><span class="meta">titleMedium · 16/24 · 600</span><span class="t-title-medium">Incline dumbbell press</span></div>
+  <div class="row"><span class="meta">titleSmall · 14/20 · 600</span><span class="t-title-small">Last time</span></div>
+  <div class="row"><span class="meta">bodyLarge · 16/24 · 400</span><span class="t-body-large">Keep shoulder blades pinched.</span></div>
+  <div class="row"><span class="meta">bodyMedium · 14/20 · 400</span><span class="t-body-medium">4 × 10 · 40 kg · last done 3 days ago</span></div>
+  <div class="row"><span class="meta">bodySmall · 12/16 · 400</span><span class="t-body-small">Seat 4, pin 7</span></div>
+  <div class="row"><span class="meta">labelLarge · 14/20 · 600</span><span class="t-label-large">Start</span></div>
+  <div class="row"><span class="meta">labelMedium · 12/16 · 600</span><span class="t-label-medium">EXERCISE 2 / 6</span></div>
+  <div class="row"><span class="meta">labelSmall · 11/16 · 600</span><span class="t-label-small">Today</span></div>
+  <div class="row"><span class="meta">logo · Kameron 22 · 700</span><span class="t-logo">My Bodybuilding Program</span></div>
+
+  <h2 class="t-label-medium">Spacing (4-pt grid)</h2>
+  <div class="sp">
+    <figure><div style="width:2px;height:2px"></div>xxs 2</figure>
+    <figure><div style="width:4px;height:4px"></div>xs 4</figure>
+    <figure><div style="width:8px;height:8px"></div>sm 8</figure>
+    <figure><div style="width:12px;height:12px"></div>md 12</figure>
+    <figure><div style="width:16px;height:16px"></div>lg 16</figure>
+    <figure><div style="width:24px;height:24px"></div>xl 24</figure>
+    <figure><div style="width:32px;height:32px"></div>xxl 32</figure>
+    <figure><div style="width:48px;height:48px"></div>xxxl 48</figure>
+  </div>
+  <div class="note">Screen padding 16 · touch targets ≥ 48 · main buttons 48, big workout buttons 64 · app bar 64 · nav bar 80.</div>
+
+  <h2 class="t-label-medium">Radius</h2>
+  <div class="rd">
+    <figure><div style="border-radius:4px"></div>xs 4</figure>
+    <figure><div style="border-radius:8px"></div>sm 8</figure>
+    <figure><div style="border-radius:12px"></div>md 12</figure>
+    <figure><div style="border-radius:16px"></div>lg 16</figure>
+    <figure><div style="border-radius:28px"></div>xl 28</figure>
+    <figure><div style="border-radius:999px"></div>full</figure>
+  </div>
+  <div class="note">Chips/inputs 8 · cards 16 · bottom sheets & dialogs 28 · buttons full.</div>
+</template>
+<section class="sheet" data-theme="light"></section>
+<section class="sheet" data-theme="dark"></section>
+</div>
+<script>
+  const tokens = Promise.resolve(window.TOKENS);
+  document.querySelectorAll('.sheet').forEach(s => {
+    s.append(document.getElementById('tpl').content.cloneNode(true));
+    s.querySelector('.theme').textContent = s.dataset.theme === 'light' ? 'Light' : 'Dark';
+  });
+  tokens.then(t => { if (!t) return;
+    document.querySelectorAll('.sheet').forEach(s => {
+      const c = t.color[s.dataset.theme];
+      s.querySelectorAll('.hex').forEach(h => h.textContent = c[h.dataset.k]);
+      s.querySelector('.ratio').textContent = s.dataset.theme === 'light' ? '5.1:1' : '7.2:1';
+    });
+    document.body.dataset.ready = '1';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design previews · My Bodybuilding Program</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { margin: 0; padding: 32px; font: 15px/22px Inter, sans-serif; background: var(--csurface); color: var(--con-surface); max-width: 760px; }
+  h1 { font: 700 26px Kameron, serif; color: var(--cbrand); margin: 0 0 4px; }
+  h2 { font: 600 13px Inter; letter-spacing: .6px; text-transform: uppercase; color: var(--con-surface-variant); margin: 28px 0 8px; }
+  a { color: var(--cprimary); font-weight: 600; }
+  li { margin: 4px 0; }
+  .cta { display: inline-block; margin-top: 16px; padding: 12px 24px; border-radius: 999px; background: var(--cprimary); color: var(--con-primary); text-decoration: none; }
+  p { color: var(--con-surface-variant); }
+</style>
+</head>
+<body data-theme="light">
+<h1>My Bodybuilding Program</h1>
+<p>Approved design (HTML source). Each page shows light and dark. Screen specs: <code>design/README.md</code>. Tokens: <code>design/tokens.json</code>.</p>
+<a class="cta" href="prototype.html">Open the clickable prototype</a>
+
+<h2>Foundations & components</h2>
+<ol>
+  <li><a href="foundations.html">Foundations</a>: colours, contrast, type, spacing, radius</li>
+  <li><a href="components-1.html">Components 1</a>: bottom nav, buttons, session card / row, exercise rows</li>
+  <li><a href="components-2.html">Components 2</a>: set rows, steppers, unit selector, rest + timed-set timers, PR chip</li>
+  <li><a href="components-3.html">Components 3</a>: multi-unit chart, calendar, streak + week strip, stat tiles</li>
+  <li><a href="components-4.html">Components 4</a>: dialogs, snackbar, trophy overlay, banner, empty states, picker sheet, chips, unit editor, settings tiles</li>
+</ol>
+
+<h2>Screens</h2>
+<ol>
+  <li><a href="screens-today.html">Today</a>: normal, after the workout, in progress, empty program, pick another session</li>
+  <li><a href="screens-workout.html">Workout 1</a>: session preview, player (reps, resting, timed)</li>
+  <li><a href="screens-workout-2.html">Workout 2</a>: list view, swap, PR trophy, paused, summary + update prompt</li>
+  <li><a href="screens-program.html">Program</a>: program, session editor, catalogue, exercise detail, exercise edit</li>
+  <li><a href="screens-progress.html">Progress</a>: calendar, exercises, history, exercise progress, workout detail</li>
+  <li><a href="screens-profile.html">Profile</a>: profile, bodyweight, settings, load units, muscles, cloud backup (v1.1)</li>
+</ol>
+
+<h2>Prototype flows</h2>
+<ol>
+  <li><a href="prototype.html#today_normal">Main</a>: Today → Preview → Player (log set → trophy → rest → list → swap) → Finish → Update program → Summary → Today (next session advanced)</li>
+  <li><a href="prototype.html#progress_calendar">Progress</a> → Exercises → Exercise progress</li>
+  <li><a href="prototype.html#profile_default">Profile</a> → Settings → Load units</li>
+</ol>
+
+<h2>Tools</h2>
+<ul>
+  <li><code>node design/preview/tools/build_tokens.mjs</code>: tokens.json → tokens.css / tokens.js</li>
+  <li><code>VW=3200 node design/preview/tools/shoot.mjs screens-today.html ../screens '[data-shot]' 2</code>: export screen PNGs</li>
+  <li><code>node design/preview/tools/build_proto.mjs</code>: [data-go] hotspots → proto.js</li>
+</ul>
+</body>
+</html>

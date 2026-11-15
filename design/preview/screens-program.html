@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screens · Program, session editor, catalogue, exercise</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="screens review">
+<template>
+  <!-- ============ Program ============ -->
+  <div class="shot"><div class="cap">Program</div>
+  <div class="phone" data-shot-suffix="program_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><h1 style="font:700 28px/36px Inter">Program</h1></div>
+    <div class="content stack" style="gap:8px;position:static">
+      <div data-go="catalogue_default" class="entry"><div class="ic"><span class="i">menu_book</span></div><div class="body" style="flex:1"><div class="t">Exercises</div><div class="s">84 in the catalogue</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="hrow" style="justify-content:space-between;margin:12px 0 0"><div class="overline">Sessions · loop of 3</div><span class="meta" style="font-size:12px">Drag to reorder</span></div>
+      <div class="session-row"><div class="handle"><span class="i">drag_indicator</span></div><div class="num">1</div><div data-go="session-editor_default" class="body"><div class="title">Pull A</div><div class="meta">6 exercises · ~50 min</div></div><button class="iconbtn"><span class="i">play_circle</span></button></div>
+      <div class="session-row next"><div class="handle"><span class="i">drag_indicator</span></div><div class="num">2</div><div class="body"><div class="title">Push A <span class="badge">Next</span></div><div class="meta">6 exercises · ~55 min</div></div><button data-go="preview_default" class="iconbtn"><span class="i">play_circle</span></button></div>
+      <div class="session-row"><div class="handle"><span class="i">drag_indicator</span></div><div class="num">3</div><div class="body"><div class="title">Legs</div><div class="meta">5 exercises · ~45 min</div></div><button class="iconbtn"><span class="i">play_circle</span></button></div>
+      <div class="loop-note"><span class="i">replay</span>After Legs, back to Pull A</div>
+    </div>
+    <div class="fab-pos"><button class="fab"><span class="i">add</span>Add session</button></div>
+    <nav class="navbar">
+      <a data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a class="on" data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+
+  <!-- ============ Session editor ============ -->
+  <div class="shot"><div class="cap">Session editor</div>
+  <div class="phone" data-shot-suffix="session-editor_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="program_default" class="iconbtn"><span class="i">arrow_back</span></button><h1>Edit session</h1><button class="iconbtn"><span class="i">more_vert</span></button></div>
+    <div class="content stack" style="gap:8px">
+      <div class="field" style="margin:8px 0"><label>Session name</label>Push A</div>
+      <div class="ed-card"><div class="top"><span class="i handle">drag_indicator</span><div class="well"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="plan">4 × 10 · 40 kg · rest 2:00</div></div><button class="iconbtn"><span class="i">expand_more</span></button></div></div>
+      <div class="ed-card open">
+        <div class="top"><span class="i handle">drag_indicator</span><div class="well"><img src="assets/img/dips.png" alt=""></div><div class="body"><div class="name">Dips</div><div class="plan">Reps · bodyweight / assisted</div></div><button class="iconbtn"><span class="i">expand_less</span></button></div>
+        <div class="pset-h"><span style="text-align:center">#</span><span>Reps</span><span>Load</span><span>Unit</span><span></span></div>
+        <div class="pset"><span class="n">1</span><span class="box">12</span><span class="box dim">Body</span><span class="unit">kg<span class="i">arrow_drop_down</span></span><span class="del"><span class="i">close</span></span></div>
+        <div class="pset"><span class="n">2</span><span class="box">10</span><span class="box">+5</span><span class="unit">kg<span class="i">arrow_drop_down</span></span><span class="del"><span class="i">close</span></span></div>
+        <div class="pset"><span class="n">3</span><span class="box max">max</span><span class="box dim">Body</span><span class="unit">kg<span class="i">arrow_drop_down</span></span><span class="del"><span class="i">close</span></span></div>
+        <div class="ed-foot">
+          <button class="btn text" style="margin-left:-12px"><span class="i">add</span>Add set</button>
+          <span class="rest-chip"><span class="i">timer</span>Rest 1:30</span>
+          <button class="iconbtn"><span class="i">delete</span></button>
+        </div>
+      </div>
+      <div class="ed-card"><div class="top"><span class="i handle">drag_indicator</span><div class="well"><img src="assets/img/plank.png" alt=""></div><div class="body"><div class="name">Plank</div><div class="plan">3 × 0:45 · rest 1:00</div></div><button class="iconbtn"><span class="i">expand_more</span></button></div></div>
+      <div class="ed-card"><div class="top"><span class="i handle">drag_indicator</span><div class="well"><img src="assets/img/leg_curl.png" alt=""></div><div class="body"><div class="name">Leg curl</div><div class="plan">12, 10, 8 · 5–7 level · rest 1:30</div></div><button class="iconbtn"><span class="i">expand_more</span></button></div></div>
+      <button class="btn tonal block" style="margin-top:4px"><span class="i">add</span>Add exercise</button>
+    </div>
+    <div class="gesturebar"></div>
+  </div></div>
+
+  <!-- ============ Catalogue ============ -->
+  <div class="shot"><div class="cap">Exercises (catalogue)</div>
+  <div class="phone" data-shot-suffix="catalogue_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="program_default" class="iconbtn"><span class="i">arrow_back</span></button><h1>Exercises</h1></div>
+    <div class="content">
+      <div class="search"><span class="i">search</span><span class="grow">Search 84 exercises</span></div>
+      <div class="chips" style="margin:12px 0 4px;flex-wrap:nowrap;overflow:hidden">
+        <span class="chip"><span class="i">inventory_2</span>Archived</span><span class="chip on"><span class="i">check</span>Chest</span><span class="chip">Back</span><span class="chip">Shoulders</span><span class="chip">Legs</span>
+      </div>
+      <div data-go="exercise-detail_default" class="ex-row"><div class="well"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="last" style="font-size:14px;line-height:20px">Chest · Triceps · Shoulders</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="ex-row"><div class="well ph" data-muscle="Chest"><img src="assets/img/placeholder_chest.png" alt=""></div><div class="body"><div class="name">Cable crossover</div><div class="last" style="font-size:14px;line-height:20px">Chest</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/dips.png" alt=""></div><div class="body"><div class="name">Dips</div><div class="last" style="font-size:14px;line-height:20px">Chest · Triceps</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/dumbbell_fly.png" alt=""></div><div class="body"><div class="name">Dumbbell fly</div><div class="last" style="font-size:14px;line-height:20px">Chest</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div><div class="body"><div class="name">Incline dumbbell press</div><div class="last" style="font-size:14px;line-height:20px">Chest · Shoulders</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/triceps_extension.png" alt=""></div><div class="body"><div class="name">Push-up</div><div class="last" style="font-size:14px;line-height:20px">Chest · Triceps</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div>
+    </div>
+    <div class="fab-pos" style="bottom:40px"><button class="fab"><span class="i">add</span>New exercise</button></div>
+    <div class="gesturebar"></div>
+  </div></div>
+
+  <!-- ============ Exercise detail ============ -->
+  <div class="shot"><div class="cap">Exercise detail</div>
+  <div class="phone" data-shot-suffix="exercise-detail_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="catalogue_default" class="iconbtn"><span class="i">arrow_back</span></button><h1></h1><button data-go="exercise-edit_default" class="iconbtn"><span class="i">edit</span></button></div>
+    <div class="content stack" style="gap:14px">
+      <div class="well hero-img" style="margin-top:-8px"><img src="assets/img/bench_press.png" alt=""></div>
+      <div>
+        <h2 style="margin:0;font:700 26px/32px Inter">Bench press</h2>
+        <div class="meta" style="margin-top:4px"><span><span class="i">repeat</span>Reps</span></div>
+      </div>
+      <div class="mchips"><span class="mchip primary">Chest</span><span class="mchip">Triceps</span><span class="mchip">Shoulders</span></div>
+      <div class="desc">Lie on the bench, eyes under the bar.<ul><li>Shoulder blades pinched, slight arch</li><li>Lower to mid-chest, elbows ~45°</li><li>Press up and slightly back</li></ul></div>
+      <div class="card" style="padding:12px 16px">
+        <div class="hrow" style="justify-content:space-between"><div class="overline">My notes / setup</div><span class="i s20" style="color:var(--con-surface-variant)">edit</span></div>
+        <div class="desc" style="margin-top:4px">Bench 3rd hole, feet flat, grip on the rings.</div>
+      </div>
+      <div data-go="exercise-progress_default" class="link-card">
+        <div class="body"><div class="t">Progress</div><div class="s">Heaviest 42.5 kg · 23 workouts</div></div>
+        <svg width="84" height="32" viewBox="0 0 84 32"><polyline points="2,28 14,24 26,24 38,18 50,14 62,14 74,6 82,6" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="i" style="color:var(--con-surface-variant)">chevron_right</span>
+      </div>
+    </div>
+    <div class="gesturebar"></div>
+  </div></div>
+
+  <!-- ============ Exercise edit ============ -->
+  <div class="shot"><div class="cap">Exercise edit (new / own exercise)</div>
+  <div class="phone" data-shot-suffix="exercise-edit_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="exercise-detail_default" class="iconbtn"><span class="i">close</span></button><h1>Edit exercise</h1><button data-go="exercise-detail_default" class="btn text" style="font-size:16px">Save</button></div>
+    <div class="content stack" style="gap:18px">
+      <div class="photo-edit" style="margin-top:-8px"><div style="height:100%;background:var(--csurface-container);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--con-surface-variant);font:400 13px/18px Inter;padding-bottom:40px"><span class="i s40">add_a_photo</span>No photo: the muscle placeholder is shown</div>
+        <div class="acts"><button class="btn"><span class="i">photo_camera</span>Camera</button><button class="btn"><span class="i">image</span>Gallery</button></div></div>
+      <div class="field focus"><label>Name</label>Cable crossover</div>
+      <div class="field" style="height:88px;align-items:flex-start;padding-top:14px;color:var(--con-surface-variant)"><label>Description / form cues</label>Pulleys high, step forward, hug a tree…</div>
+      <div><div class="lbl-sm">Measure</div><div class="seg"><span class="on"><span class="i">check</span>Reps</span><span>Time</span></div></div>
+      <div><div class="lbl-sm">Muscles · tap once = primary, twice = secondary</div>
+        <div class="mpick"><span class="chip p">Chest</span><span class="chip s">Shoulders</span><span class="chip">Triceps</span><span class="chip">Back</span><span class="chip">Biceps</span><span class="chip">Abs</span><span class="chip">Legs</span><span class="chip">Glutes</span><span class="chip">Calves</span></div></div>
+      <div class="hrow" style="justify-content:space-between;margin-top:-4px">
+        <span class="spec-n" style="margin:0">Never used, so it can be deleted.</span>
+        <button class="btn text danger"><span class="i">delete</span>Delete</button>
+      </div>
+    </div>
+    <div class="gesturebar"></div>
+  </div></div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>
