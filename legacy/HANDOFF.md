@@ -140,8 +140,8 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - Seed in `assets/seed/` (`catalogue.json` v1: 13 muscles, 82 exercises, 44 WebP images); validator and how-to in `tools/seed/`.
 - [ ] App (M0–M6 → v1.0)
   - [x] M0 Setup (v0.1.0)
-  - [ ] M1 Data layer ← *next*
-  - [ ] M2 Catalogue & program
+  - [x] M1 Data layer (v0.2.0)
+  - [ ] M2 Catalogue & program ← *next*
   - [ ] M3 Workout
   - [ ] M4 Progress
   - [ ] M5 Profile
@@ -151,9 +151,22 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0 Setup. The app launches with the 4 tabs (Today · Program · Progress · Profile) as empty states, in light and dark, themed from `design/tokens.json`. CI runs on PRs.
+**Done so far:** M0 Setup, M1 Data layer.
+- M0: the app launches with the 4 tabs (Today · Program · Progress · Profile) as empty states, in light and dark, themed from `design/tokens.json`. CI runs on PRs.
+- M1: the whole data layer, with no new screens. Drift database (14 tables, schema v1 + dump), DAOs, repositories for every feature, seed import at launch, and every domain rule as pure Dart with unit tests.
 
-**Next step:** M1 Data layer (Drift tables + migrations + schema dump, repositories, seed import, domain rules with unit tests). Set its Notion row to In progress first.
+**Next step:** M2 Catalogue & program (catalogue list/detail/edit with photos, personal notes, Load units and Muscles settings screens, Program tab, session editor, exercise picker). Set its Notion row to In progress first. The repositories it needs already exist; M2 is presentation work plus image picking/storage (`core/images`).
+
+**Where the data layer is (M1):**
+- `lib/core/db/`: `tables/` (4 layers; every synced table mixes in `SyncedTable`: id, created_at, updated_at, deleted_at, dirty), `daos/` (`SyncedWrites` stamps the sync columns: always write through `insertSynced` / `patch` / `softDelete`), `app_database.dart` (schema v1; creates the built-in `kg` unit and the single program with fixed ids), `seed/seed_importer.dart`, `database_provider.dart`.
+- `lib/features/*/domain/`: pure Dart entities (freezed) and rules: `Rotation`, `EstimatedDuration`, `PlanFormat`, `PlanDiff` ("Update the program?"), `WorkoutClock` (pause, 12 h auto-finish, rest), `SwapRule`, `Records`, `ChartSeriesBuilder`, `LastTime`, `StreakRule`, `StatsRule`, `BodyWeightTrend`, `planSeedMerge`; `lib/core/sync/sync_merge.dart` (`SyncMerge`, for v1.1).
+- `lib/features/*/data/`: `CatalogueRepository` (exercises, muscles, personal notes), `UnitsRepository`, `SettingsRepository`, `BodyWeightRepository`, `ProgramRepository`, `WorkoutRepository` (start/log/rest/pause/swap/finish/discard/auto-finish/apply changes), `HistoryRepository` (logged sets and workout summaries: the input of every derived figure).
+- `lib/app/bootstrap.dart`: before the first screen, imports the seed (first launch or new seed version), closes a workout idle for more than 12 h, loads the settings.
+- Derived data (PRs, charts, streak, stats, last time) is never stored: controllers compute it from `HistoryRepository` with the domain rules.
+
+**Changing the database:** edit the tables, bump `schemaVersion`, add the migration step, then run `dart run drift_dev make-migrations` (dumps `drift_schemas/`) and `dart run drift_dev schema generate drift_schemas/app_database test/core/db/migrations/generated/` followed by `dart format`. `test/core/db/app_database_test.dart` fails when the tables and the dump disagree. Write the data-model change in Notion > Data & Sync first.
+
+**Tests:** `test/domain` (pure rules), `test/core/db` (schema, built-ins, seed import with the real seed), `test/data` (repositories on an in-memory database, including the full flow start → log → finish → history/PRs/pointer), `test/app` (widget tests). Helpers: `test/helpers/test_env.dart` (`TestEnv`: in-memory database + every repository + a fake clock) and `test/helpers/test_app.dart` (`TestApp`: the whole app on an in-memory database; call `app.settle(tester)` after anything that writes to the database).
 
 **How the app session works (owner's instructions):**
 - One PR per milestone from the session's branch, CI green, squash-merge, then bring the branch back in line with `main`. Notion Development row: In progress → Done. Report in chat + push notification after each milestone.

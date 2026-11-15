@@ -1,19 +1,21 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:my_bodybuilding_program/app/app.dart';
 import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
-import 'package:my_bodybuilding_program/app/theme/theme_mode_controller.dart';
+import 'package:my_bodybuilding_program/features/catalogue/data/catalogue_repository.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/profile_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_screen.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_screen.dart';
+import 'package:my_bodybuilding_program/features/settings/data/settings_repository.dart';
+import 'package:my_bodybuilding_program/features/settings/domain/app_settings.dart';
 import 'package:my_bodybuilding_program/features/today/presentation/today_screen.dart';
+
+import '../helpers/test_app.dart';
 
 void main() {
   testWidgets('launches on Today with the four tabs', (tester) async {
-    await tester.pumpWidget(const ProviderScope(child: App()));
-    await tester.pumpAndSettle();
+    final app = TestApp();
+    await app.pump(tester);
 
     expect(find.byType(TodayScreen), findsOneWidget);
     expect(find.text(Strings.appName), findsOneWidget);
@@ -36,9 +38,19 @@ void main() {
     }
   });
 
+  testWidgets('imports the catalogue seed on first launch', (tester) async {
+    final app = TestApp();
+    await app.pump(tester);
+    final repository = app.container.read(catalogueRepositoryProvider);
+    final exercises = await tester.runAsync(repository.getExercises);
+    final muscles = await tester.runAsync(repository.getMuscles);
+    expect(exercises, hasLength(82));
+    expect(muscles, hasLength(13));
+  });
+
   testWidgets('each tab opens its screen', (tester) async {
-    await tester.pumpWidget(const ProviderScope(child: App()));
-    await tester.pumpAndSettle();
+    final app = TestApp();
+    await app.pump(tester);
 
     Future<void> open(String label) async {
       await tester.tap(
@@ -60,22 +72,19 @@ void main() {
     expect(find.byType(TodayScreen), findsOneWidget);
   });
 
-  testWidgets('follows the theme mode in light and dark', (tester) async {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(container: container, child: const App()),
-    );
-    await tester.pumpAndSettle();
+  testWidgets('follows the theme setting in light and dark', (tester) async {
+    final app = TestApp();
+    await app.pump(tester);
+    final settings = app.container.read(settingsRepositoryProvider);
 
     ThemeData theme() => Theme.of(tester.element(find.byType(TodayScreen)));
 
-    container.read(themeModeControllerProvider.notifier).set(ThemeMode.light);
-    await tester.pumpAndSettle();
+    await tester.runAsync(() => settings.setThemeMode(AppThemeMode.light));
+    await app.settle(tester);
     expect(theme().colorScheme, AppTheme.light.colorScheme);
 
-    container.read(themeModeControllerProvider.notifier).set(ThemeMode.dark);
-    await tester.pumpAndSettle();
+    await tester.runAsync(() => settings.setThemeMode(AppThemeMode.dark));
+    await app.settle(tester);
     expect(theme().colorScheme, AppTheme.dark.colorScheme);
   });
 }

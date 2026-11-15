@@ -6,6 +6,8 @@ analyzer:
     - android/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    # Schema snapshots written by `drift_dev schema generate`.
+    - test/core/db/migrations/generated/**
   errors:
     # Generated files are not committed; json_serializable/freezed annotations
     # on fields are valid.
