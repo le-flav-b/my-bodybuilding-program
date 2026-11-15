@@ -5,7 +5,7 @@
 | What | Where |
 |---|---|
 | Spec (master) | Notion, [My Bodybuilding Program](https://app.notion.com/p/40481ac8bb2b80f0be49f0e0e814be30): **Features**, **Screens & Navigation**, **Data & Sync**, **Technical**, and the **Development** database (milestones + status) |
-| Design | [Figma](https://www.figma.com/design/ut2qBne1bdpEzGoDeNldNK/My-Bodybuilding-Program) (file key `ut2qBne1bdpEzGoDeNldNK`) |
+| Design | **`design/`** in this repo: `tokens.json`, `README.md` (screen specs), `screens/*.png`, `preview/` (HTML). [Figma](https://www.figma.com/design/ut2qBne1bdpEzGoDeNldNK/My-Bodybuilding-Program) mirrors it for viewing only; **coding sessions never call Figma tools** (Starter plan read limits) |
 | Technical rules | this file |
 | Status / handoff | `legacy/HANDOFF.md`: read first, update last |
 
@@ -46,7 +46,7 @@ Adding a dependency beyond this list: justify it in the PR description and add i
 ```
 lib/
   main.dart
-  app/          # app widget, router, theme (tokens from Figma), strings
+  app/          # app widget, router, theme (from `design/tokens.json`), strings
   core/         # db (tables, DAOs, migrations, seed import), sync, notifications, images, utils
   features/
     today/ workout/ program/ catalogue/ progress/ profile/ settings/
@@ -105,7 +105,7 @@ Details and status are in the Notion **Development** database.
 
 ## Session workflow
 
-1. Read `legacy/HANDOFF.md`, this file, and the relevant Notion pages (plus Figma frames for UI work).
+1. Read `legacy/HANDOFF.md`, this file, and the relevant Notion pages (plus `design/` for UI work).
 2. Work on the assigned branch only; keep the PR to one milestone.
 3. Run `flutter analyze` and `flutter test` before pushing.
 4. Update Notion (spec changes + Development status), then `legacy/HANDOFF.md`, before finishing.
