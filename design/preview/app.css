@@ -203,3 +203,72 @@ body { margin: 0; font-family: Inter, sans-serif; -webkit-font-smoothing: antial
 .next-up .overline { font-size: 11px; }
 .next-up .t { font: 600 16px/24px Inter; }
 .next-up .s { font: 400 14px/20px Inter; color: var(--con-surface-variant); font-variant-numeric: tabular-nums; }
+
+/* ---------- Chips ---------- */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { height: 32px; padding: 0 12px; border-radius: var(--r-sm); border: 1px solid var(--coutline); display: inline-flex; align-items: center; gap: 6px;
+  font: 600 14px Inter; color: var(--con-surface-variant); background: transparent; white-space: nowrap; }
+.chip .i { font-size: 18px; }
+.chip.on { background: var(--cprimary-container); color: var(--con-primary-container); border-color: transparent; }
+.chip .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ---------- Streak + week strip ---------- */
+.streak { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px 0 8px; border-radius: var(--r-full);
+  background: var(--csecondary-container); color: var(--con-secondary-container); font: 600 14px Inter; }
+.streak .i { color: var(--cbrand); font-size: 20px; }
+.streak.zero { background: var(--csurface-container-high); color: var(--con-surface-variant); }
+.streak.zero .i { color: var(--con-surface-variant); }
+.week { display: flex; justify-content: space-between; }
+.week .d { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 40px; font: 600 12px Inter; color: var(--con-surface-variant); }
+.week .d b { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 500 14px Inter;
+  color: var(--con-surface); background: var(--csurface-container-high); }
+.week .d.on b { background: var(--cprimary); color: var(--con-primary); }
+.week .d.today b { box-shadow: 0 0 0 2px var(--csurface), 0 0 0 4px var(--con-surface); }
+.week .d.future b { background: transparent; border: 1px dashed var(--coutline-variant); color: var(--con-surface-variant); }
+
+/* ---------- Calendar ---------- */
+.cal-head { display: flex; align-items: center; margin-bottom: 4px; }
+.cal-head h3 { flex: 1; margin: 0 0 0 4px; font: 600 16px/24px Inter; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr) 28px; row-gap: 4px; text-align: center; }
+.cal .wd { font: 600 12px/32px Inter; color: var(--con-surface-variant); }
+.cal .c { height: 44px; display: flex; align-items: center; justify-content: center; }
+.cal .c span { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 400 14px Inter; position: relative; }
+.cal .c.out span { color: var(--coutline); }
+.cal .c.on span { background: var(--cprimary); color: var(--con-primary); font-weight: 600; }
+.cal .c.two span::after { content: ''; position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.cal .c.today span { box-shadow: inset 0 0 0 2px var(--con-surface); font-weight: 600; }
+.cal .c.on.today span { box-shadow: 0 0 0 2px var(--csurface), 0 0 0 4px var(--con-surface); }
+.cal .wk { display: flex; align-items: center; justify-content: center; }
+.cal .wk .i { font-size: 18px; color: var(--cbrand); }
+.cal .wk.miss .i { color: var(--coutline-variant); }
+
+/* ---------- Stat tiles ---------- */
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tile { background: var(--csurface-container-low); border-radius: var(--r-lg); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.tile .k { font: 400 12px/16px Inter; color: var(--con-surface-variant); display: flex; align-items: center; gap: 6px; }
+.tile .k .i { font-size: 16px; }
+.tile .v { font: 600 28px/36px Inter; letter-spacing: -.25px; font-variant-numeric: tabular-nums; }
+.tile .v small { font: 500 14px Inter; color: var(--con-surface-variant); margin-left: 2px; letter-spacing: 0; }
+.tile .d { font: 600 12px/16px Inter; display: flex; align-items: center; gap: 2px; }
+.tile .d.up { color: var(--csuccess); } .tile .d.down { color: var(--cerror); } .tile .d.flat { color: var(--con-surface-variant); }
+.tile .d .i { font-size: 16px; }
+
+/* ---------- Chart ---------- */
+.chart-card { background: var(--csurface-container-low); border-radius: var(--r-lg); padding: 12px 8px 8px; }
+.chart-card svg { display: block; width: 100%; overflow: visible; }
+.chart-card .grid line { stroke: var(--coutline-variant); stroke-width: 1; }
+.chart-card .ax { font: 500 11px Inter; font-variant-numeric: tabular-nums; }
+.chart-card .ax.x { fill: var(--con-surface-variant); }
+.chart-card .s1 { stroke: var(--cchart1); fill: var(--cchart1); } .chart-card .t1 { fill: var(--cchart1); }
+.chart-card .s2 { stroke: var(--cchart2); fill: var(--cchart2); } .chart-card .t2 { fill: var(--cchart2); }
+.chart-card .line { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.chart-card .pt { stroke: var(--csurface-container-low); stroke-width: 2; }
+.chart-card .pr { fill: var(--ctrophy); stroke: #181B1E; stroke-width: 1.5; }
+.chart-card .cursor { stroke: var(--con-surface-variant); stroke-width: 1; stroke-dasharray: 3 3; }
+.tip { position: absolute; background: var(--cinverse-surface); color: var(--con-inverse-surface); border-radius: var(--r-sm); padding: 6px 10px; font: 500 12px/16px Inter; white-space: nowrap; }
+.tip b { font-weight: 600; }
+.range { display: flex; gap: 4px; margin: 8px 4px 0; }
+.range span { flex: 1; display: flex; align-items: center; justify-content: center; height: 32px; border-radius: var(--r-full); font: 600 12px Inter; color: var(--con-surface-variant); }
+.range span.on { background: var(--csurface-container-highest); color: var(--con-surface); }
+
+.mini { display: flex; align-items: flex-end; gap: 12px; }
