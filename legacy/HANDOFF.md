@@ -4,66 +4,95 @@ This file passes context from one Claude session to the next. Each session reads
 
 ## Project
 
-An Android app (Flutter) to plan and track my training sessions and my progress over time. A first attempt a few years ago was dropped; we are **starting over**. The legacy material is reference only. **The spec is now final (v1.0)** and lives in Notion.
+An Android app (Flutter) to plan my training, guide me through each workout, and track my progress. A first attempt was dropped; we're starting over. `legacy/` is reference material only, not a spec.
 
 ## Session plan
 
-1. **Specifications**: done (this file updated at the end of it).
-2. **Design** ← *next*: update the Figma file to match the spec and produce a preview of the app.
-3. **App**: build the Flutter Android app in milestones M0–M7 (one branch + PR each), following `CLAUDE.md`, Notion and Figma.
+1. **Specifications**: done.
+2. **Design** ← *next*: update Figma to match the spec and produce a clickable preview.
+3. **Catalogue seed** (data task, separate): produce the seed JSON and images in the format defined in Notion > Technical.
+4. **App**: milestones M0–M7, one branch + PR each, following `CLAUDE.md`, Notion and Figma.
 
 A "master" session coordinates the work and the move from one session to the next.
 
 ## Where things are
 
-- **Notion (master spec):** https://app.notion.com/p/40481ac8bb2b80f0be49f0e0e814be30 (§1 Vision, §2 Concepts, §3 Features MVP/Later/Dropped, §4 Screens and navigation, §5 Data model, §6 Sync, §7 Decisions log, §8 Milestones, §9 Open points)
-  - Sub-page **Exercise seed (EN)**: 88 translated exercises + PPL program (mirrored in `docs/seed/*.csv`)
+- **Notion (master spec):** https://app.notion.com/p/40481ac8bb2b80f0be49f0e0e814be30
+  - **Features**: one toggle per feature (MVP / Later / Dropped)
+  - **Screens & Navigation**: navigation diagram + one toggle per screen, with the mapping from the old Figma
+  - **Data & Sync**: the four data layers, tables, seed rules, images, derived data, Firebase sync
+  - **Technical**: stack, architecture, seed file format, testing, decisions log
+  - **Development** database: specs, design, data task, M0–M7 and later items, with status
 - **Figma:** https://www.figma.com/design/ut2qBne1bdpEzGoDeNldNK/My-Bodybuilding-Program (file key `ut2qBne1bdpEzGoDeNldNK`)
-- **`CLAUDE.md`:** stack, architecture, conventions, testing, milestones, "Notion first" rule
-- **`README.md`:** summary + links + build placeholders
+- **`CLAUDE.md`**: rules for coding sessions. **`README.md`**: summary and links.
 
-## Key decisions (details and reasons in Notion §7)
+## Key decisions (details in Notion)
 
-English only · single user · Android/Flutter, sideloaded APK · offline-first with Drift as the source of truth · Firebase (Auth Google, Firestore mirror, Storage later) with optional sign-in in Settings · one phone (cloud = backup/restore, last write wins) · **one program = rotation of sessions** with a "next session" pointer (no fixed weekdays) · per-set logging (reps/seconds, kg, warm-up, failure) + notes · guided workout player + list view · double-progression suggestions that I confirm · kg only (increments 2.5 / 1 kg) · light + dark following the system · **4 tabs: Today · Program · Progress · Settings** · crash-safe workouts (resume prompt) · rest timer notification works with the screen off.
-
-**Dropped:** Music page, random session, manual "max load (2 reps)", fixed weekly split.
-**Later:** progress photos, reminders (training day, weigh-in), supersets, media controls, export.
+- **Basics:** English only, single user, Android/Flutter, offline-first. Firebase backup with optional Google sign-in; one phone.
+- **Catalogue:** a flat exercise catalogue (name, description, image, reps-or-time measure, muscles, movement pattern) with **no variants and no equipment**. I can add exercises in the app, with a photo. Exercises are editable; an exercise with history can only be archived. Muscle and pattern lists ship pre-filled and are editable.
+- **My exercise data** (notes/setup, favourite, hidden) is kept separate from the catalogue.
+- **Load units** are a user-managed list (kg built in, plus custom units such as "level" with a step and decimals). The unit is chosen per planned set and logged per set, never converted.
+- **Program:** one program = an ordered loop of sessions with a "next session" pointer that follows what I actually did. Skip is possible, there are no rest days in the loop, and the program starts empty.
+- **Sessions:** a flat list of exercises (no blocks), each with **per-set targets**: reps or time as a number or "max", optional load + unit, warm-up flag. Rest time is set per exercise.
+- **Workout:**
+  - Guided player plus a list view, with jump, reorder, skip and swap.
+  - Changes apply to this workout only; at the end the app asks "Update the program?".
+  - The player shows last time's sets, my notes, the next exercise and session progress.
+  - Timed sets have a 3-2-1 lead-in.
+  - Rest timer with notifications that work when the phone is locked.
+  - Crash-safe, with a resume prompt.
+- **Progress:**
+  - Per-exercise timeline chart, with each unit on its own scale/colour on the same chart.
+  - PRs per unit: heaviest load, most reps, longest hold.
+  - Calendar, plus a weekly streak (≥ N workouts per week, default 3).
+- **Navigation:** 4 tabs, Today · Program · Progress · Profile. Settings opens from Profile. The exercise catalogue lives inside Program.
+- **Profile:** bodyweight log + chart, and stats (totals, streaks, last 5 PRs, this month vs last).
+- **Later:** progress photos (pose tags, private, linked bodyweight), then reminders, supersets, media controls and export.
+- **Dropped:** music, random session, manual max load, fixed weekly split, progression suggestions, variants, equipment, blocks, phases, several programs.
 
 ## Brief for the DESIGN session
 
-Goal: turn the existing Figma (old French design, single "Page 1") into the design for spec v1.0, then produce a clickable preview.
+Goal: turn the old French Figma (single "Page 1") into the design for this spec, then a clickable preview.
 
-1. **Keep the old file as archive:** rename "Page 1" to `Archive (legacy FR)`. Create new pages: `Foundations`, `Components`, `Screens`, `Prototype`.
-2. **Foundations (Material 3, light + dark):**
-   - Colours from the old app (`legacy/some_previous_app_assets/values/colors.xml`): coral `#F55E42` (primary), light coral `#F68974`, yellow `#FFC854` (accent / PR / trophy), dark grey `#181B1E`, grey `#2D3135`, off-white `#EEEEEE`, white `#FCFCFC`. Build M3 colour roles for both themes and check contrast (WCAG AA), especially white text on coral.
-   - Type: **Kameron Bold** for the logo/app name only, **Inter** for everything else (Cantarell and Source Sans Pro are dropped). Fonts are in `legacy/some_fonts/`.
-   - Define the tokens as Figma variables (colour, type scale, spacing, radius). The APP session will map them 1:1 to the Flutter theme.
-3. **Components:** bottom nav (4 tabs; reuse the old icon style: home, bodybuilder, user→progress, settings), session card, exercise row (thumbnail + name + target), set row (index, previous, kg stepper, reps/sec stepper, warm-up/failure toggles, done check), rest timer (circular countdown, ±15 s, skip), suggestion badge, PR/trophy toast, chart card, calendar month, streak chip, empty states, dialogs, bottom-sheet exercise picker, filter chips.
-4. **Screens** (full list and contents in Notion §4), light + dark for each, all text in English:
-   Today (normal, workout-in-progress banner, first launch) · Session preview · Workout player (rep-based, time-based, resting, unilateral left/right) · Workout list view · Workout summary (with PRs) · Leave/Resume dialogs · Program · Session editor · Exercise library (+ filters) · Exercise detail/edit · Progress: Overview / Exercises / History / Body · Exercise progress · Workout detail · Settings (signed out / signed in).
-5. **Reuse:** exercise illustrations from `legacy/some_images/` (English names in Notion seed `Key` column). 14 exercises have no image: design a muscle-group placeholder (the old `abdominals`, `back_biceps`, `legs`, `pectorals_triceps` images can serve). Use the old Home illustrations (`sleep.png` pillow, `trophy.png`) for empty/rest and PR moments.
-6. **UX priorities:** one-handed gym use, large touch targets (≥ 48 dp), one tap to log a set matching the target, readable at arm's length, timer visible from a distance.
-7. **Prototype:** main flow Today → Preview → Player (log sets, rest) → Summary → Today (next session advanced), plus Progress → Exercise progress. Share a preview link.
-8. If design work reveals a spec gap, **update Notion first** (and note it here).
-
-## Open points (non-blocking)
-
-- Confirm the equipment for *Standing neutral-grip triceps extension* and *Neutral-grip row*.
-- "rowing BOM" in the PPL draft was unclear and is mapped to *Barbell row* (Pull B).
+1. **Keep the old design as an archive.** Rename "Page 1" to `Archive (legacy FR)`, then create the pages `Foundations`, `Components`, `Screens` and `Prototype`.
+2. **Foundations** (Material 3, light + dark):
+   - Colours from `legacy/some_previous_app_assets/values/colors.xml`: coral `#F55E42` (primary), light coral `#F68974`, yellow `#FFC854` (accent, PR/trophy), dark grey `#181B1E`, grey `#2D3135`, off-white `#EEEEEE`, white `#FCFCFC`. Check contrast (WCAG AA), especially white text on coral.
+   - Fonts: Kameron Bold for the logo only, Inter for everything else (both in `legacy/some_fonts/`).
+   - Define everything as Figma variables (colour, type, spacing, radius); the app maps them 1:1.
+3. **Components:**
+   - bottom nav (4 tabs), session card, exercise row (image, name, planned sets)
+   - set row: target, last time, steppers, unit selector, warm-up/failure toggles, done
+   - rest timer: circular countdown, ±15 s, skip; timed-set timer with 3-2-1
+   - multi-unit chart (one colour/scale per unit), PR trophy overlay, calendar month, streak chip
+   - stat tiles, empty states, dialogs, bottom-sheet exercise picker, filter chips, unit editor
+4. **Screens:** every screen listed in Notion > Screens & Navigation (toggles describe content and states), in light and dark, all text in English. Include the states:
+   - Today: normal / in progress / empty program
+   - Player: rep-based / time-based / resting
+   - Settings: signed out / signed in
+5. **Images:**
+   - Exercise illustrations in `legacy/some_images/` show the visual style to keep for catalogue images.
+   - Exercises without an image get a placeholder by primary muscle; the old `abdominals`, `back_biceps`, `legs` and `pectorals_triceps` images can inspire it.
+   - Reuse `trophy.png` for PRs and `sleep.png` for empty/rest states.
+6. **UX priorities:** one-handed use, touch targets ≥ 48 dp, one tap to log a set that matches the target, readable at arm's length, timer visible from a distance.
+7. **Prototype:**
+   - Main flow: Today → Preview → Player (log sets, rest, swap) → Summary (update-program prompt) → Today with the next session advanced.
+   - Also Progress → Exercise progress, and Profile → Settings → Load units.
+8. If design work reveals a gap in the spec, **update Notion first** and note it here. Set the "Design" row in the Notion Development database to In progress, then Done.
 
 ## Contents of `legacy/`
 
 | Path | What it is |
 |---|---|
-| `exercises.xlsx` | ~80 exercises (French). Translated and curated → `docs/seed/exercises.csv` / Notion seed page |
-| `program_draft_french.xlsx` | Push / Pull / Legs draft (general / targeted / bodyweight). Translated → `docs/seed/program.csv` |
-| `some_images/` | Exercise illustrations + UI icons (`_active` / `_dark_mode` variants), French file names. Mapping in the seed `legacy_image` column |
+| `exercises.xlsx` | Old exercise list (French): the exercises I did at the time. Input for the catalogue data task, not a spec |
+| `program_draft_french.xlsx` | Old Push / Pull / Legs draft (French). Reference only; the program starts empty |
+| `some_images/` | Exercise illustrations + UI icons (`_active` / `_dark_mode` variants), French file names |
 | `some_fonts/` | Cantarell Bold, Inter Medium, Kameron Bold, Source Sans Pro Regular (only Kameron + Inter kept) |
-| `some_previous_app_assets/` | Old Android app leftovers: `drawable*/` images and `values/` (colours, themes, strings) |
+| `some_previous_app_assets/` | Old Android app leftovers: `drawable*/` and `values/` (colours, themes, strings) |
 
 ## Status
 
 - [x] Repo started, legacy assets imported (master session)
-- [x] Specifications: Notion spec v1.0 + seed page, `README.md`, `CLAUDE.md`, `docs/seed/` (specs session, 2026-11-15)
+- [x] Specifications: Notion spec (4 pages + Development database), `README.md`, `CLAUDE.md` (specs session, 2026-11-15)
 - [ ] Design
+- [ ] Catalogue seed (data task)
 - [ ] App (M0–M7)
