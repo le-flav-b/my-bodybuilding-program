@@ -1,0 +1,89 @@
+key,name,primary_muscle,secondary_muscles,equipment,tracking,unilateral,default_sets,default_reps_min,default_reps_max,default_duration_s,default_rest_s,default_weight_kg,legacy_image,cues,origin
+behind_the_back_wrist_curl,Behind-the-back wrist curl,forearms,,barbell,reps,0,4,15,20,,60,18,behind_the_back_wrist_curls.png,Keep your head up. Don't compensate with other muscles.,legacy
+wall_sit,Wall sit,quads,glutes,bodyweight,time,0,6,,,120,30,0,chaise.png,"Keep your head up, don't push on your legs with your hands, focus on the thighs.",legacy
+inchworm,Inchworm,abs,shoulders;hamstrings,bodyweight,reps,0,6,8,10,,30,0,chenille.png,"Don't rush, reach as far as you can, and control how your hands land on the floor.",legacy
+crunch,Crunch,abs,,bodyweight,reps,0,6,15,20,,30,0,crunch.png,Focus on the abs; don't just move your neck; don't rest your shoulders on the floor.,legacy
+cross_body_crunch,Cross-body crunch,obliques,abs,bodyweight,reps,0,6,15,20,,30,0,crunch_gauche-droite.png,Focus on the abs; don't just move your neck; don't rest your shoulders on the floor.,legacy
+seated_dumbbell_curl,Seated dumbbell curl,biceps,,dumbbell,reps,0,4,8,10,,90,11,curl_assis.png,Slow movement. Don't rest your elbow on your thigh. Don't go all the way down.,legacy
+standing_dumbbell_curl,Standing dumbbell curl,biceps,,dumbbell,reps,0,4,8,10,,90,10,haltère.png,"Keep your back straight, don't fully lock the arms, don't swing with shoulders or back.","legacy (""haltères"")"
+barbell_curl,Standing barbell curl,biceps,forearms,barbell,reps,0,4,8,10,,90,18,debout_barre_biceps.png,"Keep your back straight, don't fully lock the arms, don't swing with shoulders or back.",legacy
+standing_neutral_grip_triceps_extension,Standing neutral-grip triceps extension,triceps,,dumbbell,reps,0,4,8,10,,90,20,debout_triceps_prise_marteau.png,"Keep your back straight, don't fully lock the arms, don't swing with shoulders or back.",legacy (equipment to confirm)
+barbell_bench_press,Barbell bench press,chest,triceps;shoulders,barbell,reps,0,5,6,8,,120,35,développés_couchés.png,"An arched back is fine. Feet planted, shoulder blades squeezed, wrists straight.",legacy
+dumbbell_bench_press,Dumbbell bench press,chest,triceps;shoulders,dumbbell,reps,0,5,6,8,,120,12,développés_couchés_haltères.png,"An arched back is fine. Feet planted, shoulder blades squeezed, wrists straight.",legacy
+close_grip_bench_press,Close-grip bench press,triceps,chest,barbell,reps,0,5,6,8,,120,30,développés_couchés_militaire.png,"An arched back is fine. Feet planted, shoulder blades squeezed, wrists straight.","legacy (""développés couchés militaire"")"
+incline_barbell_bench_press,Incline barbell bench press,chest,shoulders;triceps,barbell,reps,0,5,6,8,,120,35,développés_inclinés.png,"An arched back is fine. Feet planted, shoulder blades squeezed, wrists straight.",legacy
+incline_dumbbell_press,Incline dumbbell press,chest,shoulders;triceps,dumbbell,reps,0,5,6,8,,120,12,développés_inclinés_haltères.png,"An arched back is fine. Feet planted, shoulder blades squeezed, wrists straight.",legacy
+dips,Dips,chest,triceps;shoulders,bodyweight,reps,0,6,5,5,,30,0,dips.png,Don't let the elbows flare out; keep the legs still.,legacy
+dumbbell_shrug,Dumbbell shrug,traps,,dumbbell,reps,0,4,15,20,,60,18,dumbbell_shrug.png,"Head up, arms locked, raise the shoulders while bringing them slightly forward, slow tempo.",legacy
+dumbbell_flye,Dumbbell flye,chest,,dumbbell,reps,0,5,6,8,,120,10,écartés_couchés.png,Elbows slightly bent and fixed through the whole movement; chest out.,legacy
+windshield_wiper,Windshield wiper,obliques,abs,bodyweight,reps,0,6,12,15,,30,0,essuie-glace.png,"Focus on the core; no momentum, don't push with your hands.",legacy
+overhead_dumbbell_triceps_extension,Overhead dumbbell triceps extension,triceps,,dumbbell,reps,0,4,15,20,,60,6,extensions_verticales_haltères.png,"Stay braced, focus on the triceps, head straight and eyes fixed.",legacy
+barbell_lunge,Barbell lunge,quads,glutes;hamstrings,barbell,reps,1,5,6,8,,120,30,fentes.png,"Back straight, feet hip-width apart.",legacy
+bulgarian_split_squat,Bulgarian split squat,quads,glutes,dumbbell,reps,1,5,6,8,,120,8,fentes_bulgares.png,Back straight; turn the dumbbell 90° on the side of the leg on the bench.,legacy
+jump_lunge,Jump lunge,quads,glutes;calves,bodyweight,time,0,6,,,45,30,0,fentes_sautées.png,"Stay explosive and braced, head up.",legacy
+bench_wrist_curl,Bench wrist curl,forearms,,dumbbell,reps,0,4,15,20,,60,6,flexions_poignets_sur_banc.png,"No jerking. Cracking wrists are fine, pain is not.",legacy
+spider_plank,Spider plank,abs,shoulders,bodyweight,time,0,6,,,45,30,0,gainage_araignée.png,Hands as far from the feet as possible. Too easy? Lift one hand or one foot.,legacy
+side_plank,Side plank,obliques,abs,bodyweight,time,1,1,,,60,30,0,gainage_latéral_droit.png,"Don't push with your arm, focus on the core. Harder: lift the top leg.",legacy (left + right merged)
+seated_hammer_curl,Seated hammer curl,biceps,forearms,dumbbell,reps,0,4,8,10,,90,11,hammer_curl_assis.png,Slow movement. Don't rest your elbow on your thigh. Don't go all the way down.,legacy
+standing_hammer_curl,Standing hammer curl,biceps,forearms,dumbbell,reps,0,4,8,10,,90,11,hammer_curls_debout.png,"Keep your back straight, don't fully lock the arms, don't swing with shoulders or back.",legacy
+straight_leg_hold,Straight-leg hold,abs,,bodyweight,time,0,1,,,15,0,0,jambes_tendues.png,"Hands under the glutes if needed, eyes on the ceiling, heels off the floor. Variations: flutter kicks, scissors, small circles, knee tucks, alternating legs.",legacy (6 variants merged)
+jefferson_curl,Jefferson curl,lower_back,hamstrings,barbell,reps,0,4,8,10,,90,25,jefferson_curl.png,"Potentially dangerous: go slow, perfect form, keep the load light.",legacy
+leg_curl,Leg curl,hamstrings,,machine,reps,0,5,6,8,,120,23,leg_curl.png,"Explosive up, controlled down. Letting the stack bounce is OK if the descent stays controlled.",legacy
+leg_extension,Leg extension,quads,,machine,reps,0,5,6,8,,120,35,leg_extension.png,"Explosive up, controlled down. Letting the stack bounce is OK if the descent stays controlled.",legacy
+barbell_calf_raise,Barbell calf raise,calves,,barbell,reps,0,4,15,20,,60,32,mollets_barre.png,"Explosive up, controlled down, eyes forward.",legacy
+high_knees,High knees,cardio,quads,bodyweight,time,0,6,,,45,30,0,montée_de_genoux.png,Very fast; drive with the arms; stay on your toes.,legacy
+mountain_climbers,Mountain climbers,cardio,abs,bodyweight,time,0,6,,,45,30,0,mountain_climbers.png,"Very fast, stay braced, heels off the floor.",legacy
+reverse_dumbbell_fly,Bent-over reverse dumbbell fly,shoulders,traps,dumbbell,reps,0,4,15,20,,60,3,oiseau.png,"Elbows can bend slightly; spine straight, head up; not aggressive.","legacy (""oiseau"")"
+dumbbell_shoulder_press,Dumbbell shoulder press,shoulders,triceps,dumbbell,reps,0,4,8,10,,90,8,overhead_shoulder.png,Stay very upright; cracking shoulders are fine without pain; bring the elbows slightly forward.,legacy
+heel_touches,Heel touches (penguin),obliques,abs,bodyweight,time,0,6,,,60,30,0,pingouin.png,Focus on the core; no momentum; keep the shoulders off the floor.,"legacy (""pingouin"")"
+plank_up_down,Plank up-down,abs,shoulders;triceps,bodyweight,time,0,6,,,60,30,0,planche_up_down.png,"Stay braced, limit hip sway, don't drop onto your arms.",legacy
+plank,Plank,abs,,bodyweight,time,0,4,,,120,30,0,planche.png,"Braced, back straight at a constant height, head neutral. Harder: lift one leg.",legacy
+push_up,Push-up,chest,triceps;shoulders,bodyweight,reps,0,2,25,30,,30,0,pompes.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+archer_push_up,Archer push-up,chest,triceps,bodyweight,reps,0,2,8,10,,30,0,pompes_archer.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+decline_push_up,Decline push-up,chest,shoulders;triceps,bodyweight,reps,0,2,15,20,,30,0,pompes_déclinées.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+diamond_push_up,Diamond push-up,triceps,chest,bodyweight,reps,0,2,8,10,,30,0,pompes_diamand.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+wide_push_up,Wide push-up,chest,shoulders,bodyweight,reps,0,2,20,25,,30,0,pompes_écartées.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+shoulder_tap_push_up,Shoulder-tap push-up,chest,abs;shoulders,bodyweight,reps,0,2,15,20,,30,0,pompes_mains_épaules.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+close_grip_push_up,Close-grip push-up,triceps,chest,bodyweight,reps,0,2,20,25,,30,0,pompes_militaires.png,Elbows tucked. Cracking elbows are fine without pain. Quality over quantity.,"legacy (""pompes militaires"")"
+pike_push_up,Pike push-up,shoulders,triceps,bodyweight,reps,0,2,12,15,,30,0,pompes_pike.png,Cracking elbows are fine without pain. Quality over quantity.,legacy
+spiderman_push_up,Spiderman push-up,chest,obliques,bodyweight,reps,0,2,15,20,,30,0,,Cracking elbows are fine without pain. Quality over quantity.,legacy (no image)
+dumbbell_pullover,Dumbbell pullover,lats,chest,dumbbell,reps,0,5,6,8,,120,20,pullover.png,Arms semi-straight; an arched back is fine; eyes on the ceiling.,legacy
+preacher_curl,Preacher curl (straight bar),biceps,,barbell,reps,0,5,6,8,,120,28,pupitre_barre_droite.png,"Don't go all the way up, only while there is tension; focus on the biceps.",legacy
+ez_bar_preacher_curl,Preacher curl (EZ bar),biceps,,ez_bar,reps,0,5,6,8,,120,27,,"Don't go all the way up, only while there is tension; focus on the biceps.",legacy (no image)
+hammer_preacher_curl,Hammer-grip preacher curl,biceps,forearms,barbell,reps,0,5,6,8,,120,28,pupitre_prise_marteau.png,"Don't go all the way up, only while there is tension; focus on the biceps.",legacy
+ab_rower,Ab rower,abs,,bodyweight,reps,0,6,25,30,,30,0,rameur.png,"Back straight, eyes forward; feet and shoulders never touch the floor.","legacy (""rameur"")"
+weighted_ab_rower,Weighted ab rower,abs,,plate,reps,0,6,15,20,,30,10,rameur_lesté.png,"Back straight, eyes forward; feet and shoulders never touch the floor.",legacy
+ab_wheel_rollout,Ab wheel rollout,abs,lats,ab_wheel,reps,0,6,6,6,,30,0,roue.png,Mind your lower back; slow; hold about 5 s fully extended.,legacy
+barbell_row,Barbell row,lats,biceps;traps,barbell,reps,0,5,6,8,,120,35,rowing.png,"Back and spine straight, no jerking, don't go all the way down.",legacy
+one_arm_dumbbell_row,One-arm dumbbell row,lats,biceps,dumbbell,reps,1,4,8,10,,90,20,rowing_haltère.png,"Back and spine straight, no jerking, don't go all the way down.",legacy
+neutral_grip_row,Neutral-grip row,lats,biceps,cable,reps,0,5,6,8,,120,43,rowing_prise_marteau.png,"Back and spine straight, no jerking, don't go all the way down.",legacy (equipment to confirm)
+russian_twist,Russian twist,obliques,abs,bodyweight,reps,0,6,25,30,,30,0,russian_twist.png,"Focus on the core, not too fast, feet off the floor.",legacy
+weighted_russian_twist,Weighted Russian twist,obliques,abs,plate,reps,0,6,15,20,,30,10,russian_twist_lesté.png,"Focus on the core, not too fast, feet off the floor.",legacy
+deadlift,Deadlift,hamstrings,glutes;lower_back;traps,barbell,reps,0,5,6,8,,120,45,soulevé_de_terre.png,"Back straight, bar close to the shins, don't rest it on the floor, sync knees and back.",legacy
+back_squat,Back squat,quads,glutes,barbell,reps,0,5,6,8,,120,32,squats.png,"Back straight, hips back, feet, knees and bar in line.",legacy
+sumo_squat,Sumo squat,quads,glutes;adductors,barbell,reps,0,5,6,8,,120,32,squats_écartés.png,"Back straight, hips back, feet, knees and bar in line.",legacy
+jump_squat,Jump squat,quads,glutes;calves,bodyweight,time,0,6,,,45,30,0,squats_sautés.png,"Explosive up, controlled down, stay on your toes.",legacy
+superman,Superman,lower_back,glutes,bodyweight,time,0,6,,,15,30,0,superman.png,"Eyes forward, careful with the lower back and neck.",legacy
+quadruped_kickback,Quadruped kickback,glutes,,bodyweight,time,1,6,,,120,30,0,swimming_4_pattes.png,"Eyes on the floor, lift the leg high; add a band for more resistance.","legacy (""swimming 4 pattes"")"
+butt_kicks,Butt kicks,cardio,hamstrings,bodyweight,time,0,6,,,45,30,0,talons-fesses.png,Very fast; drive with the arms; stay on your toes.,legacy
+lat_pulldown,Lat pulldown,lats,biceps,machine,reps,0,5,6,8,,120,35,tirage_vertical.png,"Back straight, leaning slightly back; pull to the chest explosively, control the way up.",legacy
+underhand_lat_pulldown,Underhand lat pulldown,lats,biceps,machine,reps,0,5,6,8,,120,40,tirage_vertical_supination.png,"Back straight, leaning slightly back; pull to the abs explosively, arms close to the body.",legacy
+toe_touch_crunch,Toe-touch crunch,abs,,bodyweight,reps,0,6,10,12,,30,0,toe-touch.png,Not reaching the feet is fine; shoulders off the floor; focus on the abs.,legacy
+barbell_upright_row,Barbell upright row,traps,shoulders,barbell,reps,0,5,6,8,,120,23,trapèzes_à_la_barre.png,"Back straight, no momentum, elbows above the bar, control the descent.","legacy (""trapèzes à la barre"")"
+bench_dips,Bench dips,triceps,,bench,reps,0,6,20,25,,30,0,triceps.png,"Back straight, arms close to the body, eyes forward, hips stay on the same vertical line.","legacy (""triceps"")"
+v_sit,V-sit,abs,,bodyweight,time,0,6,,,30,30,0,V-sit.png,Hold the V as much as possible; balance with your arms without using them for support.,legacy
+band_woodchopper,Band woodchopper,obliques,abs,band,reps,1,6,12,15,,30,0,woodchopper_élastique.png,Slow; you can lean on a wall; don't recruit other muscles.,legacy
+seated_overhead_barbell_triceps_extension,Seated overhead barbell triceps extension,triceps,,barbell,reps,0,4,8,10,,90,20,,"Stay braced, elbows pointing up, control the stretch.",PPL draft
+barbell_overhead_press,Barbell overhead press,shoulders,triceps,barbell,reps,0,4,8,10,,90,30,,"Glutes and abs tight, bar path close to the face, lock out overhead.",PPL draft
+skull_crusher,Skull crusher,triceps,,ez_bar,reps,0,4,8,10,,90,20,,"Elbows fixed and pointing up, lower to the forehead under control.",PPL draft
+dumbbell_kickback,Dumbbell triceps kickback,triceps,,dumbbell,reps,1,3,8,10,,60,6,,Upper arm parallel to the floor and still; squeeze at full extension.,PPL draft
+lateral_raise,Dumbbell lateral raise,shoulders,,dumbbell,reps,0,3,8,12,,60,6,,"Slight elbow bend, lead with the elbows, no swinging.",PPL draft
+l_sit,L-sit,abs,triceps,bodyweight,time,0,2,,,20,60,0,,"Shoulders down, legs straight and level.",PPL draft
+concentration_curl,Concentration curl,biceps,,dumbbell,reps,1,3,8,10,,60,10,,"Elbow against the inner thigh, slow negative.",PPL draft
+pull_up,Pull-up,lats,biceps,pull_up_bar,reps,0,2,,,,90,0,,"Full hang to chin over the bar, no kipping.",PPL draft
+archer_pull_up,Archer pull-up,lats,biceps,pull_up_bar,reps,0,2,,,,90,0,,"Pull towards one hand, the other arm stays straight.",PPL draft
+barbell_shrug,Barbell shrug,traps,,barbell,reps,0,3,8,12,,60,40,,"Straight up, short pause at the top, no rolling.",PPL draft
+renegade_row,Renegade row,lats,abs,dumbbell,reps,1,3,8,10,,60,10,,"Plank position, hips square, row one dumbbell at a time.",PPL draft
+pistol_squat,Pistol squat,quads,glutes,bodyweight,reps,1,2,,,,90,0,,"Heel down, free leg straight in front, control the descent.",PPL draft
+barbell_hip_thrust,Barbell hip thrust,glutes,hamstrings,barbell,reps,0,4,8,10,,90,40,,"Chin tucked, full hip extension, squeeze the glutes at the top.",PPL draft
+dumbbell_archer_squat,Dumbbell archer squat,quads,glutes;adductors,dumbbell,reps,1,3,8,8,,60,8,,"Wide stance, shift onto one leg, the other stays straight.",PPL draft
