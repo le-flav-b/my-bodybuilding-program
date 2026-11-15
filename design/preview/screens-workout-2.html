@@ -13,7 +13,7 @@
   <div class="shot"><div class="cap">Workout list view (exercise menu open)</div>
   <div class="phone" data-shot-suffix="workout-list_default">
     <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
-    <div class="p-head"><button class="iconbtn"><span class="i">arrow_back</span></button><div class="mid"><div class="t">Push A · exercises</div><div class="s">18:22 · 2 / 6 done</div></div><button class="iconbtn"><span class="i">pause</span></button></div>
+    <div class="p-head"><button data-go="player_resting" class="iconbtn"><span class="i">arrow_back</span></button><div class="mid"><div class="t">Push A · exercises</div><div class="s">18:22 · 2 / 6 done</div></div><button class="iconbtn"><span class="i">pause</span></button></div>
     <div class="content" style="padding-top:4px;position:relative">
       <div class="ex-row"><div class="status done"><span class="i s18">check</span></div><div class="well" style="width:48px;height:48px"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="plan">4 / 4 sets</div></div><span class="i handle">drag_indicator</span></div>
       <div class="ex-row"><div class="status done"><span class="i s18">check</span></div><div class="well" style="width:48px;height:48px"><img src="assets/img/incline_dumbbell_press.png" alt=""></div><div class="body"><div class="name">Incline dumbbell press</div><div class="plan">3 / 3 sets</div></div><span class="i handle">drag_indicator</span></div>
@@ -24,14 +24,14 @@
       <button class="btn text" style="margin-top:4px"><span class="i">add</span>Add exercise</button>
       <div class="menu" style="position:absolute;right:16px;top:206px;width:210px">
         <div class="it"><span class="i">play_arrow</span>Go to exercise</div>
-        <div class="it"><span class="i">swap_horiz</span>Swap</div>
+        <div data-go="workout-list_swap" class="it"><span class="i">swap_horiz</span>Swap</div>
         <div class="it"><span class="i">block</span>Skip</div>
         <div class="it"><span class="i">straighten</span>Change unit</div>
         <div class="sep"></div>
         <div class="it" style="color:var(--cerror)"><span class="i" style="color:var(--cerror)">delete</span>Remove</div>
       </div>
     </div>
-    <div class="actionbar"><button class="btn big filled block"><span class="i">flag</span>Finish workout</button></div>
+    <div class="actionbar"><button data-go="summary_update-prompt" class="btn big filled block"><span class="i">flag</span>Finish workout</button></div>
     <div class="gesturebar"></div>
   </div></div>
 
@@ -40,7 +40,7 @@
   <div class="phone" data-shot-suffix="workout-list_swap">
     <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
     <div class="p-head"><button class="iconbtn"><span class="i">arrow_back</span></button><div class="mid"><div class="t">Push A · exercises</div><div class="s">18:22 · 2 / 6 done</div></div><button class="iconbtn"><span class="i">pause</span></button></div>
-    <div class="scrim-over"></div>
+    <div data-go="workout-list_default" class="scrim-over"></div>
     <div class="bottom sheet" style="height:820px">
       <div class="grab"></div>
       <div class="hrow" style="justify-content:space-between;margin-bottom:4px"><h2 style="margin:0">Swap exercise</h2><button class="btn text"><span class="i">add</span>New</button></div>
@@ -49,7 +49,7 @@
       <div class="chips" style="margin:12px 0 4px;flex-wrap:nowrap;overflow:hidden">
         <span class="chip on"><span class="i">check</span>Shoulders</span><span class="chip">Chest</span><span class="chip">Triceps</span><span class="chip">Back</span><span class="chip">Legs</span>
       </div>
-      <div class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/overhead_press.png" alt=""></div><div class="body"><div class="name">Seated dumbbell press</div><div class="last" style="font-size:14px;line-height:20px">Shoulders · Triceps</div></div></div>
+      <div data-go="workout-list_default" class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/overhead_press.png" alt=""></div><div class="body"><div class="name">Seated dumbbell press</div><div class="last" style="font-size:14px;line-height:20px">Shoulders · Triceps</div></div></div>
       <div class="ex-row"><div class="well ph" data-muscle="Shoulders" style="width:56px;height:56px"><img src="assets/img/placeholder_chest.png" alt=""></div><div class="body"><div class="name">Machine shoulder press</div><div class="last" style="font-size:14px;line-height:20px">Shoulders · Triceps</div></div></div>
       <div class="ex-row"><div class="well ph" data-muscle="Shoulders" style="width:56px;height:56px"><img src="assets/img/placeholder_chest.png" alt=""></div><div class="body"><div class="name">Lateral raise</div><div class="last" style="font-size:14px;line-height:20px">Shoulders</div></div></div>
       <div class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/barbell_row.png" alt=""></div><div class="body"><div class="name">Upright row</div><div class="last" style="font-size:14px;line-height:20px">Shoulders · Traps</div></div></div>
@@ -66,7 +66,7 @@
       <div class="v">42.5 kg × 10</div>
       <div class="s">Bench press · heaviest load</div>
       <div class="was">Previous: 40 kg (12 Oct)</div>
-      <button class="btn big filled" style="background:var(--ctrophy);color:#181B1E;min-width:220px">Nice!</button>
+      <button data-go="player_resting" class="btn big filled" style="background:var(--ctrophy);color:#181B1E;min-width:220px">Nice!</button>
       <div style="position:absolute;left:16px;right:16px;bottom:40px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border-radius:16px;padding:12px 16px;color:#EEEEEE;font:500 14px Inter">
         <span class="i" style="color:var(--cbrand)">timer</span><span style="flex:1">Rest running</span><b style="font-variant-numeric:tabular-nums;font-size:18px">1:24</b>
       </div>
@@ -84,7 +84,7 @@
       <div class="k">Paused</div>
       <div class="clock">18:22</div>
       <div class="s">Workout clock and rest timer are frozen.<br>Overhead press · set 2 of 3 next</div>
-      <button class="btn big filled" style="min-width:240px"><span class="i fill">play_arrow</span>Resume</button>
+      <button data-go="player_reps" class="btn big filled" style="min-width:240px"><span class="i fill">play_arrow</span>Resume</button>
       <div class="hrow" style="justify-content:center;margin-top:8px">
         <button class="btn text"><span class="i">flag</span>Finish</button>
         <button class="btn text danger">Discard</button>
@@ -108,7 +108,7 @@
           <li><span class="i">block</span>Skipped Triceps extension (kept in the program)</li>
           <li><span class="i">edit</span>Bench press: 40 → 42.5 kg</li>
         </ul>
-        <div class="acts"><button class="btn text">No, keep it</button><button class="btn filled">Update</button></div>
+        <div class="acts"><button data-go="summary_default" class="btn text">No, keep it</button><button data-go="summary_default" class="btn filled">Update</button></div>
       </div>
     </div>
   </div></div>
@@ -132,7 +132,7 @@
       <div class="textarea" style="margin-top:8px"><label>Workout note</label>Felt strong, shoulder OK.</div>
       <div class="info-line"><span class="i">skip_next</span>Next session: <b style="color:var(--con-surface)">Legs</b></div>
     </div>
-    <div class="actionbar"><button class="btn big filled block"><span class="i">check</span>Done</button></div>
+    <div class="actionbar"><button data-go="today_after-workout" class="btn big filled block"><span class="i">check</span>Done</button></div>
     <div class="gesturebar"></div>
   </div></div>
 </template>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prototype · My Bodybuilding Program</title>
+<style>
+  body { margin: 0; font: 14px/20px Inter, sans-serif; background: #2D3135; color: #EEEEEE; display: flex; gap: 32px; padding: 24px; min-height: 100vh; box-sizing: border-box; }
+  aside { width: 300px; flex: none; }
+  h1 { font: 700 20px Kameron, serif; color: #F68974; margin: 0 0 16px; }
+  h2 { font: 600 12px Inter; letter-spacing: .6px; text-transform: uppercase; color: #9aa0a6; margin: 20px 0 8px; }
+  a { color: #F68974; }
+  ol { margin: 0; padding-left: 20px; }
+  li { margin: 2px 0; }
+  li.on a { color: #FFC854; font-weight: 600; }
+  button { font: 600 13px Inter; border: 1px solid #8C9196; background: transparent; color: #EEEEEE; border-radius: 999px; height: 32px; padding: 0 14px; cursor: pointer; }
+  button.on { background: #F68974; color: #181B1E; border-color: transparent; }
+  .stage { position: relative; width: 412px; height: 915px; flex: none; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+  .stage img { width: 412px; height: 915px; display: block; }
+  .hot { position: absolute; display: block; border-radius: 8px; }
+  body.hints .hot { background: rgba(255, 200, 84, .28); outline: 2px solid #FFC854; }
+  .cap { margin-top: 10px; color: #9aa0a6; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>My Bodybuilding Program</h1>
+  <div>
+    <button id="light">Light</button> <button id="dark">Dark</button>
+    <button id="hints">Show hotspots</button>
+  </div>
+  <h2>Flows</h2>
+  <ol id="flows"></ol>
+  <h2>All screens</h2>
+  <ol id="all"></ol>
+  <p class="cap">Tap the highlighted areas to move through the flow. Screens are the approved PNGs in <code>design/screens/</code>.</p>
+</aside>
+<div>
+  <div class="stage" id="stage"></div>
+  <div class="cap" id="cap"></div>
+</div>
+<script src="proto.js"></script>
+<script>
+  const FLOWS = [
+    ['Main: Today → workout → summary → Today', 'today_normal'],
+    ['Pause during a workout', 'player_reps'],
+    ['Progress → Exercise progress', 'progress_calendar'],
+    ['Profile → Settings → Load units', 'profile_default'],
+    ['Program → catalogue → exercise', 'program_default'],
+    ['First launch (empty program)', 'today_empty'],
+  ];
+  let theme = localStorage.getItem('proto-theme') || 'light';
+  const stage = document.getElementById('stage');
+  function show() {
+    const id = location.hash.slice(1) || 'today_normal';
+    const s = PROTO[id];
+    if (!s) return;
+    stage.innerHTML = `<img src="../screens/${id}_${theme}.png" alt="${s.caption}">` +
+      s.hotspots.map((h) => `<a class="hot" href="#${h.go}" title="→ ${PROTO[h.go].caption}" style="left:${h.x}px;top:${h.y}px;width:${h.w}px;height:${h.h}px"></a>`).join('');
+    document.getElementById('cap').textContent = `${s.caption} · ${id}`;
+    document.querySelectorAll('#all li').forEach((li) => li.classList.toggle('on', li.dataset.id === id));
+    document.getElementById('light').classList.toggle('on', theme === 'light');
+    document.getElementById('dark').classList.toggle('on', theme === 'dark');
+  }
+  document.getElementById('flows').innerHTML = FLOWS.map(([t, id]) => `<li><a href="#${id}">${t}</a></li>`).join('');
+  document.getElementById('all').innerHTML = Object.entries(PROTO).map(([id, s]) => `<li data-id="${id}"><a href="#${id}">${s.caption}</a></li>`).join('');
+  document.getElementById('light').onclick = () => { theme = 'light'; localStorage.setItem('proto-theme', theme); show(); };
+  document.getElementById('dark').onclick = () => { theme = 'dark'; localStorage.setItem('proto-theme', theme); show(); };
+  document.getElementById('hints').onclick = (e) => { document.body.classList.toggle('hints'); e.target.classList.toggle('on'); };
+  window.addEventListener('hashchange', show);
+  show();
+</script>
+</body>
+</html>
