@@ -9,9 +9,9 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 ## Session plan
 
 1. **Specifications**: done.
-2. **Design** ← *next*: design every screen as an HTML preview approved in chat, then write the approved design to Figma.
-3. **Catalogue seed** (data task, separate): produce the seed JSON and images in the format defined in Notion > Technical.
-4. **App**: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and Figma.
+2. **Design**: done (see "Design session outcome" below).
+3. **Catalogue seed** ← *next* (data task, separate): produce the seed JSON and images in the format defined in Notion > Technical.
+4. **App**: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma).
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -114,10 +114,27 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 | `some_fonts/` | Cantarell Bold, Inter Medium, Kameron Bold, Source Sans Pro Regular (only Kameron + Inter kept) |
 | `some_previous_app_assets/` | Old Android app leftovers: `drawable*/` and `values/` (colours, themes, strings) |
 
+## Design session outcome (2026-11-15)
+
+**Where it is:** `design/README.md` (foundations, every component and screen spec), `design/tokens.json`, `design/screens/*.png` (32 screens × light/dark + 5 sheets), `design/preview/` (HTML source, `index.html`, clickable `prototype.html`). App sessions read only this folder.
+
+**Decisions made while designing** (all written into Notion first):
+- **Colours:** white on coral `#F55E42` fails WCAG AA, so coral is the *brand* colour only. Light-theme `primary` is `#C23E27` with white text, dark-theme `primary` is `#F68974` with dark text. Yellow is a fill only (records); the PR text colour on light is `#8A5A00`.
+- **Icons:** Material Symbols Rounded → Flutter `Icons.*_rounded` (fallbacks listed in the README; no new dependency).
+- **Images:** catalogue illustrations always sit on a white rounded "image well" (also in dark mode). The no-image placeholder is the old muscle-region photo for the primary muscle.
+- **Pause (added at the user's request, it was missing from the spec):** pause button in the player header. It freezes the workout clock and any timer; paused time is excluded from the duration; the notification shows "Paused"; the 12 h auto-finish counts from the last action. Written in Notion > Features > Workout and Screens > Workout player. **Coding sessions: include it in M3.**
+- **Timed sets:** at 0 the set is logged automatically; "Log" records a time without the timer.
+- **Multi-unit chart:** legend chips show/hide units; the first two visible units own the left and right axes, others are drawn without labels; lines only join points of the same unit.
+- **Smaller additions:** trophy overlay auto-closes after 4 s; the swap picker opens on the current exercise's primary muscle; Today has "Up next" (in progress) and "last workout" cards plus a pick-session sheet; the update prompt lists changes and keeps skipped exercises in the program; the summary shows the next session; Progress is 3 tabs (Calendar · Exercises · History) with search, PR badges and sparklines; the session editor expands exercise cards in place; muscle chips cycle primary → secondary → off; units/muscles show usage counts; weekly target is a − / + stepper.
+
+**Figma (Starter plan):** the MCP call limit was reached during the write, and `use_figma` counts against it too, not only read tools. Done: 3 pages, variables (`light/*` + `dark/*` groups because Starter allows only 1 mode), text styles, core components, 64 screen frames with prototype links and flows. **Not done:** the screen/sheet images are uploaded but not attached to their frames. `design/figma.md` lists node IDs and image hashes for a 2-call fix when quota returns. Not blocking: nobody reads Figma for the app.
+
+**Environment:** this session moved to the `my-bodybuilding-program` cloud environment and `mcp.figma.com` was added to its allowed hosts (needed for Figma image upload).
+
 ## Status
 
 - [x] Repo started, legacy assets imported (master session)
 - [x] Specifications: Notion spec (4 pages + Development database), `README.md`, `CLAUDE.md` (specs session, 2026-11-15)
-- [ ] Design
+- [x] Design: approved screen by screen, saved in `design/`; Figma partly mirrored (design session, 2026-11-15)
 - [ ] Catalogue seed (data task)
 - [ ] App (M0–M6 → v1.0)

@@ -8,6 +8,7 @@ Approved design (design session, 2026-11-15). **This folder is what app sessions
 | HTML source of every sheet and screen, light + dark | [`preview/index.html`](preview/index.html) |
 | Clickable prototype (all flows) | [`preview/prototype.html`](preview/prototype.html) |
 | Screenshots `<screen>_<state>_<theme>.png` + component sheets | [`screens/`](screens/) |
+| What is in Figma and what is left there | [`figma.md`](figma.md) |
 
 Behaviour is specified in Notion (Features, Screens & Navigation). This file covers **visuals and layout**: what each screen is made of, sizes, states and interactions. Where a screen detail added during the design changed the spec, Notion was updated first.
 
