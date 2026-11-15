@@ -370,3 +370,45 @@ body { margin: 0; font-family: Inter, sans-serif; -webkit-font-smoothing: antial
 .datehead { font: 600 12px/16px Inter; letter-spacing: .6px; text-transform: uppercase; color: var(--con-surface-variant); }
 .empty img.art { background: var(--cimage-well); border-radius: 50%; padding: 24px; box-shadow: inset 0 0 0 1px var(--coutline-variant); }
 [data-theme="light"] .empty img.art { background: var(--csurface-container-low); }
+
+/* ---------- Workout player ---------- */
+.p-head { height: 56px; flex: none; display: flex; align-items: center; gap: 4px; padding: 0 4px; }
+.p-head .mid { flex: 1; text-align: center; min-width: 0; }
+.p-head .mid .t { font: 600 16px/22px Inter; }
+.p-head .mid .s { font: 500 13px/18px Inter; color: var(--con-surface-variant); font-variant-numeric: tabular-nums; }
+.p-prog { display: flex; gap: 4px; padding: 0 16px; margin: 2px 0 12px; }
+.p-prog i { flex: 1; height: 4px; border-radius: 2px; background: var(--csurface-container-highest); }
+.p-prog i.done { background: var(--csuccess); }
+.p-prog i.now { background: var(--cprimary); }
+.p-prog i.skip { background: var(--coutline-variant); }
+.p-ex { display: flex; gap: 12px; align-items: flex-start; }
+.p-ex .well { width: 96px; height: 96px; }
+.p-ex .body { flex: 1; min-width: 0; }
+.p-ex .k { font: 600 12px/16px Inter; letter-spacing: .6px; text-transform: uppercase; color: var(--cprimary); }
+.p-ex h2 { margin: 0; font: 700 24px/30px Inter; letter-spacing: -.25px; }
+.p-ex .mus { font: 400 13px/18px Inter; color: var(--con-surface-variant); }
+.p-ex .acts { display: flex; margin: 2px -12px 0 -12px; }
+.p-ex .acts .btn { height: 36px; padding: 0 12px; font-size: 13px; }
+.note-chip { display: flex; align-items: center; gap: 8px; background: var(--csecondary-container); color: var(--con-secondary-container); border-radius: var(--r-md);
+  padding: 8px 12px; font: 500 14px/20px Inter; }
+.note-chip .i { font-size: 18px; }
+.p-foot { flex: none; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--csurface-container-low); border-top: 1px solid var(--coutline-variant); }
+.p-foot .well { width: 40px; height: 40px; border-radius: var(--r-sm); }
+.p-foot .body { flex: 1; min-width: 0; }
+.p-foot .k { font: 600 11px/16px Inter; letter-spacing: .5px; text-transform: uppercase; color: var(--con-surface-variant); }
+.p-foot .t { font: 600 14px/20px Inter; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.logged { display: flex; align-items: center; gap: 12px; background: var(--csurface-container-low); border-radius: var(--r-lg); padding: 8px 8px 8px 16px; }
+.logged .body { flex: 1; }
+.logged .t { font: 600 16px/24px Inter; font-variant-numeric: tabular-nums; }
+.logged .s { font: 400 13px/18px Inter; color: var(--con-surface-variant); }
+.mini-sets { display: flex; gap: 8px; }
+.mini-sets > span { flex: 1; height: 40px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; gap: 4px; font: 600 14px Inter; font-variant-numeric: tabular-nums;
+  background: var(--csurface-container-low); color: var(--con-surface-variant); }
+.mini-sets > span.done { color: var(--csuccess); }
+.mini-sets > span.now { background: var(--cprimary-container); color: var(--con-primary-container); }
+.mini-sets .i { font-size: 18px; }
+
+/* bottom action bar */
+.actionbar { flex: none; padding: 12px 16px; background: var(--csurface); border-top: 1px solid var(--coutline-variant); }
+.info-line { display: flex; gap: 8px; align-items: center; font: 400 13px/18px Inter; color: var(--con-surface-variant); background: var(--csurface-container-low); border-radius: var(--r-md); padding: 8px 12px; }
+.info-line .i { font-size: 18px; }
