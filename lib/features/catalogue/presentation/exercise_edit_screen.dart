@@ -10,6 +10,7 @@ import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/app/widgets/dialogs.dart';
 import 'package:my_bodybuilding_program/app/widgets/exercise_image.dart';
 import 'package:my_bodybuilding_program/core/utils/app_logger.dart';
+import 'package:my_bodybuilding_program/features/catalogue/data/catalogue_repository.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_controller.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
@@ -56,7 +57,9 @@ class _ExerciseEditScreenState extends ConsumerState<ExerciseEditScreen> {
   Future<void> _load() async {
     final id = widget.exerciseId;
     if (id != null) {
-      final exercise = ref.read(exerciseProvider(id));
+      final exercise = await ref
+          .read(catalogueRepositoryProvider)
+          .getExercise(id);
       final usage = await ref.read(catalogueControllerProvider).usageOf(id);
       if (!mounted) return;
       if (exercise != null) {
@@ -508,10 +511,12 @@ class _MuscleChoice extends StatelessWidget {
           child: Container(
             height: 32,
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            alignment: Alignment.center,
-            child: Text(
-              name,
-              style: context.text.labelLarge!.copyWith(color: foreground),
+            child: Center(
+              widthFactor: 1,
+              child: Text(
+                name,
+                style: context.text.labelLarge!.copyWith(color: foreground),
+              ),
             ),
           ),
         ),

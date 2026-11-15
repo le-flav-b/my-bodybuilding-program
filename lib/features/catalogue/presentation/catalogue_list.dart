@@ -103,13 +103,15 @@ class _CatalogueListState extends ConsumerState<CatalogueList> {
                 AppFilterChip(
                   label: muscle.name,
                   selected: _muscleIds.contains(muscle.id),
-                  onSelected: (v) => setState(
-                    () =>
-                        v
-                              ? _muscleIds = {..._muscleIds, muscle.id}
-                              : _muscleIds = {..._muscleIds}
-                          ..remove(muscle.id),
-                  ),
+                  onSelected: (selected) => setState(() {
+                    final next = {..._muscleIds};
+                    if (selected) {
+                      next.add(muscle.id);
+                    } else {
+                      next.remove(muscle.id);
+                    }
+                    _muscleIds = next;
+                  }),
                 ),
                 const SizedBox(width: AppSpacing.sm),
               ],

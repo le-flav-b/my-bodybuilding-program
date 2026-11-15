@@ -39,8 +39,10 @@ class BigButton extends StatelessWidget {
         fontSize: 18,
         height: 24 / 18,
       ),
-      backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
+      backgroundColor:
+          backgroundColor ?? (tonal ? context.colors.primaryContainer : null),
+      foregroundColor:
+          foregroundColor ?? (tonal ? context.colors.onPrimaryContainer : null),
       iconSize: 28,
     );
     final child = Text(label);

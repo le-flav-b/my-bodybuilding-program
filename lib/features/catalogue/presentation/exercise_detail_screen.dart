@@ -138,18 +138,20 @@ class _MuscleTag extends StatelessWidget {
     return Container(
       height: 28,
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: primary ? colors.primaryContainer : colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
-      child: Text(
-        name,
-        style: TextStyle(
-          fontSize: 13,
-          height: 1,
-          fontWeight: primary ? FontWeight.w600 : FontWeight.w500,
-          color: primary ? colors.onPrimaryContainer : colors.onSurface,
+      child: Center(
+        widthFactor: 1,
+        child: Text(
+          name,
+          style: TextStyle(
+            fontSize: 13,
+            height: 1,
+            fontWeight: primary ? FontWeight.w600 : FontWeight.w500,
+            color: primary ? colors.onPrimaryContainer : colors.onSurface,
+          ),
         ),
       ),
     );

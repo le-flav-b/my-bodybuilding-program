@@ -3,6 +3,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:my_bodybuilding_program/app/router.dart';
 import 'package:my_bodybuilding_program/app/strings.dart';
+import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/app/widgets/common.dart';
 import 'package:my_bodybuilding_program/app/widgets/empty_state.dart';
 
@@ -14,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: AppSpacing.lg,
         title: const TabTitle(Strings.tabProfile),
         actions: [
           IconButton(

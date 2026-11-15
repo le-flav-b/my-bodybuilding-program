@@ -34,15 +34,23 @@ class SettingsScreen extends ConsumerWidget {
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.sm,
             ),
-            child: Row(
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: AppSpacing.lg,
+              runSpacing: AppSpacing.sm,
               children: [
-                Icon(
-                  Symbols.contrast_rounded,
-                  color: context.colors.onSurfaceVariant,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Symbols.contrast_rounded,
+                      color: context.colors.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: AppSpacing.lg),
+                    Text(Strings.theme, style: context.text.bodyLarge),
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.lg),
-                Text(Strings.theme, style: context.text.bodyLarge),
-                const Spacer(),
                 SegmentedButton<AppThemeMode>(
                   showSelectedIcon: false,
                   segments: const [

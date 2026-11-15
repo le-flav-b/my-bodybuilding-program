@@ -61,7 +61,7 @@ void main() {
     testWidgets('catalogue ($theme)', (tester) async {
       final (app, _) = await start(tester);
       await go(tester, app, Routes.exercises);
-      await tester.tap(find.widgetWithText(FilterChip, 'Chest'));
+      await tester.tap(find.widgetWithText(FilterChip, 'Chest').first);
       await app.settle(tester);
       await capture(tester, 'catalogue_default_$theme');
     });
@@ -94,7 +94,11 @@ void main() {
     testWidgets('exercise picker ($theme)', (tester) async {
       final (app, demo) = await start(tester);
       await go(tester, app, Routes.session(demo.legsId));
-      await tester.scrollUntilVisible(find.text(Strings.addExercise), 200);
+      await tester.scrollUntilVisible(
+        find.text(Strings.addExercise),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.text(Strings.addExercise));
       await app.settle(tester);
       await capture(tester, 'exercise-picker_default_$theme');

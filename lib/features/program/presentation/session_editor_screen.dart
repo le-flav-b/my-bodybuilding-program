@@ -227,6 +227,11 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
             ),
             sliver: SliverToBoxAdapter(
               child: FilledButton.tonalIcon(
+                style: AppTheme.tonal(context.colors).copyWith(
+                  minimumSize: const WidgetStatePropertyAll(
+                    Size.fromHeight(56),
+                  ),
+                ),
                 onPressed: _addExercise,
                 icon: const Icon(Symbols.add_rounded),
                 label: const Text(Strings.addExercise),
@@ -408,8 +413,8 @@ class _SetTable extends ConsumerWidget {
     _setAt(
       index,
       SetTarget(
-        reps: isReps ? result.value ?? set.reps : null,
-        seconds: isReps ? null : result.value ?? set.seconds,
+        reps: isReps && !result.isMax ? result.value : null,
+        seconds: !isReps && !result.isMax ? result.value : null,
         isMax: result.isMax,
         load: set.load,
         unitId: set.unitId,
@@ -566,7 +571,11 @@ class _SetTable extends ConsumerWidget {
             );
           }(),
         const SizedBox(height: 8),
-        Row(
+        // A row spread across the card; stacked when large text doesn't fit.
+        OverflowBar(
+          alignment: MainAxisAlignment.spaceBetween,
+          overflowAlignment: OverflowBarAlignment.center,
+          spacing: AppSpacing.sm,
           children: [
             TextButton.icon(
               onPressed: () => onChanged(
@@ -586,7 +595,6 @@ class _SetTable extends ConsumerWidget {
               icon: const Icon(Symbols.add_rounded),
               label: const Text(Strings.addSet),
             ),
-            const Spacer(),
             ActionChip(
               avatar: Icon(
                 Symbols.timer_rounded,
@@ -618,7 +626,6 @@ class _SetTable extends ConsumerWidget {
                 }
               },
             ),
-            const Spacer(),
             IconButton(
               tooltip: Strings.removeExercise,
               onPressed: onRemove,

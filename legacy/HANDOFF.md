@@ -141,8 +141,8 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - [ ] App (M0–M6 → v1.0)
   - [x] M0 Setup (v0.1.0)
   - [x] M1 Data layer (v0.2.0)
-  - [ ] M2 Catalogue & program ← *next*
-  - [ ] M3 Workout
+  - [x] M2 Catalogue & program (v0.3.0)
+  - [ ] M3 Workout ← *next*
   - [ ] M4 Progress
   - [ ] M5 Profile
   - [ ] M6 Release
@@ -151,11 +151,20 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0 Setup, M1 Data layer.
-- M0: the app launches with the 4 tabs (Today · Program · Progress · Profile) as empty states, in light and dark, themed from `design/tokens.json`. CI runs on PRs.
-- M1: the whole data layer, with no new screens. Drift database (14 tables, schema v1 + dump), DAOs, repositories for every feature, seed import at launch, and every domain rule as pure Dart with unit tests.
+**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program.
+- M0: 4-tab shell, theme from `design/tokens.json`, CI.
+- M1: Drift database, repositories, seed import, all domain rules with unit tests.
+- M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (also used for swap in M3: `showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session), session editor (cards expand to the set table; every change saved at once), Settings (Appearance + Library), Load units (+ unit editor dialog), Muscles.
 
-**Next step:** M2 Catalogue & program (catalogue list/detail/edit with photos, personal notes, Load units and Muscles settings screens, Program tab, session editor, exercise picker). Set its Notion row to In progress first. The repositories it needs already exist; M2 is presentation work plus image picking/storage (`core/images`).
+**Next step:** M3 Workout (Today normal / in progress, session preview, player, list view, logging, swap, rest timer + notifications, pause, resume prompt, summary, update-program prompt). Set its Notion row to In progress first. The workout repository and the rules (`WorkoutClock`, `PlanDiff`, `SwapRule`, `Records`, `LastTime`, `EstimatedDuration`) already exist. Still missing for M3: the session preview route (the play button on Program rows was left out until it exists: add it back in `program_screen.dart` `_SessionRow`), the real Today (it shows a placeholder once the program has sessions), notifications (`flutter_local_notifications`, `timezone`, Android permissions), wakelock. After M3: build a signed APK and send it to the owner (needs the keystore uploaded again in a new container).
+
+**UI building blocks (M2):** `lib/app/widgets/`: `ImageWell`, `ExerciseImageView` / `ExerciseThumb` (seed image, user photo or muscle placeholder), `Overline`, `InfoLine`, `PillBadge`, `TabTitle`, `SearchField`, `AppFilterChip`, `BigButton`, `EmptyState`, dialogs (`showConfirmDialog`, `showTextPrompt`, `showAppSnackBar`), value dialogs (`showGoalDialog` for reps/seconds/rest with optional "max", `showLoadDialog`). Tonal buttons use `AppTheme.tonal(colors)` (the M3 `FilledButton.tonal` would be yellow here). App bars: back-arrow screens use the theme's title spacing (title at 56 dp); tab screens set `titleSpacing: AppSpacing.lg`. Strings are all in `lib/app/strings.dart`.
+
+**Gotchas met in M2:**
+- Database watchers (`SyncedWrites.watching`) listen to drift's table-update notifications. Don't go back to a shared `customSelect(...).watch()`: drift caches watched queries by SQL, so watchers shared one stream (fixed in M2; regression test in `test/data/program_repository_test.dart`).
+- Widget tests: call `app.settle(tester)` after anything that writes; `tester.pump()` after `enterText` before tapping a button that depends on the text; use `ensureVisible` (not `scrollUntilVisible`) to reach widgets already built off-screen; scope `find.byType(Scrollable)` to the current screen (tabs behind it have scrollables too).
+- Screenshots (`tool/screenshots/`) turn on real shadows (`debugDisableShadows = false`); the default test mode draws a black outline instead. `test/helpers/demo_data.dart` builds the design's sample program (Pull A → Push A (next) → Legs, a "level" unit).
+- Avoid `cond ? a = x : b = y..remove(z)`: the cascade applies to the whole conditional (this was the muscle-filter bug).
 
 **Where the data layer is (M1):**
 - `lib/core/db/`: `tables/` (4 layers; every synced table mixes in `SyncedTable`: id, created_at, updated_at, deleted_at, dirty), `daos/` (`SyncedWrites` stamps the sync columns: always write through `insertSynced` / `patch` / `softDelete`), `app_database.dart` (schema v1; creates the built-in `kg` unit and the single program with fixed ids), `seed/seed_importer.dart`, `database_provider.dart`.
@@ -167,12 +176,6 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 **Changing the database:** edit the tables, bump `schemaVersion`, add the migration step, then run `dart run drift_dev make-migrations` (dumps `drift_schemas/`) and `dart run drift_dev schema generate drift_schemas/app_database test/core/db/migrations/generated/` followed by `dart format`. `test/core/db/app_database_test.dart` fails when the tables and the dump disagree. Write the data-model change in Notion > Data & Sync first.
 
 **Tests:** `test/domain` (pure rules), `test/core/db` (schema, built-ins, seed import with the real seed), `test/data` (repositories on an in-memory database, including the full flow start → log → finish → history/PRs/pointer), `test/app` (widget tests). Helpers: `test/helpers/test_env.dart` (`TestEnv`: in-memory database + every repository + a fake clock) and `test/helpers/test_app.dart` (`TestApp`: the whole app on an in-memory database; call `app.settle(tester)` after anything that writes to the database).
-
-**M2 work in progress (not merged): branch `claude/gallant-fermi-6mf2ei`.** Pushed as a WIP commit when the session was paused (2026-11-15). Notion row "M2 Catalogue & program" is In progress; the M2 decisions are already in Notion > Technical > Decisions.
-- Written and compiling (`flutter analyze` clean): shared widgets (`lib/app/widgets/`: image well + exercise thumbnails with muscle placeholders, search field, filter chips, dialogs, value dialogs), `lib/core/images/image_storage.dart` (private photo storage + picker), providers per feature (`*_providers.dart`), controllers (`catalogue_controller`, `settings_controller`, `program_controller`), screens: catalogue list, exercise detail, exercise edit/create, exercise picker sheet, Settings (Appearance + Library only; the rest is M5), Load units + unit editor dialog, Muscles, Program tab, session editor. Routes are in `lib/app/router.dart`.
-- **Bug found and fixed in this WIP (it is on `main` since M1):** `SyncedWrites.watching` used `customSelect('SELECT 1', readsFrom: …).watch()`. Drift caches watched queries by SQL text, so every watcher shared one stream and only the first listener's tables triggered reloads. It now listens to `tableUpdates(TableUpdateQuery.onAllTables(tables))`. Regression test: "several watchers follow their own tables at the same time" in `test/data/program_repository_test.dart`. **Not yet run after the fix: run `flutter test` first.**
-- Left to do for M2: (1) run `flutter test` and `flutter test tool/screenshots` (`tool/screenshots/m2_test.dart` renders every M2 screen with `test/helpers/demo_data.dart`); two screenshot scripts failed before the fix because the lists were stale (session editor, exercise picker), re-check them; (2) compare `build/screenshots/*.png` with `design/screens/*.png` and adjust; (3) widget tests: session editor (required by CLAUDE.md), plus catalogue, exercise edit, load units, muscles, program tab; (4) the session row's play button is left out until the session preview exists (M3); Today shows a placeholder once the program has sessions (real Today is M3); (5) bump `pubspec.yaml` to `0.3.0+3`, update this file, open the M2 PR, wait for CI, squash-merge, set the Notion row to Done, report.
-- Widget tests: `TestApp.settle(tester)` must be called after any database write so streams reload (see `test/helpers/test_app.dart`).
 
 **How the app session works (owner's instructions):**
 - One PR per milestone from the session's branch, CI green, squash-merge, then bring the branch back in line with `main`. Notion Development row: In progress → Done. Report in chat + push notification after each milestone.

@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
+import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/app/widgets/big_button.dart';
 import 'package:my_bodybuilding_program/app/widgets/empty_state.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_providers.dart';
@@ -18,6 +19,7 @@ class TodayScreen extends ConsumerWidget {
     final overview = ref.watch(programOverviewProvider).value;
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: AppSpacing.lg,
         title: Text(
           Strings.appName,
           style: AppTheme.logo.copyWith(color: context.appColors.brand),

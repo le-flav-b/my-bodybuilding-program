@@ -46,7 +46,10 @@ class ProgramScreen extends ConsumerWidget {
             .length;
 
     return Scaffold(
-      appBar: AppBar(title: const TabTitle(Strings.tabProgram)),
+      appBar: AppBar(
+        titleSpacing: AppSpacing.lg,
+        title: const TabTitle(Strings.tabProgram),
+      ),
       body: overview == null
           ? const SizedBox.shrink()
           : CustomScrollView(
