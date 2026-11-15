@@ -21,6 +21,12 @@ abstract final class AppTheme {
     );
   }
 
+  /// Style of a tonal button as designed (primary container).
+  static ButtonStyle tonal(ColorScheme colors) => FilledButton.styleFrom(
+    backgroundColor: colors.primaryContainer,
+    foregroundColor: colors.onPrimaryContainer,
+  );
+
   /// The big countdown (rest timer, timed sets).
   static final TextStyle timer = style('timer');
 
@@ -115,7 +121,9 @@ abstract final class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleSpacing: AppSpacing.lg,
+        // 4 dp padding + 48 dp button, then the title at 56 dp.
+        // Tab screens (no back button) set titleSpacing to 16 themselves.
+        titleSpacing: AppSpacing.xs,
         titleTextStyle: text.titleLarge,
       ),
       navigationBarTheme: NavigationBarThemeData(
@@ -150,6 +158,8 @@ abstract final class AppTheme {
           textStyle: buttonText,
         ),
       ),
+      // Note: FilledButton.tonal reads secondaryContainer (yellow here); the
+      // design's tonal buttons are primaryContainer: use AppTheme.tonal.
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: buttonSize,

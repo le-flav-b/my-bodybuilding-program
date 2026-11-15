@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_bodybuilding_program/features/program/domain/set_target.dart';
+import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 
 import '../helpers/test_env.dart';
 
@@ -145,6 +146,35 @@ void main() {
     overview = await env.program.getOverview();
     expect(overview.isEmpty, isTrue);
     expect(overview.nextSessionId, isNull);
+  });
+
+  test('several watchers follow their own tables at the same time', () async {
+    // Regression: watchers used to share one cached stream, so only the
+    // first one's tables triggered updates.
+    final sessions = <int>[];
+    final exercises = <int>[];
+    final units = <int>[];
+    final subs = [
+      env.settings.watchSettings().listen((_) {}),
+      env.program.watchOverview().listen(
+        (o) => sessions.add(o.sessions.length),
+      ),
+      env.catalogue.watchExercises().listen((e) => exercises.add(e.length)),
+      env.units.watchUnits().listen((u) => units.add(u.length)),
+    ];
+    await pumpEventQueue();
+    await env.program.createSession('Push');
+    await env.exercise('Fly');
+    await env.units.createUnit(
+      const LoadUnitDraft(name: 'level', step: 1, decimals: 0),
+    );
+    await pumpEventQueue();
+    for (final sub in subs) {
+      await sub.cancel();
+    }
+    expect(sessions.last, 1);
+    expect(exercises.last, 3);
+    expect(units.last, 2);
   });
 
   test('watchOverview emits when the plan changes', () async {

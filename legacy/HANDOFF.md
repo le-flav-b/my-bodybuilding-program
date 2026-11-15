@@ -141,8 +141,8 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - [ ] App (M0–M6 → v1.0)
   - [x] M0 Setup (v0.1.0)
   - [x] M1 Data layer (v0.2.0)
-  - [ ] M2 Catalogue & program ← *next*
-  - [ ] M3 Workout
+  - [x] M2 Catalogue & program (v0.3.0)
+  - [ ] M3 Workout ← *next*
   - [ ] M4 Progress
   - [ ] M5 Profile
   - [ ] M6 Release
@@ -151,11 +151,20 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0 Setup, M1 Data layer.
-- M0: the app launches with the 4 tabs (Today · Program · Progress · Profile) as empty states, in light and dark, themed from `design/tokens.json`. CI runs on PRs.
-- M1: the whole data layer, with no new screens. Drift database (14 tables, schema v1 + dump), DAOs, repositories for every feature, seed import at launch, and every domain rule as pure Dart with unit tests.
+**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program.
+- M0: 4-tab shell, theme from `design/tokens.json`, CI.
+- M1: Drift database, repositories, seed import, all domain rules with unit tests.
+- M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (also used for swap in M3: `showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session), session editor (cards expand to the set table; every change saved at once), Settings (Appearance + Library), Load units (+ unit editor dialog), Muscles.
 
-**Next step:** M2 Catalogue & program (catalogue list/detail/edit with photos, personal notes, Load units and Muscles settings screens, Program tab, session editor, exercise picker). Set its Notion row to In progress first. The repositories it needs already exist; M2 is presentation work plus image picking/storage (`core/images`).
+**Next step:** M3 Workout (Today normal / in progress, session preview, player, list view, logging, swap, rest timer + notifications, pause, resume prompt, summary, update-program prompt). Set its Notion row to In progress first. The workout repository and the rules (`WorkoutClock`, `PlanDiff`, `SwapRule`, `Records`, `LastTime`, `EstimatedDuration`) already exist. Still missing for M3: the session preview route (the play button on Program rows was left out until it exists: add it back in `program_screen.dart` `_SessionRow`), the real Today (it shows a placeholder once the program has sessions), notifications (`flutter_local_notifications`, `timezone`, Android permissions), wakelock. After M3: build a signed APK and send it to the owner (needs the keystore uploaded again in a new container).
+
+**UI building blocks (M2):** `lib/app/widgets/`: `ImageWell`, `ExerciseImageView` / `ExerciseThumb` (seed image, user photo or muscle placeholder), `Overline`, `InfoLine`, `PillBadge`, `TabTitle`, `SearchField`, `AppFilterChip`, `BigButton`, `EmptyState`, dialogs (`showConfirmDialog`, `showTextPrompt`, `showAppSnackBar`), value dialogs (`showGoalDialog` for reps/seconds/rest with optional "max", `showLoadDialog`). Tonal buttons use `AppTheme.tonal(colors)` (the M3 `FilledButton.tonal` would be yellow here). App bars: back-arrow screens use the theme's title spacing (title at 56 dp); tab screens set `titleSpacing: AppSpacing.lg`. Strings are all in `lib/app/strings.dart`.
+
+**Gotchas met in M2:**
+- Database watchers (`SyncedWrites.watching`) listen to drift's table-update notifications. Don't go back to a shared `customSelect(...).watch()`: drift caches watched queries by SQL, so watchers shared one stream (fixed in M2; regression test in `test/data/program_repository_test.dart`).
+- Widget tests: call `app.settle(tester)` after anything that writes; `tester.pump()` after `enterText` before tapping a button that depends on the text; use `ensureVisible` (not `scrollUntilVisible`) to reach widgets already built off-screen; scope `find.byType(Scrollable)` to the current screen (tabs behind it have scrollables too).
+- Screenshots (`tool/screenshots/`) turn on real shadows (`debugDisableShadows = false`); the default test mode draws a black outline instead. `test/helpers/demo_data.dart` builds the design's sample program (Pull A → Push A (next) → Legs, a "level" unit).
+- Avoid `cond ? a = x : b = y..remove(z)`: the cascade applies to the whole conditional (this was the muscle-filter bug).
 
 **Where the data layer is (M1):**
 - `lib/core/db/`: `tables/` (4 layers; every synced table mixes in `SyncedTable`: id, created_at, updated_at, deleted_at, dirty), `daos/` (`SyncedWrites` stamps the sync columns: always write through `insertSynced` / `patch` / `softDelete`), `app_database.dart` (schema v1; creates the built-in `kg` unit and the single program with fixed ids), `seed/seed_importer.dart`, `database_provider.dart`.

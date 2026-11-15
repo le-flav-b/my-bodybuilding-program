@@ -32,6 +32,9 @@ Future<void> loadAppFonts() async {
 
 /// Sizes the test view like the design's phone frame.
 void usePhoneFrame(WidgetTester tester) {
+  // Real elevation shadows (tests draw a black outline instead by default).
+  debugDisableShadows = false;
+  addTearDown(() => debugDisableShadows = true);
   tester.view.devicePixelRatio = _pixelRatio;
   tester.view.physicalSize = const Size(
     AppSizes.screenWidth * _pixelRatio,
