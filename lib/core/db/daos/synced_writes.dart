@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:drift/drift.dart';
 import 'package:my_bodybuilding_program/core/db/app_database.dart';
 import 'package:my_bodybuilding_program/core/db/tables/synced_table.dart';
@@ -53,14 +55,52 @@ mixin SyncedWrites on DatabaseAccessor<AppDatabase> {
     DateTime now,
   ) => softDeleteWhere(table, (t) => t.id.equals(id), now);
 
-  /// Emits once now and again whenever one of [tables] changes.
-  Stream<void> changes(
-    Iterable<ResultSetImplementation<dynamic, dynamic>> tables,
-  ) => customSelect('SELECT 1', readsFrom: tables.toSet()).watch();
-
-  /// Reloads [load] whenever one of [tables] changes.
+  /// Loads [load] once and again whenever one of [tables] changes.
+  ///
+  /// Built on the database's table-update notifications rather than on a
+  /// watched query: drift shares watched queries that have the same SQL, so
+  /// a generic "changed" query would only follow the tables of its first
+  /// listener. Reloads never overlap; a change during a reload triggers one
+  /// more reload when it ends.
   Stream<R> watching<R>(
     Iterable<ResultSetImplementation<dynamic, dynamic>> tables,
     Future<R> Function() load,
-  ) => changes(tables).asyncMap((_) => load());
+  ) {
+    late final StreamController<R> controller;
+    StreamSubscription<void>? updates;
+    var loading = false;
+    var stale = false;
+
+    Future<void> reload() async {
+      if (loading) {
+        stale = true;
+        return;
+      }
+      loading = true;
+      do {
+        stale = false;
+        try {
+          final value = await load();
+          if (!controller.isClosed) controller.add(value);
+        } on Object catch (error, stackTrace) {
+          if (!controller.isClosed) controller.addError(error, stackTrace);
+        }
+      } while (stale && !controller.isClosed);
+      loading = false;
+    }
+
+    controller = StreamController<R>(
+      onListen: () {
+        updates = attachedDatabase
+            .tableUpdates(TableUpdateQuery.onAllTables(tables))
+            .listen((_) => unawaited(reload()));
+        unawaited(reload());
+      },
+      onCancel: () async {
+        await updates?.cancel();
+        await controller.close();
+      },
+    );
+    return controller.stream;
+  }
 }
