@@ -1,0 +1,1135 @@
+{
+  "version": 1,
+  "muscles": [
+    {
+      "key": "chest",
+      "name": "Chest"
+    },
+    {
+      "key": "back",
+      "name": "Back"
+    },
+    {
+      "key": "shoulders",
+      "name": "Shoulders"
+    },
+    {
+      "key": "traps",
+      "name": "Traps"
+    },
+    {
+      "key": "biceps",
+      "name": "Biceps"
+    },
+    {
+      "key": "triceps",
+      "name": "Triceps"
+    },
+    {
+      "key": "forearms",
+      "name": "Forearms"
+    },
+    {
+      "key": "abs",
+      "name": "Abs"
+    },
+    {
+      "key": "lower_back",
+      "name": "Lower back"
+    },
+    {
+      "key": "glutes",
+      "name": "Glutes"
+    },
+    {
+      "key": "quads",
+      "name": "Quads"
+    },
+    {
+      "key": "hamstrings",
+      "name": "Hamstrings"
+    },
+    {
+      "key": "calves",
+      "name": "Calves"
+    }
+  ],
+  "exercises": [
+    {
+      "key": "barbell_bench_press",
+      "name": "Barbell bench press",
+      "description": "Feet planted, shoulder blades squeezed together, wrists straight over the elbows. Lower the bar to mid-chest and press it back up. A slight arch in the lower back is fine.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "image": "barbell_bench_press.webp"
+    },
+    {
+      "key": "dumbbell_bench_press",
+      "name": "Dumbbell bench press",
+      "description": "Feet planted, shoulder blades squeezed together, wrists straight. Lower the dumbbells to chest level and press them up until they almost touch.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "image": "dumbbell_bench_press.webp"
+    },
+    {
+      "key": "incline_barbell_bench_press",
+      "name": "Incline barbell bench press",
+      "description": "On a bench set to 30–45°, feet planted and shoulder blades squeezed together. Lower the bar to the upper chest and press it back up, wrists straight.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "image": "incline_barbell_bench_press.webp"
+    },
+    {
+      "key": "incline_dumbbell_bench_press",
+      "name": "Incline dumbbell bench press",
+      "description": "On a bench set to 30–45°, feet planted and shoulder blades squeezed together. Lower the dumbbells to the upper chest and press them back up, wrists straight.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "image": "incline_dumbbell_bench_press.webp"
+    },
+    {
+      "key": "machine_chest_press",
+      "name": "Machine chest press",
+      "description": "Adjust the seat so the handles are at mid-chest height. Press forward without locking your elbows, then return slowly while keeping your back against the pad.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "dumbbell_fly",
+      "name": "Dumbbell fly",
+      "description": "Keep a slight bend in the elbows and hold it throughout. Open your arms wide until you feel a stretch in the chest, then bring the dumbbells back together with your chest pushed out.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "image": "dumbbell_fly.webp"
+    },
+    {
+      "key": "cable_fly",
+      "name": "Cable fly",
+      "description": "Stand between the pulleys with a slight bend in the elbows. Bring the handles together in front of your chest in a wide arc, squeeze, then return slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "pec_deck",
+      "name": "Pec deck",
+      "description": "Sit with your back against the pad and your elbows slightly bent. Bring the handles together in front of your chest, squeeze, then open slowly without letting the weights touch.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "dip",
+      "name": "Dip",
+      "description": "Lower yourself until your shoulders are just below your elbows, then push back up. Keep your elbows from flaring out and your legs still. Leaning forward works the chest more.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "push_up",
+      "name": "Push-up",
+      "description": "Body straight from head to heels, hands slightly wider than your shoulders. Lower your chest to just above the floor and push back up. Clean form matters more than a high rep count.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "shoulders",
+        "abs"
+      ],
+      "image": "push_up.webp"
+    },
+    {
+      "key": "decline_push_up",
+      "name": "Decline push-up",
+      "description": "Feet on a bench, hands on the floor, body straight. Lower your chest toward the floor and push back up. Clean form matters more than a high rep count.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "image": "decline_push_up.webp"
+    },
+    {
+      "key": "dumbbell_pullover",
+      "name": "Dumbbell pullover",
+      "description": "Lie across a bench holding one dumbbell above your chest with your arms slightly bent. Lower it behind your head in an arc, eyes on the ceiling, then pull it back over your chest.",
+      "measure": "reps",
+      "primary_muscles": [
+        "chest"
+      ],
+      "secondary_muscles": [
+        "back",
+        "triceps"
+      ],
+      "image": "dumbbell_pullover.webp"
+    },
+    {
+      "key": "pull_up",
+      "name": "Pull-up",
+      "description": "Hang with an overhand grip slightly wider than your shoulders. Pull until your chin passes the bar, leading with the chest, then lower under control to full extension.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "forearms"
+      ],
+      "image": null
+    },
+    {
+      "key": "chin_up",
+      "name": "Chin-up",
+      "description": "Hang with an underhand grip at shoulder width. Pull until your chin passes the bar, then lower under control to full extension.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "forearms"
+      ],
+      "image": null
+    },
+    {
+      "key": "lat_pulldown",
+      "name": "Lat pulldown",
+      "description": "Sit tall, leaning back slightly. Pull the bar to your upper chest explosively, then let it rise under control. Focus on using your back.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps"
+      ],
+      "image": "lat_pulldown.webp"
+    },
+    {
+      "key": "seated_cable_row",
+      "name": "Seated cable row",
+      "description": "Sit tall with your knees slightly bent. Pull the handle to your stomach, squeezing your shoulder blades together, then extend your arms slowly without rounding your back.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "barbell_row",
+      "name": "Barbell row",
+      "description": "Hinge forward with your back flat and your knees slightly bent. Pull the bar to your lower ribs without jerking, and don't lower it all the way to the floor between reps.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "lower_back",
+        "shoulders"
+      ],
+      "image": "barbell_row.webp"
+    },
+    {
+      "key": "dumbbell_row",
+      "name": "Dumbbell row",
+      "description": "One knee and hand on a bench, back flat. Pull the dumbbell to your hip without jerking, and don't let it drop all the way down between reps.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "shoulders"
+      ],
+      "image": "dumbbell_row.webp"
+    },
+    {
+      "key": "t_bar_row",
+      "name": "T-bar row",
+      "description": "Straddle the bar and hinge forward with your back flat and knees slightly bent. Pull the handle to your chest, squeezing your shoulder blades together, then lower under control.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "lower_back",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "inverted_row",
+      "name": "Inverted row",
+      "description": "Hang under a bar set at waist height, body straight from head to heels. Pull your chest to the bar, squeezing your shoulder blades together, then lower under control.",
+      "measure": "reps",
+      "primary_muscles": [
+        "back"
+      ],
+      "secondary_muscles": [
+        "biceps",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "overhead_press",
+      "name": "Overhead press",
+      "description": "Stand with the bar at shoulder height, glutes and abs tight. Press it straight overhead until your arms are locked out, then lower it back to your shoulders without arching your lower back.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "traps"
+      ],
+      "image": null
+    },
+    {
+      "key": "dumbbell_shoulder_press",
+      "name": "Dumbbell shoulder press",
+      "description": "Sit very upright with your elbows slightly forward. Press the dumbbells overhead, then lower them to ear level. Cracking shoulders are fine as long as there is no pain.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "triceps"
+      ],
+      "image": "dumbbell_shoulder_press.webp"
+    },
+    {
+      "key": "machine_shoulder_press",
+      "name": "Machine shoulder press",
+      "description": "Adjust the seat so the handles are at shoulder height. Press overhead without locking your elbows, then lower slowly while keeping your back against the pad.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "triceps"
+      ],
+      "image": null
+    },
+    {
+      "key": "lateral_raise",
+      "name": "Lateral raise",
+      "description": "Stand with the dumbbells at your sides and your elbows slightly bent. Raise your arms out to shoulder height, then lower slowly. Don't swing.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "traps"
+      ],
+      "image": null
+    },
+    {
+      "key": "front_raise",
+      "name": "Front raise",
+      "description": "Stand with the dumbbells in front of your thighs. Raise them forward to shoulder height with your arms almost straight, then lower slowly. Don't swing.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "chest"
+      ],
+      "image": null
+    },
+    {
+      "key": "reverse_fly",
+      "name": "Reverse fly",
+      "description": "Bend forward with your spine straight and your head neutral. Raise the dumbbells out to the sides, elbows slightly bent. Keep the movement smooth, never jerky.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "back",
+        "traps"
+      ],
+      "image": "reverse_fly.webp"
+    },
+    {
+      "key": "face_pull",
+      "name": "Face pull",
+      "description": "Set the cable at face height with a rope handle. Pull the rope toward your face with your elbows high, spreading your hands apart, then return slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "back",
+        "traps"
+      ],
+      "image": null
+    },
+    {
+      "key": "upright_row",
+      "name": "Upright row",
+      "description": "Back straight, hands about shoulder-width apart. Pull the bar up along your body to chest height, elbows leading and above your hands, without momentum. Control the way down.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders",
+        "traps"
+      ],
+      "secondary_muscles": [
+        "biceps"
+      ],
+      "image": "upright_row.webp"
+    },
+    {
+      "key": "pike_push_up",
+      "name": "Pike push-up",
+      "description": "Hips high and body in an inverted V. Lower the top of your head toward the floor between your hands, then push back up. Clean form matters more than a high rep count.",
+      "measure": "reps",
+      "primary_muscles": [
+        "shoulders"
+      ],
+      "secondary_muscles": [
+        "triceps",
+        "chest"
+      ],
+      "image": "pike_push_up.webp"
+    },
+    {
+      "key": "shrug",
+      "name": "Shrug",
+      "description": "Hold a barbell or dumbbells with your head up and arms straight. Raise your shoulders straight up toward your ears, pause, then lower them slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "traps"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": "shrug.webp"
+    },
+    {
+      "key": "barbell_curl",
+      "name": "Barbell curl",
+      "description": "Back straight. Curl the bar up without using your shoulders or back, and stop before your arms fully straighten on the way down.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": "barbell_curl.webp"
+    },
+    {
+      "key": "dumbbell_curl",
+      "name": "Dumbbell curl",
+      "description": "Back straight, palms facing forward. Curl the dumbbells up without using your shoulders or back, and stop before your arms fully straighten on the way down.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": "dumbbell_curl.webp"
+    },
+    {
+      "key": "hammer_curl",
+      "name": "Hammer curl",
+      "description": "Back straight, palms facing each other. Curl the dumbbells up without using your shoulders or back, and stop before your arms fully straighten on the way down.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": "hammer_curl.webp"
+    },
+    {
+      "key": "preacher_curl",
+      "name": "Preacher curl",
+      "description": "Upper arms flat on the pad. Curl the weight up only as far as the biceps are still working, then lower slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [],
+      "image": "preacher_curl.webp"
+    },
+    {
+      "key": "concentration_curl",
+      "name": "Concentration curl",
+      "description": "Sit with your elbow braced against the inside of your thigh. Curl the dumbbell toward your shoulder, squeeze, then lower it slowly to almost full extension.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "cable_curl",
+      "name": "Cable curl",
+      "description": "Stand facing a low pulley, elbows pinned to your sides. Curl the bar up, squeeze, then lower slowly without letting your elbows drift forward.",
+      "measure": "reps",
+      "primary_muscles": [
+        "biceps"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": null
+    },
+    {
+      "key": "triceps_pushdown",
+      "name": "Triceps pushdown",
+      "description": "Stand facing a high pulley, elbows pinned to your sides. Push the bar or rope down until your arms are straight, then let it rise slowly to chest height.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "overhead_triceps_extension",
+      "name": "Overhead triceps extension",
+      "description": "Hold a dumbbell overhead with both hands, body braced, head straight and eyes fixed ahead. Lower it behind your head by bending only at the elbows, then extend.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [],
+      "image": "overhead_triceps_extension.webp"
+    },
+    {
+      "key": "skull_crusher",
+      "name": "Skull crusher",
+      "description": "Lie on a bench holding a bar or dumbbells above your chest. Lower them toward your forehead by bending only at the elbows, then extend your arms again.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "close_grip_bench_press",
+      "name": "Close-grip bench press",
+      "description": "Grip the bar at shoulder width with your elbows close to your body. Lower it to the lower chest and press it back up, wrists straight.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [
+        "chest",
+        "shoulders"
+      ],
+      "image": null
+    },
+    {
+      "key": "bench_dip",
+      "name": "Bench dip",
+      "description": "Hands on a bench behind you, back straight, eyes forward. Lower your body by bending your elbows, keeping your hips close to the bench, then push back up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [
+        "chest",
+        "shoulders"
+      ],
+      "image": "bench_dip.webp"
+    },
+    {
+      "key": "diamond_push_up",
+      "name": "Diamond push-up",
+      "description": "Hands together under your chest, with thumbs and index fingers forming a diamond. Lower your chest to your hands with your elbows close to your body, then push up. Clean form matters more than a high rep count.",
+      "measure": "reps",
+      "primary_muscles": [
+        "triceps"
+      ],
+      "secondary_muscles": [
+        "chest",
+        "shoulders"
+      ],
+      "image": "diamond_push_up.webp"
+    },
+    {
+      "key": "wrist_curl",
+      "name": "Wrist curl",
+      "description": "Forearms on a bench, palms up, wrists over the edge. Curl the weight up using only your wrists, without jerking. Cracking is fine but stop if it hurts.",
+      "measure": "reps",
+      "primary_muscles": [
+        "forearms"
+      ],
+      "secondary_muscles": [],
+      "image": "wrist_curl.webp"
+    },
+    {
+      "key": "reverse_wrist_curl",
+      "name": "Reverse wrist curl",
+      "description": "Forearms on a bench, palms down, wrists over the edge. Raise the weight using only your wrists, then lower slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "forearms"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "farmers_walk",
+      "name": "Farmer's walk",
+      "description": "Hold a heavy dumbbell or kettlebell in each hand, shoulders back and core tight. Walk with short, steady steps for the set time.",
+      "measure": "time",
+      "primary_muscles": [
+        "forearms"
+      ],
+      "secondary_muscles": [
+        "traps",
+        "abs"
+      ],
+      "image": null
+    },
+    {
+      "key": "crunch",
+      "name": "Crunch",
+      "description": "Curl your shoulders off the floor by contracting your abs, not by pulling on your neck. Don't rest your shoulders on the floor between reps.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": "crunch.webp"
+    },
+    {
+      "key": "bicycle_crunch",
+      "name": "Bicycle crunch",
+      "description": "Bring each elbow toward the opposite knee while extending the other leg. Use your abs, not your neck, and keep your shoulders off the floor.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": "bicycle_crunch.webp"
+    },
+    {
+      "key": "sit_up",
+      "name": "Sit-up",
+      "description": "Lie with your knees bent and feet flat. Roll your torso up until you are sitting upright, then lower back down slowly without dropping.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "cable_crunch",
+      "name": "Cable crunch",
+      "description": "Kneel facing a high pulley, holding the rope beside your head. Curl your torso down toward your knees using your abs, keeping your hips still, then return slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "hanging_leg_raise",
+      "name": "Hanging leg raise",
+      "description": "Hang from a bar. Raise your legs to hip height or higher using your abs, without swinging, then lower them slowly.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "forearms"
+      ],
+      "image": null
+    },
+    {
+      "key": "lying_leg_raise",
+      "name": "Lying leg raise",
+      "description": "Lie flat with your hands under your glutes. Raise your straight legs to vertical, then lower them slowly until just above the floor without letting your lower back arch.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "hollow_hold",
+      "name": "Hollow hold",
+      "description": "Lie on your back, arms extended, and lift your shoulders and straight legs slightly off the floor. Press your lower back into the floor and hold. Hands under your glutes make it easier.",
+      "measure": "time",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": "hollow_hold.webp"
+    },
+    {
+      "key": "russian_twist",
+      "name": "Russian twist",
+      "description": "Sit with your torso leaned back and your feet off the floor. Rotate from side to side using your abs, not too fast. Holding a weight makes it harder.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": "russian_twist.webp"
+    },
+    {
+      "key": "plank",
+      "name": "Plank",
+      "description": "Forearms on the floor, body straight from head to heels at a constant height, head neutral. Hold. Lifting one leg makes it harder.",
+      "measure": "time",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "lower_back"
+      ],
+      "image": "plank.webp"
+    },
+    {
+      "key": "side_plank",
+      "name": "Side plank",
+      "description": "On one forearm, body straight and hips lifted; hold using your core rather than your arm. Lifting the top leg makes it harder. Do both sides.",
+      "measure": "time",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "image": "side_plank.webp"
+    },
+    {
+      "key": "ab_wheel_rollout",
+      "name": "Ab wheel rollout",
+      "description": "Kneeling, roll the wheel forward slowly as far as you can without your lower back sagging. Pause briefly, then roll back using your abs.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "lower_back"
+      ],
+      "image": "ab_wheel_rollout.webp"
+    },
+    {
+      "key": "mountain_climber",
+      "name": "Mountain climber",
+      "description": "From a high plank, drive your knees toward your chest one after the other, very fast. Keep your core tight and your heels off the floor.",
+      "measure": "time",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "shoulders",
+        "quads"
+      ],
+      "image": "mountain_climber.webp"
+    },
+    {
+      "key": "woodchopper",
+      "name": "Woodchopper",
+      "description": "With a cable or band set high, pull it diagonally down across your body by rotating your torso. Move slowly and let your abs do the work, not your arms.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [
+        "shoulders"
+      ],
+      "image": "woodchopper.webp"
+    },
+    {
+      "key": "seated_knee_tuck",
+      "name": "Seated knee tuck",
+      "description": "Sit on the edge of a bench, leaning back. Pull your knees to your chest, then extend your legs, keeping your back and gaze straight and your feet off the floor.",
+      "measure": "reps",
+      "primary_muscles": [
+        "abs"
+      ],
+      "secondary_muscles": [],
+      "image": "seated_knee_tuck.webp"
+    },
+    {
+      "key": "deadlift",
+      "name": "Deadlift",
+      "description": "Back straight, bar over mid-foot. Stand up by driving through your legs and back together, with the bar sliding along your shins. Don't rest the bar on the floor between reps.",
+      "measure": "reps",
+      "primary_muscles": [
+        "lower_back",
+        "glutes",
+        "hamstrings"
+      ],
+      "secondary_muscles": [
+        "back",
+        "quads",
+        "traps",
+        "forearms"
+      ],
+      "image": "deadlift.webp"
+    },
+    {
+      "key": "back_extension",
+      "name": "Back extension",
+      "description": "On a hyperextension bench with your hips on the pad, lower your torso with your back straight. Raise it until your body is in line, without overextending.",
+      "measure": "reps",
+      "primary_muscles": [
+        "lower_back"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "superman",
+      "name": "Superman",
+      "description": "Lie face down and lift your arms and legs off the floor, looking ahead. Hold without straining your lower back or neck.",
+      "measure": "time",
+      "primary_muscles": [
+        "lower_back"
+      ],
+      "secondary_muscles": [
+        "glutes"
+      ],
+      "image": "superman.webp"
+    },
+    {
+      "key": "bird_dog",
+      "name": "Bird dog",
+      "description": "On all fours, extend one arm forward and the opposite leg back until both are level with your body. Hold briefly, return, and alternate sides without rotating your hips.",
+      "measure": "reps",
+      "primary_muscles": [
+        "lower_back"
+      ],
+      "secondary_muscles": [
+        "abs",
+        "glutes"
+      ],
+      "image": null
+    },
+    {
+      "key": "hip_thrust",
+      "name": "Hip thrust",
+      "description": "Upper back on a bench, feet flat, a bar or dumbbell across your hips if used. Drive your hips up until your body is level from knees to shoulders, squeeze your glutes, then lower.",
+      "measure": "reps",
+      "primary_muscles": [
+        "glutes"
+      ],
+      "secondary_muscles": [
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "glute_bridge",
+      "name": "Glute bridge",
+      "description": "Lie on your back with your knees bent and feet flat. Push your hips up until your body forms a straight line from knees to shoulders, squeeze your glutes, then lower.",
+      "measure": "reps",
+      "primary_muscles": [
+        "glutes"
+      ],
+      "secondary_muscles": [
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "hip_abduction",
+      "name": "Hip abduction",
+      "description": "Sit in the machine with the pads against the outside of your knees. Push your knees apart as far as you can, pause, then return slowly without letting the weights touch.",
+      "measure": "reps",
+      "primary_muscles": [
+        "glutes"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    },
+    {
+      "key": "back_squat",
+      "name": "Back squat",
+      "description": "Bar on your upper back, chest up and back straight. Sit back and down, knees tracking over your toes and the bar over mid-foot, to at least parallel, then stand up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings",
+        "lower_back"
+      ],
+      "image": "back_squat.webp"
+    },
+    {
+      "key": "front_squat",
+      "name": "Front squat",
+      "description": "Bar resting on the front of your shoulders, elbows high. Squat down with your torso upright to at least parallel, then stand up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "abs"
+      ],
+      "image": null
+    },
+    {
+      "key": "goblet_squat",
+      "name": "Goblet squat",
+      "description": "Hold a dumbbell or kettlebell against your chest. Squat down between your knees with your torso upright, then stand up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes"
+      ],
+      "image": null
+    },
+    {
+      "key": "bodyweight_squat",
+      "name": "Bodyweight squat",
+      "description": "Feet shoulder-width apart, arms forward for balance. Sit back and down to at least parallel with your heels on the floor, then stand up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes"
+      ],
+      "image": null
+    },
+    {
+      "key": "leg_press",
+      "name": "Leg press",
+      "description": "Feet shoulder-width apart on the platform. Lower it until your knees reach about 90° without your lower back lifting off the seat, then press without locking your knees.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "hack_squat",
+      "name": "Hack squat",
+      "description": "Shoulders under the pads and back flat against the backrest, feet shoulder-width on the platform. Lower until your thighs are at least parallel, then press back up without locking your knees.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "leg_extension",
+      "name": "Leg extension",
+      "description": "Sit with your knees in line with the machine's pivot and the pad on your lower shins. Raise the weight explosively and control the way down. Letting the weights bounce slightly is fine as long as you control the lowering.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [],
+      "image": "leg_extension.webp"
+    },
+    {
+      "key": "lunge",
+      "name": "Lunge",
+      "description": "Back straight, feet hip-width apart. Step forward and lower until both knees are at about 90°, then push back to standing. Alternate legs.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": "lunge.webp"
+    },
+    {
+      "key": "bulgarian_split_squat",
+      "name": "Bulgarian split squat",
+      "description": "Rear foot on a bench, back straight. Lower until your front thigh is parallel to the floor, then push back up. Do both legs.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": "bulgarian_split_squat.webp"
+    },
+    {
+      "key": "step_up",
+      "name": "Step-up",
+      "description": "Place one foot on a bench or box. Drive through that heel to stand up on it without pushing off with the back foot, then step down under control. Do both legs.",
+      "measure": "reps",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "image": null
+    },
+    {
+      "key": "jump_squat",
+      "name": "Jump squat",
+      "description": "Squat down, then jump up explosively. Land softly on the balls of your feet and go straight into the next rep. Keep your core tight and your head up.",
+      "measure": "time",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "calves"
+      ],
+      "image": "jump_squat.webp"
+    },
+    {
+      "key": "wall_sit",
+      "name": "Wall sit",
+      "description": "Back flat against a wall, thighs parallel to the floor. Hold with your head up and your hands off your legs.",
+      "measure": "time",
+      "primary_muscles": [
+        "quads"
+      ],
+      "secondary_muscles": [
+        "glutes"
+      ],
+      "image": "wall_sit.webp"
+    },
+    {
+      "key": "romanian_deadlift",
+      "name": "Romanian deadlift",
+      "description": "Knees slightly bent, back flat. Push your hips back and slide the bar down your thighs until you feel a stretch in your hamstrings, then stand up.",
+      "measure": "reps",
+      "primary_muscles": [
+        "hamstrings"
+      ],
+      "secondary_muscles": [
+        "glutes",
+        "lower_back"
+      ],
+      "image": null
+    },
+    {
+      "key": "leg_curl",
+      "name": "Leg curl",
+      "description": "Curl the weight up explosively and control the way down. Letting the weights bounce slightly is fine as long as you control the lowering.",
+      "measure": "reps",
+      "primary_muscles": [
+        "hamstrings"
+      ],
+      "secondary_muscles": [
+        "calves"
+      ],
+      "image": "leg_curl.webp"
+    },
+    {
+      "key": "standing_calf_raise",
+      "name": "Standing calf raise",
+      "description": "Rise onto your toes explosively, pause, and control the way down to a full stretch. Look straight ahead.",
+      "measure": "reps",
+      "primary_muscles": [
+        "calves"
+      ],
+      "secondary_muscles": [],
+      "image": "standing_calf_raise.webp"
+    },
+    {
+      "key": "seated_calf_raise",
+      "name": "Seated calf raise",
+      "description": "Knees under the pad, balls of your feet on the platform. Raise your heels as high as possible, pause, then lower to a full stretch.",
+      "measure": "reps",
+      "primary_muscles": [
+        "calves"
+      ],
+      "secondary_muscles": [],
+      "image": null
+    }
+  ]
+}

@@ -10,8 +10,8 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 
 1. **Specifications**: done.
 2. **Design**: done (see "Design session outcome" below).
-3. **Catalogue seed** ← *next* (data task, separate): produce the seed JSON and images in the format defined in Notion > Technical.
-4. **App**: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma).
+3. **Catalogue seed** (data task, separate): done (`assets/seed/`, `tools/seed/`).
+4. **App** ← *next*: milestones M0–M6 (v1.0), then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma).
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -136,5 +136,6 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - [x] Repo started, legacy assets imported (master session)
 - [x] Specifications: Notion spec (4 pages + Development database), `README.md`, `CLAUDE.md` (specs session, 2026-11-15)
 - [x] Design: approved screen by screen, saved in `design/`; Figma partly mirrored (design session, 2026-11-15)
-- [ ] Catalogue seed (data task)
+- [x] Catalogue seed (data task)
+  - Seed in `assets/seed/` (`catalogue.json` v1: 13 muscles, 82 exercises, 44 WebP images); validator and how-to in `tools/seed/`.
 - [ ] App (M0–M6 → v1.0)
