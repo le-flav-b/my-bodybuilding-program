@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const [, , page, out, sel, scale = '2'] = process.argv;
 const browser = await chromium.launch();
-const ctx = await browser.newContext({ deviceScaleFactor: Number(scale), viewport: { width: 1200, height: 900 } });
+const ctx = await browser.newContext({ deviceScaleFactor: Number(scale), viewport: { width: Number(process.env.VW || 1200), height: 900 } });
 const p = await ctx.newPage();
 await p.goto(pathToFileURL(path.resolve(here, '..', page)).href);
 await p.evaluate(() => document.fonts.ready);
