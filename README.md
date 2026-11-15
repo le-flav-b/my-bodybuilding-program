@@ -18,15 +18,18 @@ A personal Android app (Flutter) to plan my training, guide me through each work
 
 ## Build
 
-> To be filled in during M0 (setup) and M6 (release).
+Prerequisites: Flutter 3.50.0 (stable, Dart 3.14), JDK 21 and the Android SDK (platform 37, build-tools 36; Gradle installs what is missing).
 
 ```bash
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs
-flutter test
-flutter run
+dart run build_runner build --delete-conflicting-outputs   # generated code is not committed
+flutter analyze
+flutter test                      # unit + widget tests
+flutter test tool/screenshots     # renders the screens to build/screenshots/ for design checks
+flutter run                       # on a connected Android device
 ```
 
-- Prerequisites: *TBD (M0)*
-- Release APK: *TBD (M6)*
+- **Release APK:** `flutter build apk --release`. It is signed with the release key when `android/key.properties` exists (git-ignored; fields `storeFile`, `storePassword`, `keyAlias`, `keyPassword`), otherwise with the debug key. The `Release APK` GitHub Actions workflow builds a signed APK from repository secrets (listed at the top of `.github/workflows/release.yml`). Install instructions: *TBD (M6)*.
+- **CI:** `.github/workflows/ci.yml` runs the seed validator, code generation, format check, `flutter analyze` and `flutter test --coverage` on every pull request.
+- **Sandboxed build machines** where Maven Central is unreliable: see `tools/env/gradle-plugin-mirror.gradle`.
 - Firebase configuration (`google-services.json`, not committed): *TBD (Cloud sync, v1.1)*
