@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screens · Profile, bodyweight, settings</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="screens review">
+<template>
+  <div class="shot"><div class="cap">Profile</div>
+  <div class="phone" data-shot-suffix="profile_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><h1 style="font:700 28px/36px Inter">Profile</h1><button class="iconbtn"><span class="i">settings</span></button></div>
+    <div class="content stack" style="gap:10px">
+      <div class="bw-card"><div class="body"><div class="overline">Bodyweight · today</div><div class="v">78.4<small>kg</small></div><div class="s"><span class="i s18">arrow_downward</span>0.6 kg vs last week</div></div>
+        <svg width="96" height="40" viewBox="0 0 96 40"><polyline points="2,10 14,12 26,9 38,16 50,18 62,17 74,24 86,26 94,28" fill="none" stroke="var(--cprimary)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <button class="iconbtn filled"><span class="i">add</span></button></div>
+      <div class="tiles">
+        <div class="tile"><div class="k"><span class="i">exercise</span>Workouts</div><div class="v">128</div></div>
+        <div class="tile"><div class="k"><span class="i">schedule</span>Time trained</div><div class="v">104<small>h</small> 20<small>m</small></div></div>
+        <div class="tile"><div class="k"><span class="i">done_all</span>Sets</div><div class="v">2,451</div></div>
+        <div class="tile"><div class="k"><span class="i">local_fire_department</span>Streak · best</div><div class="v">2<small>wk</small> · 11<small>wk</small></div></div>
+        <div class="tile"><div class="k">Workouts · Nov</div><div class="v">7</div><div class="d down"><span class="i">arrow_downward</span>5 vs Oct (12)</div></div>
+        <div class="tile"><div class="k">Time · Nov</div><div class="v">6<small>h</small> 12<small>m</small></div><div class="d down"><span class="i">arrow_downward</span>3 h 53 vs Oct</div></div>
+      </div>
+      <div class="overline" style="margin-top:6px">Latest records</div>
+      <div><div class="pr-row"><div class="ic"><span class="i fill s18">trophy</span></div><div class="body"><div class="t">Leg press · heaviest</div><div class="s">10 Nov</div></div><div class="v">7 level × 12</div></div><div class="pr-row"><div class="ic"><span class="i fill s18">trophy</span></div><div class="body"><div class="t">Bench press · heaviest</div><div class="s">6 Nov</div></div><div class="v">42.5 kg × 10</div></div><div class="pr-row"><div class="ic"><span class="i fill s18">trophy</span></div><div class="body"><div class="t">Dips · most reps</div><div class="s">6 Nov</div></div><div class="v">16</div></div><div class="pr-row"><div class="ic"><span class="i fill s18">trophy</span></div><div class="body"><div class="t">Plank · longest hold</div><div class="s">1 Nov</div></div><div class="v">1:20</div></div></div>
+    </div><nav class="navbar">
+      <a><span class="ind"><span class="i">today</span></span>Today</a>
+      <a><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a class="on"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Bodyweight</div>
+  <div class="phone" data-shot-suffix="bodyweight_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Bodyweight</h1></div>
+    <div class="content stack" style="gap:12px">
+      <div><div class="v" style="font:700 40px/48px Inter;letter-spacing:-.5px">78.4 <span style="font:500 18px Inter;color:var(--con-surface-variant)">kg</span></div><div class="meta"><span><span class="i">arrow_downward</span>1.2 kg in 30 days</span></div></div>
+      <div class="chart-card">
+        <svg viewBox="0 0 380 170"><g class="grid"><line x1="36" x2="372" y1="20" y2="20"/><line x1="36" x2="372" y1="70" y2="70"/><line x1="36" x2="372" y1="120" y2="120"/></g>
+          <text class="ax x" x="30" y="24" text-anchor="end">80</text><text class="ax x" x="30" y="74" text-anchor="end">79</text><text class="ax x" x="30" y="124" text-anchor="end">78</text>
+          <polyline points="40,30 70,24 100,40 130,38 160,52 190,48 220,66 250,72 280,70 310,90 340,96 368,100" fill="none" stroke="var(--cprimary)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="368" cy="100" r="5" fill="var(--cprimary)"/>
+          <text class="ax x" x="40" y="160">Sep</text><text class="ax x" x="160" y="160">Oct</text><text class="ax x" x="290" y="160">Nov</text></svg>
+        <div class="range"><span>1M</span><span class="on">3M</span><span>6M</span><span>1Y</span><span>All</span></div>
+      </div>
+      <div>
+        <div class="entry-row"><div class="body"><div class="t">78.4 kg</div><div class="s">Today 07:12</div></div><div class="d">−0.2</div><span class="i" style="color:var(--con-surface-variant);font-size:20px">more_vert</span></div><div class="entry-row"><div class="body"><div class="t">78.6 kg</div><div class="s">Thu 12 Nov · after holidays</div></div><div class="d">−0.4</div><span class="i" style="color:var(--con-surface-variant);font-size:20px">more_vert</span></div><div class="entry-row"><div class="body"><div class="t">79.0 kg</div><div class="s">Mon 9 Nov</div></div><div class="d">+0.1</div><span class="i" style="color:var(--con-surface-variant);font-size:20px">more_vert</span></div><div class="entry-row"><div class="body"><div class="t">78.9 kg</div><div class="s">Thu 5 Nov</div></div><div class="d">−0.3</div><span class="i" style="color:var(--con-surface-variant);font-size:20px">more_vert</span></div>
+      </div>
+    </div>
+    <div class="fab-pos" style="bottom:40px"><button class="fab"><span class="i">add</span>Log weight</button></div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Settings</div>
+  <div class="phone" data-shot-suffix="settings_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Settings</h1></div>
+    <div class="content" style="padding-top:0">
+      <div class="section-label" style="margin-top:0">Appearance</div>
+      <div class="list-tile"><span class="lead"><span class="i">contrast</span></span><div class="body"><div class="t">Theme</div></div></div>
+      <div class="seg" style="margin:-4px 0 4px 40px"><span class="on"><span class="i">check</span>System</span><span>Light</span><span>Dark</span></div>
+      <div class="section-label">Library</div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">Load units</div><div class="s">kg, level, plates</div></div><span class="trail">3 <span class="i">chevron_right</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">accessibility_new</span></span><div class="body"><div class="t">Muscles</div><div class="s">Used to tag and filter exercises</div></div><span class="trail">14 <span class="i">chevron_right</span></span></div>
+      <div class="section-label">Workout</div>
+      <div class="list-tile"><span class="lead"><span class="i">timer</span></span><div class="body"><div class="t">Default rest</div></div><span class="trail">1:30 <span class="i">chevron_right</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">volume_up</span></span><div class="body"><div class="t">Timer sound</div></div><span class="trail"><span class="switch on"></span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">vibration</span></span><div class="body"><div class="t">Timer vibration</div></div><span class="trail"><span class="switch on"></span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">light_mode</span></span><div class="body"><div class="t">Keep screen on</div><div class="s">During workouts</div></div><span class="trail"><span class="switch"></span></span></div>
+      <div class="section-label">Streak</div>
+      <div class="list-tile"><span class="lead"><span class="i">local_fire_department</span></span><div class="body"><div class="t">Weekly target</div><div class="s">Workouts per week</div></div><span class="trail"><span class="stepper-inline"><button><span class="i">remove</span></button><b>3</b><button><span class="i">add</span></button></span></span></div>
+      <div class="section-label">About</div>
+      <div class="list-tile"><span class="lead"><span class="i">info</span></span><div class="body"><div class="t">Version</div></div><span class="trail">1.0.0</span></div>
+    </div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Load units</div>
+  <div class="phone" data-shot-suffix="load-units_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Load units</h1></div>
+    <div class="content">
+      <div class="info-line" style="margin-bottom:8px"><span class="i">info</span>Loads are never converted between units.</div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">kg</div><div class="s">Built in · step 0.5 · 1 decimal</div></div><span class="trail"><span class="i lock">lock</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">level</div><div class="s">Step 1 · 0 decimals · used in 2 exercises</div></div><span class="trail"><span class="i">edit</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">plates</div><div class="s">Step 1 · 0 decimals · not used yet</div></div><span class="trail"><span class="i">edit</span></span></div>
+      <div class="section-label" style="color:var(--con-surface-variant)">Archived</div>
+      <div class="list-tile"><span class="lead"><span class="i">inventory_2</span></span><div class="body"><div class="t">pin</div><div class="s">Step 1 · used in 1 past workout</div></div><span class="trail"><button class="btn text" style="height:36px">Restore</button></span></div>
+    </div>
+    <div class="fab-pos" style="bottom:40px"><button class="fab"><span class="i">add</span>Add unit</button></div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Muscles</div>
+  <div class="phone" data-shot-suffix="muscles_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Muscles</h1></div>
+    <div class="content">
+      <div class="list-tile"><div class="body"><div class="t" style="">Chest</div><div class="s">18 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Back</div><div class="s">21 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Shoulders</div><div class="s">15 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Biceps</div><div class="s">9 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Triceps</div><div class="s">11 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Abs</div><div class="s">12 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Quads</div><div class="s">10 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Hamstrings</div><div class="s">6 exercises</div></div><span class="trail"><span class="i">edit</span></span></div><div class="list-tile"><div class="body"><div class="t" style="">Glutes</div><div class="s">8 exercises</div></div><span class="trail"><span class="i">edit</span></span></div>
+      <div class="section-label" style="color:var(--con-surface-variant)">Hidden</div>
+      <div class="list-tile"><div class="body"><div class="t" style="color:var(--con-surface-variant)">Neck</div><div class="s">Hidden from filters and pickers</div></div><span class="trail"><span class="i">visibility_off</span></span></div>
+    </div>
+    <div class="fab-pos" style="bottom:40px"><button class="fab"><span class="i">add</span>Add muscle</button></div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Settings · cloud backup, signed out (v1.1)</div>
+  <div class="phone" data-shot-suffix="settings_cloud-signed-out">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Settings</h1></div>
+    <div class="content" style="padding-top:0">
+      <div class="section-label" style="margin-top:0">Cloud backup <span class="later-tag">v1.1</span></div>
+      <div class="cloud">
+        <div class="hrow" style="flex-wrap:nowrap;align-items:flex-start"><span class="i s32" style="color:var(--cprimary)">cloud_upload</span><div><div class="t">Back up your training</div><div class="s">Optional. Sign in to keep a copy of everything, including your photos, and restore it on a new phone. The app keeps working offline.</div></div></div>
+        <button class="gbtn"><span class="g"></span>Sign in with Google</button>
+      </div>
+      <div class="section-label">Appearance</div>
+      <div class="list-tile"><span class="lead"><span class="i">contrast</span></span><div class="body"><div class="t">Theme</div></div></div>
+      <div class="seg" style="margin:-4px 0 4px 40px"><span class="on"><span class="i">check</span>System</span><span>Light</span><span>Dark</span></div>
+      <div class="section-label">Library</div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">Load units</div><div class="s">kg, level, plates</div></div><span class="trail">3 <span class="i">chevron_right</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">accessibility_new</span></span><div class="body"><div class="t">Muscles</div><div class="s">Used to tag and filter exercises</div></div><span class="trail">14 <span class="i">chevron_right</span></span></div>
+    </div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Settings · cloud backup, signed in (v1.1)</div>
+  <div class="phone" data-shot-suffix="settings_cloud-signed-in">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar back"><button class="iconbtn"><span class="i">arrow_back</span></button><h1>Settings</h1></div>
+    <div class="content" style="padding-top:0">
+      <div class="section-label" style="margin-top:0">Cloud backup <span class="later-tag">v1.1</span></div>
+      <div class="cloud">
+        <div class="hrow" style="flex-wrap:nowrap"><div class="avatar">A</div><div style="flex:1"><div class="t">Alex</div><div class="s">alex@example.com</div></div></div>
+        <div class="sync-ok"><span class="i fill s18">check_circle</span>Backed up 2 min ago</div>
+        <div class="hrow" style="flex-wrap:nowrap"><button class="btn tonal" style="flex:1"><span class="i">sync</span>Sync now</button><button class="btn outlined" style="flex:1">Sign out</button></div>
+      </div>
+      <div class="section-label">Appearance</div>
+      <div class="list-tile"><span class="lead"><span class="i">contrast</span></span><div class="body"><div class="t">Theme</div></div></div>
+      <div class="seg" style="margin:-4px 0 4px 40px"><span class="on"><span class="i">check</span>System</span><span>Light</span><span>Dark</span></div>
+      <div class="section-label">Library</div>
+      <div class="list-tile"><span class="lead"><span class="i">straighten</span></span><div class="body"><div class="t">Load units</div><div class="s">kg, level, plates</div></div><span class="trail">3 <span class="i">chevron_right</span></span></div>
+      <div class="list-tile"><span class="lead"><span class="i">accessibility_new</span></span><div class="body"><div class="t">Muscles</div><div class="s">Used to tag and filter exercises</div></div><span class="trail">14 <span class="i">chevron_right</span></span></div>
+    </div><div class="gesturebar"></div>
+  </div></div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>
