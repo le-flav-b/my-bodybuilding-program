@@ -18,7 +18,7 @@ part 'workout_controller.g.dart';
 
 /// Actions of the workout flow: start, log, deviate, rest, pause, end.
 class WorkoutController {
-  WorkoutController(this._ref);
+  new(this._ref);
 
   final Ref _ref;
 
@@ -35,8 +35,8 @@ class WorkoutController {
     SessionPlan session,
     List<WorkoutDraftExercise> draft,
   ) async {
-    await _ref.read(workoutNotifierProvider).requestPermission();
-    return _workouts.startWorkout(
+    await _ref.read(workoutNotificationsProvider).requestPermission();
+    return await _workouts.startWorkout(
       sessionId: session.session.id,
       sessionName: session.session.name,
       planSnapshot: session.toPlan(),
@@ -46,8 +46,8 @@ class WorkoutController {
 
   /// Starts a workout with no exercises; it never moves the program pointer.
   Future<String> startEmpty() async {
-    await _ref.read(workoutNotifierProvider).requestPermission();
-    return _workouts.startWorkout(
+    await _ref.read(workoutNotificationsProvider).requestPermission();
+    return await _workouts.startWorkout(
       sessionName: emptyWorkoutName,
       exercises: const [],
     );
@@ -137,7 +137,7 @@ class WorkoutController {
         .read(programControllerProvider)
         .defaultPlanFor(exercise);
     final sets = await _targetsFor(plan.sets, exercise, exercise.measure);
-    return _workouts.addExercise(workoutId, plan.copyWith(sets: sets));
+    return await _workouts.addExercise(workoutId, plan.copyWith(sets: sets));
   }
 
   /// Swaps [current] for [replacement]; logged sets stay on [current].

@@ -215,4 +215,13 @@ abstract final class Strings {
   static const String hide = 'Hide';
   static const String show = 'Show';
   static const String hiddenFromFilters = 'Hidden from filters and pickers';
+
+  // Workout notifications
+  static const String notifyRestOverTitle = 'Rest is over';
+  static const String notifyHoldOverTitle = 'Time is up';
+  static const String notifyPaused = 'Paused';
+  static const String notifyInProgress = 'Workout in progress';
+  static String notifyRest(String session) => '$session · rest';
+  static String exerciseSetOf(String exercise, int n, int of) =>
+      '$exercise · set $n of $of';
 }

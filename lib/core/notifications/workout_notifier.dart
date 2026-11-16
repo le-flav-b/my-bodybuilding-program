@@ -8,7 +8,7 @@ part 'workout_notifier.g.dart';
 
 /// What the ongoing notification shows while a workout is in progress.
 sealed class WorkoutStatusNotice {
-  const WorkoutStatusNotice({required this.title, required this.body});
+  const new({required this.title, required this.body});
 
   final String title;
   final String body;
@@ -16,7 +16,7 @@ sealed class WorkoutStatusNotice {
 
 /// Training: the elapsed time counts up from [clockStart].
 final class ActiveNotice extends WorkoutStatusNotice {
-  const ActiveNotice({
+  const new({
     required super.title,
     required super.body,
     required this.clockStart,
@@ -28,18 +28,14 @@ final class ActiveNotice extends WorkoutStatusNotice {
 
 /// Resting: counts down to [endsAt].
 final class RestNotice extends WorkoutStatusNotice {
-  const RestNotice({
-    required super.title,
-    required super.body,
-    required this.endsAt,
-  });
+  const new({required super.title, required super.body, required this.endsAt});
 
   final DateTime endsAt;
 }
 
 /// Paused: nothing moves.
 final class PausedNotice extends WorkoutStatusNotice {
-  const PausedNotice({required super.title, required super.body});
+  const new({required super.title, required super.body});
 }
 
 /// Notifications of a workout: the ongoing status and the alert at the end
@@ -68,7 +64,7 @@ abstract interface class WorkoutNotifier {
 
 /// [WorkoutNotifier] on `flutter_local_notifications`.
 class LocalWorkoutNotifier implements WorkoutNotifier {
-  LocalWorkoutNotifier([FlutterLocalNotificationsPlugin? plugin])
+  new([FlutterLocalNotificationsPlugin? plugin])
     : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
 
   static const int statusId = 1;
@@ -107,17 +103,18 @@ class LocalWorkoutNotifier implements WorkoutNotifier {
   }
 
   @override
-  Future<void> requestPermission() =>
-      _guard(() async => _android?.requestNotificationsPermission());
+  Future<void> requestPermission() => _guard(() async {
+    await _android?.requestNotificationsPermission();
+  });
 
   @override
-  Future<void> showStatus(WorkoutStatusNotice notice) => _guard(() {
-    final (when, countDown) = switch (notice) {
+  Future<void> showStatus(WorkoutStatusNotice notice) => _guard(() async {
+    final (anchor, countDown) = switch (notice) {
       ActiveNotice(:final clockStart) => (clockStart, false),
       RestNotice(:final endsAt) => (endsAt, true),
       PausedNotice() => (null, false),
     };
-    return _plugin.show(
+    await _plugin.show(
       id: statusId,
       title: notice.title,
       body: notice.body,
@@ -125,8 +122,7 @@ class LocalWorkoutNotifier implements WorkoutNotifier {
         android: AndroidNotificationDetails(
           _statusChannel,
           'Workout in progress',
-          channelDescription:
-              'Elapsed time and rest countdown while you train',
+          channelDescription: 'Elapsed time and rest countdown while you train',
           importance: Importance.low,
           priority: Priority.low,
           ongoing: true,
@@ -135,9 +131,9 @@ class LocalWorkoutNotifier implements WorkoutNotifier {
           playSound: false,
           enableVibration: false,
           category: AndroidNotificationCategory.stopwatch,
-          showWhen: when != null,
-          when: when?.millisecondsSinceEpoch,
-          usesChronometer: when != null,
+          showWhen: anchor != null,
+          when: anchor?.millisecondsSinceEpoch,
+          usesChronometer: anchor != null,
           chronometerCountDown: countDown,
         ),
       ),
@@ -193,4 +189,4 @@ class LocalWorkoutNotifier implements WorkoutNotifier {
 }
 
 @Riverpod(keepAlive: true)
-WorkoutNotifier workoutNotifier(Ref ref) => LocalWorkoutNotifier();
+WorkoutNotifier workoutNotifications(Ref ref) => LocalWorkoutNotifier();

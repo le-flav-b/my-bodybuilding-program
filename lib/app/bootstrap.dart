@@ -6,6 +6,7 @@ import 'package:my_bodybuilding_program/core/utils/clock.dart';
 import 'package:my_bodybuilding_program/core/utils/ids.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_runtime.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'bootstrap.g.dart';
@@ -31,4 +32,6 @@ Future<void> appBootstrap(Ref ref) async {
   await ref.watch(workoutRepositoryProvider).finishIfStale();
   await ref.watch(appSettingsProvider.future);
   await ref.watch(imageStorageProvider.future);
+  // Follows the workout in progress (notification, rest timer) from now on.
+  ref.watch(workoutRuntimeProvider);
 }

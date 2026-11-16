@@ -10,8 +10,11 @@ import 'package:my_bodybuilding_program/app/bootstrap.dart';
 import 'package:my_bodybuilding_program/core/db/app_database.dart';
 import 'package:my_bodybuilding_program/core/db/database_provider.dart';
 import 'package:my_bodybuilding_program/core/images/image_storage.dart';
+import 'package:my_bodybuilding_program/core/notifications/device_feedback.dart';
+import 'package:my_bodybuilding_program/core/notifications/workout_notifier.dart';
 import 'package:my_bodybuilding_program/core/utils/clock.dart';
 
+import 'fakes.dart';
 import 'test_env.dart';
 
 /// The whole app on an in-memory database, for widget tests.
@@ -25,6 +28,8 @@ class TestApp {
         appDatabaseProvider.overrideWithValue(db),
         clockProvider.overrideWithValue(this.clock.call),
         imageStorageProvider.overrideWith((ref) async => images),
+        workoutNotificationsProvider.overrideWithValue(notifier),
+        deviceFeedbackProvider.overrideWithValue(feedback),
         ...overrides,
       ],
     );
@@ -33,6 +38,8 @@ class TestApp {
   final FakeClock clock;
   late final AppDatabase db;
   late final ImageStorage images;
+  final FakeWorkoutNotifier notifier = FakeWorkoutNotifier();
+  final FakeDeviceFeedback feedback = FakeDeviceFeedback();
   late final ProviderContainer container;
 
   Widget get widget =>

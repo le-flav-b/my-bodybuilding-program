@@ -22,7 +22,7 @@ part 'workout_runtime.g.dart';
 ///   alert while the app is in the background;
 /// - the same alert for a timed set that is running ([holdEndsAt]).
 class WorkoutRuntime {
-  WorkoutRuntime(this._ref);
+  new(this._ref);
 
   final Ref _ref;
   WorkoutDetail? _detail;
@@ -32,7 +32,7 @@ class WorkoutRuntime {
   DateTime? _holdEndsAt;
   AppLifecycleListener? _lifecycle;
 
-  WorkoutNotifier get _notifier => _ref.read(workoutNotifierProvider);
+  WorkoutNotifier get _notifier => _ref.read(workoutNotificationsProvider);
   Clock get _clock => _ref.read(clockProvider);
 
   /// Starts following the workout in progress. Called once at launch.
@@ -55,6 +55,8 @@ class WorkoutRuntime {
 
   /// End of the timed set that is running, or null. Lets the background
   /// alert also ring for a hold.
+  // Write-only on purpose: only the player knows about a running hold.
+  // ignore: avoid_setters_without_getters
   set holdEndsAt(DateTime? value) {
     _holdEndsAt = value;
     if (!_foreground) unawaited(_scheduleAlert());
