@@ -13,9 +13,11 @@ abstract final class DateText {
   static int daysBetween(DateTime date, DateTime now) {
     final a = _day(date);
     final b = _day(now);
-    return DateTime.utc(b.year, b.month, b.day)
-        .difference(DateTime.utc(a.year, a.month, a.day))
-        .inDays;
+    return DateTime.utc(
+      b.year,
+      b.month,
+      b.day,
+    ).difference(DateTime.utc(a.year, a.month, a.day)).inDays;
   }
 
   /// "today", "yesterday", "4 days ago".
@@ -28,17 +30,16 @@ abstract final class DateText {
 
   /// "Sunday 15 November".
   static String longDay(DateTime date) =>
-      DateFormat('EEEE d MMMM', 'en').format(date.toLocal());
+      DateFormat('EEEE d MMMM').format(date.toLocal());
 
   /// "Sunday 15 Nov".
   static String mediumDay(DateTime date) =>
-      DateFormat('EEEE d MMM', 'en').format(date.toLocal());
+      DateFormat('EEEE d MMM').format(date.toLocal());
 
   /// "18:04".
   static String time(DateTime date) =>
-      DateFormat('HH:mm', 'en').format(date.toLocal());
+      DateFormat('HH:mm').format(date.toLocal());
 
   /// "Mon", "Tue"…
-  static String weekdayShort(DateTime date) =>
-      DateFormat('EEE', 'en').format(date);
+  static String weekdayShort(DateTime date) => DateFormat('EEE').format(date);
 }

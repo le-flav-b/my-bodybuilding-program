@@ -45,7 +45,7 @@ String lastTimeText(List<LoggedSet> sets, UnitLookup units) =>
 /// A session just before starting: its exercises with planned sets and last
 /// time. Edits made here apply to this workout only.
 class SessionPreviewScreen extends ConsumerStatefulWidget {
-  const SessionPreviewScreen({required this.sessionId, super.key});
+  const new({required this.sessionId, super.key});
 
   final String sessionId;
 
@@ -278,7 +278,7 @@ class _SessionPreviewScreenState extends ConsumerState<SessionPreviewScreen> {
 
 /// "6 exercises · ~55 min · 4 days ago" with icons.
 class SessionMeta extends StatelessWidget {
-  const SessionMeta({
+  const new({
     required this.exerciseCount,
     required this.estimateSeconds,
     required this.lastDone,
@@ -326,7 +326,7 @@ class SessionMeta extends StatelessWidget {
 
 /// The sticky bar holding the one main action of a screen.
 class BottomActionBar extends StatelessWidget {
-  const BottomActionBar({required this.child, super.key});
+  const new({required this.child, super.key});
 
   final Widget child;
 
@@ -354,7 +354,7 @@ class BottomActionBar extends StatelessWidget {
 }
 
 class _PreviewRow extends ConsumerWidget {
-  const _PreviewRow({
+  const new({
     required this.index,
     required this.entry,
     required this.showDivider,

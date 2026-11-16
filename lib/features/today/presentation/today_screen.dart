@@ -36,7 +36,7 @@ import 'package:my_bodybuilding_program/features/workout/presentation/workout_pr
 
 /// Tab 1: what to do now.
 class TodayScreen extends ConsumerWidget {
-  const TodayScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -137,7 +137,7 @@ Future<void> startEmptyWorkout(BuildContext context, WidgetRef ref) async {
 }
 
 class _SessionCard extends ConsumerWidget {
-  const _SessionCard({required this.overview, required this.next});
+  const new({required this.overview, required this.next});
 
   final ProgramOverview overview;
   final SessionPlan next;
@@ -259,11 +259,7 @@ class _SessionCard extends ConsumerWidget {
 }
 
 class _CardAction extends StatelessWidget {
-  const _CardAction({
-    required this.icon,
-    required this.label,
-    required this.onPressed,
-  });
+  const new({required this.icon, required this.label, required this.onPressed});
 
   final IconData icon;
   final String label;
@@ -290,7 +286,7 @@ Future<void> showPickSessionSheet(BuildContext context) =>
     );
 
 class _PickSessionSheet extends ConsumerWidget {
-  const _PickSessionSheet();
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -378,10 +374,7 @@ class _PickSessionSheet extends ConsumerWidget {
                                   ' · ${done == null ? Strings.neverDone : DateText.relativeDay(done, now)}',
                         style: TextStyle(color: muted),
                       ),
-                      trailing: Icon(
-                        Symbols.play_circle_rounded,
-                        color: muted,
-                      ),
+                      trailing: Icon(Symbols.play_circle_rounded, color: muted),
                       onTap: () {
                         Navigator.of(context).pop();
                         unawaited(
@@ -401,7 +394,7 @@ class _PickSessionSheet extends ConsumerWidget {
 
 /// Replaces the session card while a workout is in progress.
 class _ResumeBanner extends ConsumerWidget {
-  const _ResumeBanner({required this.detail});
+  const new({required this.detail});
 
   final WorkoutDetail detail;
 
@@ -497,7 +490,7 @@ class _ResumeBanner extends ConsumerWidget {
 }
 
 class _UpNextCard extends ConsumerWidget {
-  const _UpNextCard({required this.detail});
+  const new({required this.detail});
 
   final WorkoutDetail detail;
 
@@ -565,7 +558,7 @@ class _UpNextCard extends ConsumerWidget {
 }
 
 class _WeekCard extends ConsumerWidget {
-  const _WeekCard({required this.summaries, required this.now});
+  const new({required this.summaries, required this.now});
 
   final List<WorkoutSummary> summaries;
   final DateTime now;
@@ -622,7 +615,7 @@ class _WeekCard extends ConsumerWidget {
 
 /// "🔥 2 weeks", or a grey "No streak".
 class StreakChip extends StatelessWidget {
-  const StreakChip({required this.weeks, super.key});
+  const new({required this.weeks, super.key});
 
   final int weeks;
 
@@ -634,9 +627,7 @@ class StreakChip extends StatelessWidget {
       height: 32,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       decoration: BoxDecoration(
-        color: active
-            ? colors.secondaryContainer
-            : colors.surfaceContainerHigh,
+        color: active ? colors.secondaryContainer : colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(AppRadius.full),
       ),
       child: Row(
@@ -665,11 +656,7 @@ class StreakChip extends StatelessWidget {
 }
 
 class _WeekDay extends StatelessWidget {
-  const _WeekDay({
-    required this.date,
-    required this.trained,
-    required this.isToday,
-  });
+  const new({required this.date, required this.trained, required this.isToday});
 
   final DateTime date;
   final bool trained;
@@ -707,17 +694,14 @@ class _WeekDay extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
-        Text(
-          DateText.weekdayShort(date),
-          style: context.text.bodySmall,
-        ),
+        Text(DateText.weekdayShort(date), style: context.text.bodySmall),
       ],
     );
   }
 }
 
 class _LastWorkoutCard extends StatelessWidget {
-  const _LastWorkoutCard({required this.summary, required this.now});
+  const new({required this.summary, required this.now});
 
   final WorkoutSummary summary;
   final DateTime now;

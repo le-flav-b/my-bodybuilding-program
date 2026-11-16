@@ -12,14 +12,16 @@ import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 
 /// "42.5 kg × 10", "16 reps" or "1:20": a record as text.
-String recordValueText(RecordEvent event, UnitLookup units) =>
-    switch (event.series) {
-      LoadSeries(:final unitId) =>
-        '${PlanFormat.load(event.value, unitId, units)}'
-            '${event.set.reps == null ? '' : ' ${PlanFormat.times} ${event.set.reps}'}',
-      RepsSeries() => Strings.repsCount(event.value.round()),
-      TimeSeries() => PlanFormat.clock(event.value.round()),
-    };
+String recordValueText(
+  RecordEvent event,
+  UnitLookup units,
+) => switch (event.series) {
+  LoadSeries(:final unitId) =>
+    '${PlanFormat.load(event.value, unitId, units)}'
+        '${event.set.reps == null ? '' : ' ${PlanFormat.times} ${event.set.reps}'}',
+  RepsSeries() => Strings.repsCount(event.value.round()),
+  TimeSeries() => PlanFormat.clock(event.value.round()),
+};
 
 /// The record that was beaten, as text ("40 kg", "14", "1:05").
 String recordPreviousText(RecordEvent event, UnitLookup units) =>
@@ -39,7 +41,7 @@ String recordTypeLabel(SeriesKey series) => switch (series) {
 /// The round countdown: a 12-wide track and an arc that drains clockwise
 /// from 12 o'clock, with content in the centre.
 class TimerRing extends StatelessWidget {
-  const TimerRing({
+  const new({
     required this.fraction,
     required this.color,
     required this.child,
@@ -75,11 +77,7 @@ class TimerRing extends StatelessWidget {
 }
 
 class _RingPainter extends CustomPainter {
-  _RingPainter({
-    required this.fraction,
-    required this.color,
-    required this.track,
-  });
+  new({required this.fraction, required this.color, required this.track});
 
   final double? fraction;
   final Color color;
@@ -116,7 +114,7 @@ class _RingPainter extends CustomPainter {
 /// Label, round − and + buttons and a large value. A value that differs
 /// from the target turns primary. Long-press the value to type it.
 class ValueStepper extends StatelessWidget {
-  const ValueStepper({
+  const new({
     required this.label,
     required this.value,
     required this.onMinus,
@@ -218,7 +216,7 @@ class ValueStepper extends StatelessWidget {
 
 /// "kg ▾" on the load stepper: picks the unit of the remaining sets.
 class UnitChip extends StatelessWidget {
-  const UnitChip({
+  const new({
     required this.unit,
     required this.units,
     required this.onSelected,
@@ -296,7 +294,7 @@ class UnitChip extends StatelessWidget {
 
 /// Yellow pill marking a record ("PR").
 class PrChip extends StatelessWidget {
-  const PrChip({this.label = Strings.pr, super.key});
+  const new({this.label = Strings.pr, super.key});
 
   final String label;
 

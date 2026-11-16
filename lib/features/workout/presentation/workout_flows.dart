@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -51,7 +53,7 @@ Future<void> discardWorkoutFlow(
 
 /// A stacked dialog button, full width.
 class _StackedAction extends StatelessWidget {
-  const _StackedAction({required this.child});
+  const new({required this.child});
 
   final Widget child;
 
@@ -181,7 +183,7 @@ Future<void> showResumeDialog(
             child: FilledButton.icon(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
-                context.push(Routes.workout);
+                unawaited(context.push(Routes.workout));
               },
               icon: const Icon(Symbols.play_arrow_rounded, fill: 1),
               label: const Text(Strings.resume),
@@ -302,11 +304,11 @@ Future<bool> showUpdateProgramDialog(
 
 /// What the user chose in [showEditSetSheet].
 sealed class EditSetResult {
-  const EditSetResult();
+  const new();
 }
 
 final class EditSetSaved extends EditSetResult {
-  const EditSetSaved({this.reps, this.seconds, this.load, this.unitId});
+  const new({this.reps, this.seconds, this.load, this.unitId});
 
   final int? reps;
   final int? seconds;
@@ -315,11 +317,11 @@ final class EditSetSaved extends EditSetResult {
 }
 
 final class EditSetNotDone extends EditSetResult {
-  const EditSetNotDone();
+  const new();
 }
 
 final class EditSetDeleted extends EditSetResult {
-  const EditSetDeleted();
+  const new();
 }
 
 /// Edits a logged set: reps or time and load, mark as not done (during a
@@ -343,7 +345,7 @@ Future<EditSetResult?> showEditSetSheet(
 );
 
 class _EditSetSheet extends ConsumerStatefulWidget {
-  const _EditSetSheet({
+  const new({
     required this.set,
     required this.measure,
     required this.allowNotDone,
@@ -475,7 +477,7 @@ class _EditSetSheetState extends ConsumerState<_EditSetSheet> {
 /// The load stepper: − / + by the unit's step, "Body" for no load, a
 /// negative value for assisted. Long-press to type.
 class LoadStepper extends StatelessWidget {
-  const LoadStepper({
+  const new({
     required this.load,
     required this.unit,
     required this.onChanged,

@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:my_bodybuilding_program/app/app_shell.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_screen.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise_detail_screen.dart';
@@ -11,6 +12,7 @@ import 'package:my_bodybuilding_program/features/settings/presentation/load_unit
 import 'package:my_bodybuilding_program/features/settings/presentation/muscles_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_screen.dart';
 import 'package:my_bodybuilding_program/features/today/presentation/today_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/session_preview_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -31,6 +33,11 @@ abstract final class Routes {
   static String exercise(String id) => '/exercises/$id';
   static String editExercise(String id) => '/exercises/$id/edit';
   static String session(String id) => '/sessions/$id';
+  static String sessionPreview(String sessionId) => '/preview/$sessionId';
+  static const String workout = '/workout';
+  static const String workoutList = '/workout/list';
+  static String workoutSummary(String workoutId) =>
+      '/workout/summary/$workoutId';
   static const String settings = '/settings';
   static const String loadUnits = '/settings/units';
   static const String muscles = '/settings/muscles';
@@ -104,6 +111,26 @@ GoRouter router(Ref ref) {
             SessionEditorScreen(sessionId: state.pathParameters['id']!),
       ),
       GoRoute(
+        path: '/preview/:id',
+        builder: (context, state) =>
+            SessionPreviewScreen(sessionId: state.pathParameters['id']!),
+      ),
+      // M3 in progress: the player, list view and summary screens are not
+      // written yet. These routes exist so the screens that link to them
+      // compile; replace the placeholder with the real screens.
+      GoRoute(
+        path: Routes.workout,
+        builder: (context, state) => const _NotBuiltYet(),
+      ),
+      GoRoute(
+        path: Routes.workoutList,
+        builder: (context, state) => const _NotBuiltYet(),
+      ),
+      GoRoute(
+        path: '/workout/summary/:id',
+        builder: (context, state) => const _NotBuiltYet(),
+      ),
+      GoRoute(
         path: Routes.settings,
         builder: (context, state) => const SettingsScreen(),
       ),
@@ -119,4 +146,12 @@ GoRouter router(Ref ref) {
   );
   ref.onDispose(router.dispose);
   return router;
+}
+
+/// Placeholder for the M3 routes whose screens are not written yet.
+class _NotBuiltYet extends StatelessWidget {
+  const new();
+
+  @override
+  Widget build(BuildContext context) => Scaffold(appBar: AppBar());
 }
