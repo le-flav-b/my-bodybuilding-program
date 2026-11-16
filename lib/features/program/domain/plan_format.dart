@@ -77,6 +77,15 @@ abstract final class PlanFormat {
     return loadText == null ? goalText : '$goalText $dot $loadText';
   }
 
+  /// What was actually done, set by set: "10, 10, 9, 8 · 40 kg",
+  /// "14, 12, 10", "0:45, 0:40".
+  static String performed(List<SetTarget> sets, UnitLookup units) {
+    if (sets.isEmpty) return '';
+    final goals = [for (final s in sets) goal(s)].join(', ');
+    final loadText = _loads(sets, units);
+    return loadText == null ? goals : '$goals $dot $loadText';
+  }
+
   static String? _loads(List<SetTarget> sets, UnitLookup units) {
     final loaded = [
       for (final s in sets)
