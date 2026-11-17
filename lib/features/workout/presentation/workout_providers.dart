@@ -119,3 +119,11 @@ Set<String> workoutRecordSetIds(Ref ref, String workoutId) {
       e.setId,
   };
 }
+
+/// Remembers whether "Resume workout?" was offered since launch.
+class ResumePrompt {
+  bool shown = false;
+}
+
+@Riverpod(keepAlive: true)
+ResumePrompt resumePrompt(Ref ref) => ResumePrompt();

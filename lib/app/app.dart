@@ -6,6 +6,7 @@ import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_runtime.dart';
 
 /// Root widget: theme (light/dark from the design tokens) and router.
 class App extends ConsumerWidget {
@@ -27,6 +28,10 @@ class App extends ConsumerWidget {
         home: _StartupScreen(error: bootstrap.error),
       );
     }
+
+    // Follows the workout in progress (notification, rest timer) from now
+    // on. Started here, in the app's zone, so its timers are the app's.
+    ref.watch(workoutRuntimeProvider);
 
     return MaterialApp.router(
       title: Strings.appName,

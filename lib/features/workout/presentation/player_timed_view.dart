@@ -54,8 +54,16 @@ class _TimedExerciseViewState extends ConsumerState<TimedExerciseView> {
   SetValues? _values;
   Timer? _ticker;
   int _lastLeadInSecond = 3;
-  late final WorkoutRuntime _runtime = ref.read(workoutRuntimeProvider);
-  late final DeviceFeedback _feedback = ref.read(deviceFeedbackProvider);
+  int _shownFrame = -1;
+  late final WorkoutRuntime _runtime;
+  late final DeviceFeedback _feedback;
+
+  @override
+  void initState() {
+    super.initState();
+    _runtime = ref.read(workoutRuntimeProvider);
+    _feedback = ref.read(deviceFeedbackProvider);
+  }
 
   DateTime _now() => ref.read(clockProvider)();
 
@@ -111,7 +119,12 @@ class _TimedExerciseViewState extends ConsumerState<TimedExerciseView> {
           return;
         }
     }
-    setState(() {});
+    // Repaint only when what is shown moves (4 times a second).
+    final frame = _phase.index * 1000000 + _elapsedMs() ~/ 250;
+    if (frame != _shownFrame) {
+      _shownFrame = frame;
+      setState(() {});
+    }
   }
 
   void _updateHoldEnd() {

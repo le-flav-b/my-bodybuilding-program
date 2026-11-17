@@ -1,7 +1,9 @@
 name: Release APK
 
-# Builds a signed release APK. Runs when a version tag (v1.0.0) is pushed, or
-# by hand from the Actions tab. Needs these repository secrets:
+# Builds a signed release APK, checks that it is signed with the owner's
+# release key, and publishes it as the GitHub release v<pubspec version>.
+# Runs when a version tag (v1.0.0) is pushed, or by hand from the Actions tab
+# (on main only for the release). Needs these repository secrets:
 #   RELEASE_KEYSTORE_BASE64    base64 of the release keystore (.jks)
 #   RELEASE_KEYSTORE_PASSWORD  keystore password
 #   RELEASE_KEY_ALIAS          key alias
@@ -13,6 +15,11 @@ on:
 
 permissions:
   contents: write
+
+env:
+  # SHA-256 of the release certificate (legacy/HANDOFF.md, "Release signing").
+  # An APK signed with any other key cannot update the installed app.
+  EXPECTED_CERT_SHA256: '34:A1:93:EC:C4:C9:C9:55:4C:71:8C:EE:44:67:DB:92:B3:0B:D3:39:C5:49:A8:61:0A:AF:7A:07:59:20:64:D7'
 
 jobs:
   build:
@@ -60,6 +67,18 @@ jobs:
       - name: Build the release APK
         run: flutter build apk --release
 
+      - name: Check the signing certificate
+        run: |
+          apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)apksigner
+          "$apksigner" verify --print-certs build/app/outputs/flutter-apk/app-release.apk | tee "$RUNNER_TEMP/certs.txt"
+          actual=$(grep -m 1 'certificate SHA-256 digest:' "$RUNNER_TEMP/certs.txt" | sed 's/.*digest: //' | tr -d ':[:space:]' | tr 'A-F' 'a-f')
+          expected=$(echo "$EXPECTED_CERT_SHA256" | tr -d ':[:space:]' | tr 'A-F' 'a-f')
+          if [ -z "$actual" ] || [ "$actual" != "$expected" ]; then
+            echo "::error::The APK is not signed with the release key (got '$actual', expected '$expected')."
+            exit 1
+          fi
+          echo "Signed with the release key ($expected)."
+
       - name: Name the APK
         id: apk
         run: |
@@ -67,19 +86,26 @@ jobs:
           name="my-bodybuilding-program-$version.apk"
           cp build/app/outputs/flutter-apk/app-release.apk "$name"
           echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
 
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.apk.outputs.name }}
           path: ${{ steps.apk.outputs.name }}
 
-      - name: Attach to the GitHub release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Publish the GitHub release
+        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || steps.apk.outputs.tag }}
         run: |
-          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes || true
-          gh release upload "$GITHUB_REF_NAME" "${{ steps.apk.outputs.name }}" --clobber
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "::notice::Release $TAG exists: replacing its APK."
+          else
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "$TAG" --generate-notes
+          fi
+          gh release upload "$TAG" "${{ steps.apk.outputs.name }}" --clobber
+          echo "Release: $(gh release view "$TAG" --json url --jq .url)"
 
       - name: Remove the signing key
         if: always()

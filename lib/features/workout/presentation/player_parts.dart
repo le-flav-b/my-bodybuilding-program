@@ -234,24 +234,29 @@ class _ExerciseBlockState extends ConsumerState<ExerciseBlock> {
                   if (!widget.compact)
                     Row(
                       children: [
-                        if (hasCues)
-                          TextButton.icon(
-                            onPressed: () =>
-                                setState(() => _showCues = !_showCues),
-                            style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                            ),
-                            icon: Icon(
-                              _showCues
-                                  ? Symbols.expand_less_rounded
-                                  : Symbols.expand_more_rounded,
-                            ),
-                            label: const Text(Strings.formCues),
+                        Expanded(
+                          child: Wrap(
+                            children: [
+                              if (hasCues)
+                                TextButton.icon(
+                                  onPressed: () =>
+                                      setState(() => _showCues = !_showCues),
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                  ),
+                                  icon: Icon(
+                                    _showCues
+                                        ? Symbols.expand_less_rounded
+                                        : Symbols.expand_more_rounded,
+                                  ),
+                                  label: const Text(Strings.formCues),
+                                ),
+                              noteButton,
+                            ],
                           ),
-                        noteButton,
-                        const Spacer(),
+                        ),
                         menu,
                       ],
                     ),

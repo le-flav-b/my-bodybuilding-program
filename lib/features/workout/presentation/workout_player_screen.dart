@@ -38,11 +38,12 @@ class _WorkoutPlayerScreenState extends ConsumerState<WorkoutPlayerScreen> {
   RecordEvent? _trophy;
   Timer? _trophyTimer;
   bool _logging = false;
-  late final DeviceFeedback _feedback = ref.read(deviceFeedbackProvider);
+  late final DeviceFeedback _feedback;
 
   @override
   void initState() {
     super.initState();
+    _feedback = ref.read(deviceFeedbackProvider);
     if (ref.read(currentSettingsProvider).keepScreenOn) {
       unawaited(_feedback.keepScreenOn(on: true));
     }
