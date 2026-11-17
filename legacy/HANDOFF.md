@@ -143,21 +143,23 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - [x] M1 Data layer (v0.2.0)
   - [x] M2 Catalogue & program (v0.3.0)
   - [x] M3 Workout (v0.4.0)
-  - [ ] M4 Progress ← *next*
-  - [ ] M5 Profile
+  - [x] M4 Progress (v0.5.0)
+  - [ ] M5 Profile ← *next*
   - [ ] M6 Release
 
 ## App session: current state / next step
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program, M3 Workout.
+**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program, M3 Workout, M4 Progress.
 - M0: 4-tab shell, theme from `design/tokens.json`, CI.
 - M1: Drift database, repositories, seed import, all domain rules with unit tests.
 - M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (`showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session, play → preview), session editor, Settings (Appearance + Library), Load units, Muscles.
 - M3: Today (normal / in progress / empty / pick-session sheet / skip with Undo), session preview (draft edits for this workout only), player (`workout_player_screen.dart` + `player_parts.dart`, `player_rest_view.dart`, `player_timed_view.dart`, `player_overlays.dart`: header with elapsed + time left, segment bar, exercise block with form cues / note / ⋮ swap-skip-change unit, setup note strip, set rows + current set card, rest view, timed sets with 3-2-1 lead-in, paused overlay, trophy overlay, all-done state, next-exercise footer), list view (`workout_list_screen.dart`), summary (`workout_summary_screen.dart`, "Update the program?" first), resume prompt once at launch (`AppShell`), notifications + beeps/vibration + keep screen on, release workflow with certificate check and GitHub release.
 
-**Next step:** M4 Progress (history + edit, multi-unit charts, PRs + trophy, calendar + streak). Set its Notion row to In progress first. The Progress tab is still the M0 placeholder. Already there: `HistoryRepository` (logged sets, workout summaries), `Records`, `ChartSeriesBuilder`, `StreakRule`, `StatsRule`, `history_providers.dart`, `workoutRecordEvents()` (records of one workout, in `workout_providers.dart`), `showEditSetSheet(allowDelete: true)` for the workout detail, `fl_chart` in the stack. Screens: Progress (Calendar · Exercises · History tabs), Exercise progress, Workout detail; the Today "last workout" card and the exercise detail's progress card should link to them (Today's card currently has no target). Then: bump to `0.5.0+5`, screenshots (`tool/screenshots/m4_test.dart`), PR, CI, squash-merge, Notion Done, run "Release APK" on main, report with the release link.
+- M4: Progress tab (`progress_screen.dart`: Calendar with week marks, streak and month tiles; Exercises done with search, best and sparkline; History grouped by month with totals and PR badges), Exercise progress (`exercise_progress_screen.dart`: record tiles per unit, legend chips, `MultiUnitChart` on fl_chart with each series normalised by `ChartScale`, range 1M–All, all sets grouped by workout), Workout detail (`workout_detail_screen.dart`: note, edit/delete set, exercise note/remove, delete workout), links from Today's last-workout card and the exercise detail (`ExerciseProgressCard`). Pure rules added: `CalendarRule`, `ChartScale`. Shared widgets in `progress_widgets.dart` (`StatTile`, `statValue`, `Sparkline`, `RecordCountBadge`, `headlineRecord`, `longDuration`) and `streak_chip.dart`.
+
+**Next step:** M5 Profile (bodyweight log + chart, stats summary, complete Settings: Workout section with default rest / sound / vibration / keep screen on, Streak weekly target stepper, About with version). Set its Notion row to In progress first. Already there: `BodyWeightRepository`, `BodyWeightTrend`, `StatsRule`, `Records.latest`, `streakProvider`, `StatTile`/`statValue`/`Sparkline` (reuse for the Profile tiles and the bodyweight card), `MultiUnitChart`'s approach for the bodyweight chart (single series). The Profile tab is still the M0 placeholder; Settings has Appearance + Library only. Then: bump to `0.6.0+6`, screenshots (`tool/screenshots/m5_test.dart`), PR, CI, squash-merge, Notion Done, run "Release APK" on main, report with the release link.
 
 **UI building blocks (M2):** `lib/app/widgets/`: `ImageWell`, `ExerciseImageView` / `ExerciseThumb` (seed image, user photo or muscle placeholder), `Overline`, `InfoLine`, `PillBadge`, `TabTitle`, `SearchField`, `AppFilterChip`, `BigButton`, `EmptyState`, dialogs (`showConfirmDialog`, `showTextPrompt`, `showAppSnackBar`), value dialogs (`showGoalDialog` for reps/seconds/rest with optional "max", `showLoadDialog`). Tonal buttons use `AppTheme.tonal(colors)` (the M3 `FilledButton.tonal` would be yellow here). App bars: back-arrow screens use the theme's title spacing (title at 56 dp); tab screens set `titleSpacing: AppSpacing.lg`. Strings are all in `lib/app/strings.dart`.
 
@@ -185,7 +187,13 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - A widget that repaints on a periodic timer must only `setState` when what it shows changes, or `pumpAndSettle` never returns (timed set view).
 - The test font (Ahem) is wider than Inter: rows of buttons need `Wrap`/`Expanded` or they overflow in widget tests.
 - `DateFormat` must be used without an explicit locale (see `core/utils/date_text.dart`).
-- Helpers: `test/helpers/workout_data.dart` (`WorkoutData`: past history, Push A in progress at various points) on top of `DemoData`.
+- Helpers: `test/helpers/workout_data.dart` (`WorkoutData`: past history, `richHistory(weeks:)` with rising loads and leg curl switching kg → level, Push A in progress at various points) on top of `DemoData`.
+
+**Gotchas met in M4:**
+- A `PopupMenuItem.onTap` that opens a dialog: the menu then pops the top route, i.e. the dialog. Use the button's `onSelected` instead.
+- Don't shadow the screen's `context` in `itemBuilder: (context) => …` when an item's action needs the screen.
+- In widget tests the body comes before the AppBar in the element tree: scope `find.byIcon(...)` to `find.byType(AppBar)` for app-bar actions.
+- After `git checkout -B <branch> origin/main` the upstream is `main`: push with `git push -u origin <branch>` (a bare `git push` is refused).
 
 **How the app session works (owner's instructions):**
 - One PR per milestone from the session's branch, CI green, squash-merge, then bring the branch back in line with `main`. Notion Development row: In progress → Done. Report in chat + push notification after each milestone.
