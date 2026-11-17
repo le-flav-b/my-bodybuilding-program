@@ -215,4 +215,179 @@ abstract final class Strings {
   static const String hide = 'Hide';
   static const String show = 'Show';
   static const String hiddenFromFilters = 'Hidden from filters and pickers';
+
+  // Workout notifications
+  static const String notifyRestOverTitle = 'Rest is over';
+  static const String notifyHoldOverTitle = 'Time is up';
+  static const String notifyPaused = 'Paused';
+  static const String notifyInProgress = 'Workout in progress';
+  static String notifyRest(String session) => '$session · rest';
+  static String exerciseSetOf(String exercise, int n, int of) =>
+      '$exercise · set $n of $of';
+
+  // Relative days
+  static const String today = 'today';
+  static const String yesterday = 'yesterday';
+  static String daysAgo(int n) => '$n days ago';
+
+  // Today
+  static const String workoutInProgress = 'Workout in progress';
+  static String lastWorkoutWhen(String when) => 'Last workout $when';
+  static const String noWorkoutYet = 'No workout yet';
+  static String nextSessionOf(int place, int count) =>
+      'Next session · $place of $count';
+  static const String neverDone = 'never done';
+  static const String start = 'Start';
+  static const String otherSession = 'Other session';
+  static const String emptyWorkout = 'Empty';
+  static const String skip = 'Skip';
+  static String skipped(String name) => '$name skipped';
+  static String thisWeek(int done, int target) => 'This week · $done / $target';
+  static String streakWeeks(int n) => n == 1 ? '1 week' : '$n weeks';
+  static const String noStreak = 'No streak';
+  static String inProgressFor(String clock) => 'In progress · $clock';
+  static String exerciseProgress(int n, int of, int sets) =>
+      'Exercise $n / $of · ${sets == 1 ? '1 set' : '$sets sets'} logged';
+  static String upNextIn(String session) => 'Up next in $session';
+  static String setOfWith(int n, int of, String target) =>
+      'set $n of $of · $target';
+  static const String allSetsDone = 'Everything is logged';
+  static const String resume = 'Resume';
+  static const String startAnotherSession = 'Start another session';
+  static const String pointerFollows =
+      'The program continues after the session you actually do.';
+  static String sessionSummary(String duration, int sets, int records) =>
+      '$duration · ${setCount(sets)}'
+      '${records == 0 ? '' : ' · $records ${records == 1 ? 'PR' : 'PRs'}'}';
+  static const String nothingLoggedDiscarded =
+      'Nothing was logged, so the workout was discarded.';
+  static const String sessionHasNoExercises =
+      'This session has no exercises yet.';
+
+  // Session preview
+  static const String previewInfo = 'Changes here apply to this workout only.';
+  static const String startWorkout = 'Start workout';
+  static String lastTime(String sets) => 'Last: $sets';
+  static const String editSets = 'Edit sets';
+  static const String swap = 'Swap';
+  static const String remove = 'Remove';
+  static const String workoutAlreadyRunning =
+      'A workout is already in progress.';
+
+  // Player
+  static String elapsedAndLeft(String elapsed, int minutesLeft) =>
+      '$elapsed · ~$minutesLeft min left';
+  static const String pause = 'Pause';
+  static const String listView = 'Exercise list';
+  static const String leaveWorkout = 'Leave workout';
+  static String exerciseOf(int n, int of) => 'Exercise $n / $of';
+  static const String formCues = 'Form cues';
+  static const String note = 'Note';
+  static const String exerciseNote = 'Note for this exercise';
+  static const String exerciseNoteHint = 'How it felt, what to change…';
+  static const String changeUnit = 'Change unit';
+  static String target(String value) => 'Target $value';
+  static String lastShort(String value) => 'last $value';
+  static String lastLong(String value) => 'Last $value';
+  static const String nextExercise = 'Next exercise';
+  static const String lastExercise = 'Last exercise of the workout';
+  static const String restLabel = 'Rest';
+  static String ofTotal(String clock) => 'of $clock';
+  static String setLogged(int n, String value) => 'Set $n · $value';
+  static String loggedOn(String exercise) => '$exercise · logged';
+  static String nextSetOf(int n, int of) => 'Next · set $n of $of';
+  static const String nextUpExercise = 'Next · exercise';
+  static String setRemoved(int n) => 'Set $n removed';
+  static const String editSet = 'Edit set';
+  static const String markNotDone = 'Mark as not done';
+  static const String deleteSet = 'Delete set';
+  static const String getReady = 'Get ready';
+  static const String hold = 'Hold';
+  static const String stop = 'Stop';
+  static const String log = 'Log';
+  static String targetAndLast(String target, String? last) =>
+      last == null ? 'target $target' : 'target $target · last $last';
+  static String bestTime(String? best) =>
+      best == null ? 'as long as you can' : 'best $best';
+  static const String timedHelp =
+      'Stop early logs the time held. At 0:00 the set is logged and the '
+      'rest starts.';
+  static const String timedMaxHelp = 'Stop logs the time held.';
+  static String setN(int n) => 'Set $n';
+  static const String allDoneTitle = 'All sets are logged';
+  static const String allDoneBody = 'Finish the workout, or add something.';
+  static const String finishWorkout = 'Finish workout';
+  static const String noExercisesInWorkout = 'No exercises yet';
+  static const String noExercisesInWorkoutBody =
+      'Add the exercises you want to do in this workout.';
+  static const String paused = 'Paused';
+  static const String pausedExplanation =
+      'Workout clock and rest timer are frozen.';
+  static String nextIs(String what) => '$what next';
+  static const String finish = 'Finish';
+  static const String discardWorkoutTitle = 'Discard this workout?';
+  static const String discardWorkoutBody =
+      'Its logged sets are deleted. The program does not move on.';
+  static const String restRunning = 'Rest running';
+  static const String tapToGo = 'Go to the next exercise';
+  static const String everythingLogged = 'Everything is logged';
+
+  // Records
+  static const String newRecord = 'New record';
+  static const String nice = 'Nice!';
+  static const String heaviestLoad = 'heaviest load';
+  static const String mostReps = 'most reps';
+  static const String longestHold = 'longest hold';
+  static String previousRecord(String value) => 'Previous: $value';
+  static String wasRecord(String value) => 'was $value';
+  static String repsCount(int n) => n == 1 ? '1 rep' : '$n reps';
+  static const String pr = 'PR';
+
+  // List view
+  static String exercisesOf(String session) => '$session · exercises';
+  static String doneOf(String elapsed, int done, int of) =>
+      '$elapsed · $done / $of done';
+  static String setsDone(int done, int of) => '$done / $of sets';
+  static const String skippedLabel = 'Skipped';
+  static const String goToExercise = 'Go to exercise';
+  static const String unskip = 'Do it after all';
+  static String removeExerciseTitle(String name) => 'Remove $name?';
+  static const String removeExerciseBody =
+      'Its logged sets are removed from this workout too.';
+
+  // Leave / resume / update
+  static const String leaveTitle = 'Leave workout?';
+  static const String elapsed = 'elapsed';
+  static const String setsLogged = 'sets logged';
+  static const String exercisesLabel = 'exercises';
+  static const String finishNow = 'Finish now';
+  static const String keepGoing = 'Keep going';
+  static const String discardWorkout = 'Discard workout';
+  static const String resumeTitle = 'Resume workout?';
+  static String resumeBody(String session, String when, int sets) =>
+      '$session, started $when. ${setCount(sets)} saved.';
+  static const String finishWithLogged = "Finish with what's logged";
+  static const String updateProgramTitle = 'Update the program?';
+  static String updateProgramBody(String session) =>
+      'You changed $session during this workout:';
+  static const String keepProgram = 'No, keep it';
+  static const String update = 'Update';
+  static String changeSwapped(String from, String to) => '$from → $to';
+  static String changeAdded(String name) => 'Added $name';
+  static String changeRemoved(String name) => 'Removed $name';
+  static String changeSkipped(String name) =>
+      'Skipped $name (kept in the program)';
+  static String changeSets(String name, String from, String to) =>
+      '$name: $from → $to';
+  static const String changeReordered = 'Exercises in a new order';
+
+  // Summary
+  static const String workoutComplete = 'Workout complete';
+  static const String duration = 'Duration';
+  static const String sets = 'Sets';
+  static const String exercisesTile = 'Exercises';
+  static String newRecords(int n) => 'New records · $n';
+  static const String workoutNote = 'Workout note';
+  static const String workoutNoteHint = 'Felt strong, shoulder OK…';
+  static const String nextSessionLabel = 'Next session:';
 }

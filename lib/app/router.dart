@@ -11,6 +11,10 @@ import 'package:my_bodybuilding_program/features/settings/presentation/load_unit
 import 'package:my_bodybuilding_program/features/settings/presentation/muscles_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_screen.dart';
 import 'package:my_bodybuilding_program/features/today/presentation/today_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/session_preview_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_list_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_player_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_summary_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -31,6 +35,11 @@ abstract final class Routes {
   static String exercise(String id) => '/exercises/$id';
   static String editExercise(String id) => '/exercises/$id/edit';
   static String session(String id) => '/sessions/$id';
+  static String sessionPreview(String sessionId) => '/preview/$sessionId';
+  static const String workout = '/workout';
+  static const String workoutList = '/workout/list';
+  static String workoutSummary(String workoutId) =>
+      '/workout/summary/$workoutId';
   static const String settings = '/settings';
   static const String loadUnits = '/settings/units';
   static const String muscles = '/settings/muscles';
@@ -102,6 +111,24 @@ GoRouter router(Ref ref) {
         path: '/sessions/:id',
         builder: (context, state) =>
             SessionEditorScreen(sessionId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/preview/:id',
+        builder: (context, state) =>
+            SessionPreviewScreen(sessionId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.workout,
+        builder: (context, state) => const WorkoutPlayerScreen(),
+      ),
+      GoRoute(
+        path: Routes.workoutList,
+        builder: (context, state) => const WorkoutListScreen(),
+      ),
+      GoRoute(
+        path: '/workout/summary/:id',
+        builder: (context, state) =>
+            WorkoutSummaryScreen(workoutId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: Routes.settings,

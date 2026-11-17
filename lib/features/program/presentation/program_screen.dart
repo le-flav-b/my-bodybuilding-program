@@ -313,7 +313,21 @@ class _SessionRow extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.md),
+                IconButton(
+                  tooltip: Strings.programStartSession,
+                  onPressed: plan.exercises.isEmpty
+                      ? null
+                      : () => context.push(
+                          Routes.sessionPreview(plan.session.id),
+                        ),
+                  icon: Icon(
+                    Symbols.play_circle_rounded,
+                    fill: 1,
+                    size: 32,
+                    color: plan.exercises.isEmpty ? muted : colors.primary,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.xs),
               ],
             ),
           ),
