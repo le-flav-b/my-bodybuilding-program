@@ -319,12 +319,18 @@ abstract final class Strings {
   static const String finishWorkout = 'Finish workout';
   static const String noExercisesInWorkout = 'No exercises yet';
   static const String noExercisesInWorkoutBody =
-      'Open the list to add exercises to this workout.';
+      'Add the exercises you want to do in this workout.';
   static const String paused = 'Paused';
   static const String pausedExplanation =
       'Workout clock and rest timer are frozen.';
   static String nextIs(String what) => '$what next';
   static const String finish = 'Finish';
+  static const String discardWorkoutTitle = 'Discard this workout?';
+  static const String discardWorkoutBody =
+      'Its logged sets are deleted. The program does not move on.';
+  static const String restRunning = 'Rest running';
+  static const String tapToGo = 'Go to the next exercise';
+  static const String everythingLogged = 'Everything is logged';
 
   // Records
   static const String newRecord = 'New record';

@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:my_bodybuilding_program/app/app_shell.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_screen.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise_detail_screen.dart';
@@ -13,6 +12,9 @@ import 'package:my_bodybuilding_program/features/settings/presentation/muscles_s
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_screen.dart';
 import 'package:my_bodybuilding_program/features/today/presentation/today_screen.dart';
 import 'package:my_bodybuilding_program/features/workout/presentation/session_preview_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_list_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_player_screen.dart';
+import 'package:my_bodybuilding_program/features/workout/presentation/workout_summary_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -115,20 +117,18 @@ GoRouter router(Ref ref) {
         builder: (context, state) =>
             SessionPreviewScreen(sessionId: state.pathParameters['id']!),
       ),
-      // M3 in progress: the player, list view and summary screens are not
-      // written yet. These routes exist so the screens that link to them
-      // compile; replace the placeholder with the real screens.
       GoRoute(
         path: Routes.workout,
-        builder: (context, state) => const _NotBuiltYet(),
+        builder: (context, state) => const WorkoutPlayerScreen(),
       ),
       GoRoute(
         path: Routes.workoutList,
-        builder: (context, state) => const _NotBuiltYet(),
+        builder: (context, state) => const WorkoutListScreen(),
       ),
       GoRoute(
         path: '/workout/summary/:id',
-        builder: (context, state) => const _NotBuiltYet(),
+        builder: (context, state) =>
+            WorkoutSummaryScreen(workoutId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: Routes.settings,
@@ -146,12 +146,4 @@ GoRouter router(Ref ref) {
   );
   ref.onDispose(router.dispose);
   return router;
-}
-
-/// Placeholder for the M3 routes whose screens are not written yet.
-class _NotBuiltYet extends StatelessWidget {
-  const new();
-
-  @override
-  Widget build(BuildContext context) => Scaffold(appBar: AppBar());
 }

@@ -16,6 +16,7 @@ import 'package:my_bodybuilding_program/core/utils/date_text.dart';
 import 'package:my_bodybuilding_program/core/utils/ids.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
+import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise_picker_sheet.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
@@ -523,5 +524,185 @@ class LoadStepper extends StatelessWidget {
               if (result != null) onChanged(result.load);
             },
     );
+  }
+}
+
+/// Picks a replacement for [exercise] (the picker opens on its primary
+/// muscle). Sets already logged stay on it.
+Future<void> swapExerciseFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutExercise exercise,
+) async {
+  final current = ref.read(exercisesByIdProvider)[exercise.exerciseId];
+  final picked = await showExercisePicker(
+    context,
+    replacing: current,
+    initialMuscleIds: {?current?.mainMuscleId},
+    excludeExerciseIds: {exercise.exerciseId},
+  );
+  if (picked == null) return;
+  await ref.read(workoutControllerProvider).swap(exercise, picked);
+}
+
+/// Adds an exercise at the end of the workout and makes it current when
+/// nothing else is left to do.
+Future<void> addExerciseFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutDetail detail,
+) async {
+  final picked = await showExercisePicker(context);
+  if (picked == null) return;
+  final controller = ref.read(workoutControllerProvider);
+  final id = await controller.addExercise(detail.workout.id, picked);
+  if (detail.firstUnfinished == null) {
+    await controller.goTo(detail.workout.id, id);
+  }
+}
+
+/// "Change unit": the remaining sets of [exercise] switch unit.
+Future<void> changeUnitFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutExercise exercise,
+) async {
+  final units = ref.read(activeLoadUnitsProvider);
+  final currentUnit = exercise.nextSet?.target.unitId ?? FixedIds.kgUnit;
+  final picked = await showDialog<String>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: const Text(Strings.changeUnit),
+      children: [
+        for (final u in units)
+          SimpleDialogOption(
+            onPressed: () => Navigator.of(context).pop(u.id),
+            child: Row(
+              children: [
+                Expanded(child: Text(u.name, style: context.text.bodyLarge)),
+                Text(
+                  Strings.unitStep(formatLoadValue(u.step, 2)),
+                  style: context.text.bodySmall,
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                SizedBox(
+                  width: 24,
+                  child: u.id == currentUnit
+                      ? Icon(
+                          Symbols.check_rounded,
+                          size: 20,
+                          color: context.colors.primary,
+                        )
+                      : null,
+                ),
+              ],
+            ),
+          ),
+        SimpleDialogOption(
+          onPressed: () {
+            Navigator.of(context).pop();
+            unawaited(context.push(Routes.loadUnits));
+          },
+          child: Text(
+            Strings.manageUnits,
+            style: context.text.labelLarge!.copyWith(
+              color: context.colors.primary,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+  if (picked == null || picked == currentUnit) return;
+  await ref.read(workoutControllerProvider).changeUnit(exercise, picked);
+}
+
+/// Removes [exercise] from the workout after a confirmation.
+Future<void> removeExerciseFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutExercise exercise,
+) async {
+  final name = ref.read(exercisesByIdProvider)[exercise.exerciseId]?.name;
+  final confirmed = await showConfirmDialog(
+    context,
+    title: Strings.removeExerciseTitle(name ?? ''),
+    message: Strings.removeExerciseBody,
+    confirmLabel: Strings.remove,
+    destructive: true,
+  );
+  if (confirmed) {
+    await ref.read(workoutControllerProvider).remove(exercise.id);
+  }
+}
+
+/// Tap on a logged set during the workout: edit it or mark it not done.
+Future<void> editLoggedSetFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutExercise exercise,
+  WorkoutSet set,
+) async {
+  final measure =
+      ref.read(exercisesByIdProvider)[exercise.exerciseId]?.measure ??
+      Measure.reps;
+  final result = await showEditSetSheet(
+    context,
+    set: set,
+    measure: measure,
+    allowNotDone: true,
+  );
+  final controller = ref.read(workoutControllerProvider);
+  switch (result) {
+    case EditSetSaved(:final reps, :final seconds, :final load, :final unitId):
+      await controller.editSet(
+        set.id,
+        reps: reps,
+        seconds: seconds,
+        load: load,
+        unitId: unitId,
+      );
+    case EditSetNotDone():
+      await controller.unlogSet(set.id);
+    case EditSetDeleted():
+      await controller.deleteLoggedSet(set.id);
+    case null:
+      break;
+  }
+}
+
+/// Removes a set that is not done yet, with Undo.
+Future<void> removeSetFlow(
+  BuildContext context,
+  WidgetRef ref,
+  WorkoutSet set,
+  int number,
+) async {
+  final controller = ref.read(workoutControllerProvider);
+  await controller.removeSet(set.id);
+  if (!context.mounted) return;
+  showAppSnackBar(
+    context,
+    Strings.setRemoved(number),
+    actionLabel: Strings.undo,
+    onAction: () => unawaited(controller.restoreSet(set.id)),
+  );
+}
+
+/// Discards the workout after a confirmation.
+Future<void> confirmDiscardFlow(
+  BuildContext context,
+  WidgetRef ref,
+  String workoutId,
+) async {
+  final confirmed = await showConfirmDialog(
+    context,
+    title: Strings.discardWorkoutTitle,
+    message: Strings.discardWorkoutBody,
+    confirmLabel: Strings.discard,
+    destructive: true,
+  );
+  if (confirmed && context.mounted) {
+    await discardWorkoutFlow(context, ref, workoutId);
   }
 }
