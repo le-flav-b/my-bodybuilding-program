@@ -164,7 +164,7 @@ class TrophyOverlay extends ConsumerWidget {
   final WorkoutDetail detail;
   final VoidCallback onClose;
 
-  static const Color _scrim = Color(0xF2080A0C);
+  static const Color _scrim = Color(0xFA080A0C);
   static const Color _ink = Color(0xFF181B1E);
 
   @override
