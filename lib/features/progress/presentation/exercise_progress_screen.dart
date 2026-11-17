@@ -517,7 +517,7 @@ class MultiUnitChart extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: AppSpacing.md),
         Expanded(
           child: LineChart(
             LineChartData(
@@ -525,7 +525,6 @@ class MultiUnitChart extends StatelessWidget {
               maxX: maxX,
               minY: 0,
               maxY: 1,
-              clipData: const FlClipData.all(),
               lineBarsData: [for (final s in series) bar(s)],
               gridData: FlGridData(
                 drawVerticalLine: false,
@@ -534,6 +533,16 @@ class MultiUnitChart extends StatelessWidget {
                     FlLine(color: colors.outlineVariant, strokeWidth: 1),
               ),
               borderData: FlBorderData(show: false),
+              extraLinesData: ExtraLinesData(
+                horizontalLines: [
+                  for (final y in const [0.0, 1.0])
+                    HorizontalLine(
+                      y: y,
+                      color: colors.outlineVariant,
+                      strokeWidth: 1,
+                    ),
+                ],
+              ),
               titlesData: FlTitlesData(
                 topTitles: const AxisTitles(),
                 leftTitles: sideTitles(left),

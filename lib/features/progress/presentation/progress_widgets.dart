@@ -151,11 +151,10 @@ class StatTile extends StatelessWidget {
                 const SizedBox(width: 6),
               ],
               Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: context.text.bodyMedium,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(label, style: context.text.bodyMedium),
                 ),
               ),
             ],

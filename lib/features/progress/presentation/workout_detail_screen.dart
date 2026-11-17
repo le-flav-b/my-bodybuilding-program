@@ -124,12 +124,13 @@ class WorkoutDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(workout.sessionName),
         actions: [
-          PopupMenuButton<void>(
+          PopupMenuButton<String>(
             tooltip: Strings.more,
             icon: const Icon(Symbols.more_vert_rounded),
-            itemBuilder: (context) => [
+            onSelected: (_) => unawaited(_delete(context, ref)),
+            itemBuilder: (_) => [
               PopupMenuItem(
-                onTap: () => unawaited(_delete(context, ref)),
+                value: 'delete',
                 child: ListTile(
                   leading: Icon(Symbols.delete_rounded, color: colors.error),
                   title: Text(
@@ -408,17 +409,21 @@ class _ExerciseSection extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),
-                    Text(
-                      PlanFormat.set(
-                        reps: set.reps,
-                        seconds: set.seconds,
-                        loadValue: set.load,
-                        unitId: set.unitId,
-                        units: units,
-                      ),
-                      style: context.text.bodyLarge!.copyWith(
-                        fontSize: 17,
-                        fontFeatures: AppTheme.tabular,
+                    Flexible(
+                      child: Text(
+                        PlanFormat.set(
+                          reps: set.reps,
+                          seconds: set.seconds,
+                          loadValue: set.load,
+                          unitId: set.unitId,
+                          units: units,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.text.bodyLarge!.copyWith(
+                          fontSize: 17,
+                          fontFeatures: AppTheme.tabular,
+                        ),
                       ),
                     ),
                     if (records.contains(set.id)) ...[

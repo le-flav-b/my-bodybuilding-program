@@ -305,12 +305,17 @@ class _CalendarTabState extends ConsumerState<_CalendarTab> {
         Row(
           children: [
             StreakChip(weeks: streak.current, long: true),
-            const Spacer(),
-            Text(
-              Strings.bestStreak(streak.best),
-              style: context.text.bodyLarge!.copyWith(
-                color: colors.onSurfaceVariant,
-                fontFeatures: AppTheme.tabular,
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Text(
+                Strings.bestStreak(streak.best),
+                textAlign: TextAlign.end,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: context.text.bodyLarge!.copyWith(
+                  color: colors.onSurfaceVariant,
+                  fontFeatures: AppTheme.tabular,
+                ),
               ),
             ),
           ],
