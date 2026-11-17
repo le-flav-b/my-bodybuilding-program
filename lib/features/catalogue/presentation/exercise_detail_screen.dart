@@ -12,6 +12,7 @@ import 'package:my_bodybuilding_program/app/widgets/exercise_image.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_controller.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/exercise_progress_card.dart';
 
 /// One exercise: image, measure, muscles, form cues and my notes/setup.
 class ExerciseDetailScreen extends ConsumerWidget {
@@ -117,6 +118,8 @@ class ExerciseDetailScreen extends ConsumerWidget {
                 ],
                 const SizedBox(height: 14),
                 _NotesCard(exerciseId: exerciseId),
+                const SizedBox(height: AppSpacing.sm),
+                ExerciseProgressCard(exerciseId: exerciseId),
               ],
             ),
           ),

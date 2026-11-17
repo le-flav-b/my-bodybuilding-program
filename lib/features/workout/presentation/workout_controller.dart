@@ -108,6 +108,10 @@ class WorkoutController {
 
   Future<void> deleteLoggedSet(String setId) => _workouts.deleteSet(setId);
 
+  /// Deletes a completed workout from the history.
+  Future<void> deleteWorkout(String workoutId) =>
+      _workouts.deleteWorkout(workoutId);
+
   // -------------------------------------------------------------- deviating
 
   Future<void> goTo(String workoutId, String workoutExerciseId) async {

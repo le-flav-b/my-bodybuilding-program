@@ -26,6 +26,7 @@ import 'package:my_bodybuilding_program/features/program/presentation/program_sc
 import 'package:my_bodybuilding_program/features/progress/domain/stats.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/streak.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/streak_chip.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -613,48 +614,6 @@ class _WeekCard extends ConsumerWidget {
   }
 }
 
-/// "🔥 2 weeks", or a grey "No streak".
-class StreakChip extends StatelessWidget {
-  const new({required this.weeks, super.key});
-
-  final int weeks;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    final active = weeks > 0;
-    return Container(
-      height: 32,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      decoration: BoxDecoration(
-        color: active ? colors.secondaryContainer : colors.surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(AppRadius.full),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Symbols.local_fire_department_rounded,
-            size: 18,
-            fill: 1,
-            color: active ? context.appColors.brand : colors.onSurfaceVariant,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            active ? Strings.streakWeeks(weeks) : Strings.noStreak,
-            style: context.text.labelLarge!.copyWith(
-              color: active
-                  ? colors.onSecondaryContainer
-                  : colors.onSurfaceVariant,
-              fontFeatures: AppTheme.tabular,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _WeekDay extends StatelessWidget {
   const new({required this.date, required this.trained, required this.isToday});
 
@@ -709,52 +668,60 @@ class _LastWorkoutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerLow,
+    return Material(
+      color: colors.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      child: InkWell(
         borderRadius: BorderRadius.circular(AppRadius.lg),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: colors.surfaceContainerHigh,
-            ),
-            child: Icon(
-              Symbols.history_rounded,
-              size: 20,
-              color: colors.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${summary.sessionName} · '
-                  '${DateText.relativeDay(summary.startedAt, now)}',
-                  style: context.text.titleMedium,
+        onTap: () => context.push(Routes.workoutDetail(summary.id)),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colors.surfaceContainerHigh,
                 ),
-                Text(
-                  Strings.sessionSummary(
-                    PlanFormat.duration(summary.durationSeconds),
-                    summary.setCount,
-                    summary.recordCount,
-                  ),
-                  style: context.text.bodyMedium!.copyWith(
-                    color: colors.onSurfaceVariant,
-                    fontFeatures: AppTheme.tabular,
-                  ),
+                child: Icon(
+                  Symbols.history_rounded,
+                  size: 20,
+                  color: colors.onSurfaceVariant,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${summary.sessionName} · '
+                      '${DateText.relativeDay(summary.startedAt, now)}',
+                      style: context.text.titleMedium,
+                    ),
+                    Text(
+                      Strings.sessionSummary(
+                        PlanFormat.duration(summary.durationSeconds),
+                        summary.setCount,
+                        summary.recordCount,
+                      ),
+                      style: context.text.bodyMedium!.copyWith(
+                        color: colors.onSurfaceVariant,
+                        fontFeatures: AppTheme.tabular,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Symbols.chevron_right_rounded,
+                color: colors.onSurfaceVariant,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

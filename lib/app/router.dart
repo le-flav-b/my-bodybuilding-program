@@ -6,7 +6,9 @@ import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise
 import 'package:my_bodybuilding_program/features/profile/presentation/profile_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/session_editor_screen.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/exercise_progress_screen.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_screen.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/workout_detail_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/load_units_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/muscles_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_screen.dart';
@@ -40,6 +42,9 @@ abstract final class Routes {
   static const String workoutList = '/workout/list';
   static String workoutSummary(String workoutId) =>
       '/workout/summary/$workoutId';
+  static String exerciseProgress(String exerciseId) =>
+      '/exercise-progress/$exerciseId';
+  static String workoutDetail(String workoutId) => '/workouts/$workoutId';
   static const String settings = '/settings';
   static const String loadUnits = '/settings/units';
   static const String muscles = '/settings/muscles';
@@ -129,6 +134,16 @@ GoRouter router(Ref ref) {
         path: '/workout/summary/:id',
         builder: (context, state) =>
             WorkoutSummaryScreen(workoutId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/exercise-progress/:id',
+        builder: (context, state) =>
+            ExerciseProgressScreen(exerciseId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/workouts/:id',
+        builder: (context, state) =>
+            WorkoutDetailScreen(workoutId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: Routes.settings,
