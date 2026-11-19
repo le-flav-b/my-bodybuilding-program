@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand coral (design/tokens.json "brand"). -->
+    <color name="ic_launcher_background">#F55E42</color>
+    <!-- App surface while starting (light). -->
+    <color name="splash_background">#FCFCFC</color>
+</resources>
