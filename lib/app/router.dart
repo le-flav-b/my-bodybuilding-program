@@ -3,6 +3,7 @@ import 'package:my_bodybuilding_program/app/app_shell.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_screen.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise_detail_screen.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/exercise_edit_screen.dart';
+import 'package:my_bodybuilding_program/features/profile/presentation/bodyweight_screen.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/profile_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/session_editor_screen.dart';
@@ -45,6 +46,7 @@ abstract final class Routes {
   static String exerciseProgress(String exerciseId) =>
       '/exercise-progress/$exerciseId';
   static String workoutDetail(String workoutId) => '/workouts/$workoutId';
+  static const String bodyweight = '/bodyweight';
   static const String settings = '/settings';
   static const String loadUnits = '/settings/units';
   static const String muscles = '/settings/muscles';
@@ -144,6 +146,10 @@ GoRouter router(Ref ref) {
         path: '/workouts/:id',
         builder: (context, state) =>
             WorkoutDetailScreen(workoutId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.bodyweight,
+        builder: (context, state) => const BodyweightScreen(),
       ),
       GoRoute(
         path: Routes.settings,
