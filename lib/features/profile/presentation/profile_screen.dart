@@ -17,6 +17,7 @@ import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogu
 import 'package:my_bodybuilding_program/features/profile/domain/body_weight.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/body_weight_providers.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/bodyweight_screen.dart';
+import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
@@ -118,11 +119,11 @@ class ProfileScreen extends ConsumerWidget {
               footer: _Delta(
                 diff: stats.thisMonth.seconds - stats.lastMonth.seconds,
                 text: Strings.vsMonth(
-                  longDuration(
+                  PlanFormat.duration(
                     (stats.thisMonth.seconds - stats.lastMonth.seconds).abs(),
-                  ).replaceAll(' min', ''),
+                  ),
                   lastShort,
-                  longDuration(stats.lastMonth.seconds),
+                  PlanFormat.duration(stats.lastMonth.seconds),
                 ),
               ),
             ),
@@ -286,10 +287,14 @@ class _BodyweightCard extends ConsumerWidget {
                               color: colors.onSurfaceVariant,
                             ),
                             const SizedBox(width: 4),
-                            Text(
-                              Strings.vsLastWeek(weightText(change.abs())),
-                              style: context.text.bodyMedium!.copyWith(
-                                fontFeatures: AppTheme.tabular,
+                            Flexible(
+                              child: Text(
+                                Strings.vsLastWeek(weightText(change.abs())),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.text.bodyMedium!.copyWith(
+                                  fontFeatures: AppTheme.tabular,
+                                ),
                               ),
                             ),
                           ],
@@ -312,7 +317,15 @@ class _BodyweightCard extends ConsumerWidget {
                 child: IconButton.filled(
                   tooltip: Strings.logWeight,
                   onPressed: () => unawaited(logWeightFlow(context, ref)),
-                  icon: const Icon(Symbols.add_rounded, size: 28),
+                  style: IconButton.styleFrom(
+                    backgroundColor: colors.primary,
+                    foregroundColor: colors.onPrimary,
+                  ),
+                  icon: Icon(
+                    Symbols.add_rounded,
+                    size: 28,
+                    color: colors.onPrimary,
+                  ),
                 ),
               ),
             ],

@@ -389,6 +389,16 @@ class _WeightChart extends StatelessWidget {
               FlLine(color: colors.outlineVariant, strokeWidth: 1),
         ),
         borderData: FlBorderData(show: false),
+        extraLinesData: ExtraLinesData(
+          horizontalLines: [
+            for (final y in [scale.min, scale.max])
+              HorizontalLine(
+                y: y,
+                color: colors.outlineVariant,
+                strokeWidth: 1,
+              ),
+          ],
+        ),
         titlesData: FlTitlesData(
           topTitles: const AxisTitles(),
           rightTitles: const AxisTitles(),
