@@ -156,7 +156,7 @@ class _ExerciseProgressScreenState
                               ),
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      _RangeRow(
+                      ChartRangeRow(
                         value: _range,
                         onChanged: (r) => setState(() => _range = r),
                       ),
@@ -337,52 +337,6 @@ class _LegendChip extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _RangeRow extends StatelessWidget {
-  const new({required this.value, required this.onChanged});
-
-  final ChartRange value;
-  final ValueChanged<ChartRange> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Row(
-      children: [
-        for (final r in ChartRange.values)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Material(
-                color: r == value
-                    ? colors.surfaceContainerHighest
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(AppRadius.full),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(AppRadius.full),
-                  onTap: () => onChanged(r),
-                  child: SizedBox(
-                    height: 40,
-                    child: Center(
-                      child: Text(
-                        r.label,
-                        style: context.text.labelLarge!.copyWith(
-                          fontSize: 15,
-                          color: r == value
-                              ? colors.onSurface
-                              : colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
     );
   }
 }

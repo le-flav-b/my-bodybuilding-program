@@ -6,6 +6,7 @@ import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
 import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/chart_series.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 
@@ -238,4 +239,51 @@ class RecordCountBadge extends StatelessWidget {
       ],
     ),
   );
+}
+
+/// 1M / 3M / 6M / 1Y / All under a chart.
+class ChartRangeRow extends StatelessWidget {
+  const new({required this.value, required this.onChanged, super.key});
+
+  final ChartRange value;
+  final ValueChanged<ChartRange> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Row(
+      children: [
+        for (final r in ChartRange.values)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Material(
+                color: r == value
+                    ? colors.surfaceContainerHighest
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(AppRadius.full),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(AppRadius.full),
+                  onTap: () => onChanged(r),
+                  child: SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        r.label,
+                        style: context.text.labelLarge!.copyWith(
+                          fontSize: 15,
+                          color: r == value
+                              ? colors.onSurface
+                              : colors.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }

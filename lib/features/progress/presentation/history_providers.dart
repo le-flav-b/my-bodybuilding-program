@@ -63,3 +63,10 @@ List<DoneExercise> doneExercises(Ref ref) {
   });
   return result..sort((a, b) => b.lastDone.compareTo(a.lastDone));
 }
+
+/// Totals and this month vs last month.
+@riverpod
+Stats stats(Ref ref) => StatsRule.compute(
+  ref.watch(workoutSummariesProvider).value ?? const <WorkoutSummary>[],
+  ref.watch(clockProvider)().toLocal(),
+);

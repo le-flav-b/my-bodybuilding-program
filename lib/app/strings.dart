@@ -82,6 +82,32 @@ abstract final class Strings {
   static const String profileEmptyTitle = 'No stats yet';
   static const String profileEmptyBody =
       'Bodyweight and training stats appear here once you start logging.';
+  static String bodyweightWhen(String when) => 'Bodyweight · $when';
+  static const String bodyweightTitle = 'Bodyweight';
+  static const String noWeighIn = 'No weigh-in yet';
+  static const String logWeight = 'Log weight';
+  static const String editWeight = 'Edit weigh-in';
+  static const String weightKg = 'Weight (kg)';
+  static const String weightInvalid = 'Enter a weight between 20 and 400 kg.';
+  static const String noteOptional = 'Note (optional)';
+  static String vsLastWeek(String change) => '$change kg vs last week';
+  static String inDays(String change, int days) => '$change kg in $days days';
+  static const String deleteWeighInTitle = 'Delete this weigh-in?';
+  static const String noWeighInsBody =
+      'Log your weight to follow its trend over time.';
+  static const String workoutsTile = 'Workouts';
+  static const String timeTrained = 'Time trained';
+  static const String setsTile = 'Sets';
+  static const String streakBest = 'Streak · best';
+  static const String weeksUnit = 'wk';
+  static String workoutsMonth(String month) => 'Workouts · $month';
+  static String timeMonth(String month) => 'Time · $month';
+  static String vsMonth(String diff, String month, String value) =>
+      '$diff vs $month ($value)';
+  static const String latestRecords = 'Latest records';
+  static const String heaviest = 'heaviest';
+  static String todayAt(String time) => 'Today $time';
+  static const String noRecordsYet = 'Records appear here as you beat them.';
 
   // Common
   static const String cancel = 'Cancel';
@@ -237,6 +263,17 @@ abstract final class Strings {
   static const String muscles = 'Muscles';
   static const String musclesSubtitle = 'Used to tag and filter exercises';
   static String muscleCount(int n) => n == 1 ? '1 muscle' : '$n muscles';
+  static const String workoutSection = 'Workout';
+  static const String defaultRest = 'Default rest';
+  static const String timerSound = 'Timer sound';
+  static const String timerVibration = 'Timer vibration';
+  static const String keepScreenOn = 'Keep screen on';
+  static const String duringWorkouts = 'During workouts';
+  static const String streakSection = 'Streak';
+  static const String weeklyTarget = 'Weekly target';
+  static const String workoutsPerWeek = 'Workouts per week';
+  static const String about = 'About';
+  static const String version = 'Version';
 
   // Load units
   static const String unitsNeverConverted =

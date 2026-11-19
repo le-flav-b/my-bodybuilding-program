@@ -144,14 +144,14 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - [x] M2 Catalogue & program (v0.3.0)
   - [x] M3 Workout (v0.4.0)
   - [x] M4 Progress (v0.5.0)
-  - [ ] M5 Profile ← *next*
-  - [ ] M6 Release
+  - [x] M5 Profile (v0.6.0)
+  - [ ] M6 Release ← *next*
 
 ## App session: current state / next step
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program, M3 Workout, M4 Progress.
+**Done so far:** M0 Setup, M1 Data layer, M2 Catalogue & program, M3 Workout, M4 Progress, M5 Profile.
 - M0: 4-tab shell, theme from `design/tokens.json`, CI.
 - M1: Drift database, repositories, seed import, all domain rules with unit tests.
 - M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (`showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session, play → preview), session editor, Settings (Appearance + Library), Load units, Muscles.
@@ -159,7 +159,9 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 
 - M4: Progress tab (`progress_screen.dart`: Calendar with week marks, streak and month tiles; Exercises done with search, best and sparkline; History grouped by month with totals and PR badges), Exercise progress (`exercise_progress_screen.dart`: record tiles per unit, legend chips, `MultiUnitChart` on fl_chart with each series normalised by `ChartScale`, range 1M–All, all sets grouped by workout), Workout detail (`workout_detail_screen.dart`: note, edit/delete set, exercise note/remove, delete workout), links from Today's last-workout card and the exercise detail (`ExerciseProgressCard`). Pure rules added: `CalendarRule`, `ChartScale`. Shared widgets in `progress_widgets.dart` (`StatTile`, `statValue`, `Sparkline`, `RecordCountBadge`, `headlineRecord`, `longDuration`) and `streak_chip.dart`.
 
-**Next step:** M5 Profile (bodyweight log + chart, stats summary, complete Settings: Workout section with default rest / sound / vibration / keep screen on, Streak weekly target stepper, About with version). Set its Notion row to In progress first. Already there: `BodyWeightRepository`, `BodyWeightTrend`, `StatsRule`, `Records.latest`, `streakProvider`, `StatTile`/`statValue`/`Sparkline` (reuse for the Profile tiles and the bodyweight card), `MultiUnitChart`'s approach for the bodyweight chart (single series). The Profile tab is still the M0 placeholder; Settings has Appearance + Library only. Then: bump to `0.6.0+6`, screenshots (`tool/screenshots/m5_test.dart`), PR, CI, squash-merge, Notion Done, run "Release APK" on main, report with the release link.
+- M5: Profile tab (`profile/presentation/profile_screen.dart`: bodyweight card with sparkline and +, stat tiles, this month vs last, latest 5 records), Bodyweight (`bodyweight_screen.dart`: value, change over 30 days, trend chart, entries with edit/delete, Log weight; `body_weight_dialog.dart`, `logWeightFlow`), Settings complete (Workout: default rest, sound, vibration, keep screen on; Streak: weekly target 1–7; About: `AppInfo.version`, kept equal to the pubspec version by `test/app/app_info_test.dart`). `ChartRangeRow` moved to `progress_widgets.dart`.
+
+**Next step:** M6 Release (v1.0.0): app icon (adaptive, from the design's brand: coral logo), splash (Android 12+ splash API via `android/app/src/main/res`, no new dependency unless justified), polish pass over every screen (light/dark screenshots vs `design/screens`), README build section, bump to `1.0.0+7` (and `AppInfo.version`), PR, CI, squash-merge, Notion M6 Done, run "Release APK" on main (publishes v1.0.0), report with the release link. Check the Notion M6 row's description first.
 
 **UI building blocks (M2):** `lib/app/widgets/`: `ImageWell`, `ExerciseImageView` / `ExerciseThumb` (seed image, user photo or muscle placeholder), `Overline`, `InfoLine`, `PillBadge`, `TabTitle`, `SearchField`, `AppFilterChip`, `BigButton`, `EmptyState`, dialogs (`showConfirmDialog`, `showTextPrompt`, `showAppSnackBar`), value dialogs (`showGoalDialog` for reps/seconds/rest with optional "max", `showLoadDialog`). Tonal buttons use `AppTheme.tonal(colors)` (the M3 `FilledButton.tonal` would be yellow here). App bars: back-arrow screens use the theme's title spacing (title at 56 dp); tab screens set `titleSpacing: AppSpacing.lg`. Strings are all in `lib/app/strings.dart`.
 

@@ -1,5 +1,6 @@
 import 'package:my_bodybuilding_program/core/utils/ids.dart';
 import 'package:my_bodybuilding_program/features/catalogue/data/catalogue_repository.dart';
+import 'package:my_bodybuilding_program/features/profile/data/body_weight_repository.dart';
 import 'package:my_bodybuilding_program/features/program/data/program_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -137,6 +138,21 @@ class WorkoutData {
     }
     clock.now = now;
     await _program.setNextSession(demo.pushId);
+  }
+
+  /// A weigh-in every 3 days over [days] days, slowly going down
+  /// (80.0 → about 78.4 kg).
+  Future<void> bodyWeights({int days = 90}) async {
+    final repo = app.container.read(bodyWeightRepositoryProvider);
+    final now = app.clock.now;
+    for (var d = days; d >= 0; d -= 3) {
+      final kg = 78.4 + 1.6 * d / days + (d % 9 == 0 ? 0.2 : 0);
+      await repo.addEntry(
+        measuredAt: now.subtract(Duration(days: d, hours: 11)),
+        weightKg: (kg * 10).round() / 10,
+        note: d == 3 ? 'after holidays' : null,
+      );
+    }
   }
 
   Future<String> startPush() => _start(demo.pushId);
