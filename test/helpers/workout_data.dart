@@ -1,3 +1,4 @@
+import 'package:my_bodybuilding_program/core/utils/ids.dart';
 import 'package:my_bodybuilding_program/features/catalogue/data/catalogue_repository.dart';
 import 'package:my_bodybuilding_program/features/program/data/program_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
@@ -67,6 +68,73 @@ class WorkoutData {
       }
     }
     await _workouts.finish(pull);
+    clock.now = now;
+    await _program.setNextSession(demo.pushId);
+  }
+
+  /// Twelve weeks of Pull A / Push A / Legs on Mon, Wed and Fri up to
+  /// now, with loads going up. Leg curl moves from kg to "level" halfway
+  /// (two units on one chart). The pointer ends on Push A.
+  Future<void> richHistory({int weeks = 12}) async {
+    final clock = app.clock;
+    final now = clock.now;
+    final sessions = [demo.pullId, demo.pushId, demo.legsId];
+    final thisMonday = DateTime.utc(
+      now.year,
+      now.month,
+      now.day - (now.weekday - 1),
+      18,
+    );
+    var n = 0;
+    for (var w = 0; w < weeks; w++) {
+      final monday = thisMonday.subtract(Duration(days: 7 * (weeks - 1 - w)));
+      final p = weeks == 1 ? 1.0 : w / (weeks - 1);
+      for (final dayOffset in const [0, 2, 4]) {
+        final start = monday.add(Duration(days: dayOffset));
+        if (!start.isBefore(now)) continue;
+        clock.now = start;
+        final id = await _start(sessions[n++ % sessions.length]);
+        final detail = (await _workouts.getWorkout(id))!;
+        for (final e in detail.exercises) {
+          final key = demo.bySeedKey.entries
+              .firstWhere((x) => x.value.id == e.exerciseId)
+              .key;
+          for (final (i, s) in e.sets.indexed) {
+            clock.advance(const Duration(minutes: 2));
+            final t = s.target;
+            var load = t.load;
+            var unitId = t.unitId;
+            if (key == 'barbell_bench_press') {
+              load = 32.5 + ((p * 10) / 2.5).round() * 2.5;
+            } else if (key == 'leg_curl') {
+              if (w < weeks ~/ 2) {
+                load = 30 + w * 2.5;
+                unitId = FixedIds.kgUnit;
+              } else {
+                load = 5.0 + (w - weeks ~/ 2) ~/ 2;
+                unitId = demo.levelUnitId;
+              }
+            } else if (load != null) {
+              load = load + (p * 4).round();
+            }
+            await _workouts.logSet(
+              s.id,
+              reps: t.seconds != null
+                  ? null
+                  : t.isMax
+                  ? 10 + w ~/ 3
+                  : (t.reps ?? 10) - (i == e.sets.length - 1 ? 1 : 0),
+              seconds: t.seconds == null ? null : 30 + w * 3,
+              load: load,
+              unitId: load == null ? null : unitId,
+              startRest: false,
+            );
+          }
+        }
+        clock.advance(const Duration(minutes: 5));
+        await _workouts.finish(id);
+      }
+    }
     clock.now = now;
     await _program.setNextSession(demo.pushId);
   }

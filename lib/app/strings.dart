@@ -25,6 +25,58 @@ abstract final class Strings {
   static const String progressEmptyBody =
       'Your calendar, charts and records appear here after your first '
       'workout.';
+  static const String calendarTab = 'Calendar';
+  static const String exercisesTab = 'Exercises';
+  static const String historyTab = 'History';
+  static const String previousMonth = 'Previous month';
+  static const String nextMonth = 'Next month';
+  static const String weekReached = 'Weekly target reached';
+  static const String weekMissed = 'Weekly target missed';
+  static const String weekCurrent = 'This week';
+  static String streakLong(int n) =>
+      n == 1 ? '1 week streak' : '$n week streak';
+  static String bestStreak(int n) => n == 1 ? 'Best: 1 week' : 'Best: $n weeks';
+  static String workoutsIn(String month) => 'Workouts in $month';
+  static String timeIn(String month) => 'Time in $month';
+  static const String hoursUnit = 'h';
+  static const String minutesUnit = 'm';
+  static const String searchDone = "Search exercises you've done";
+  static const String sortedByLastDone = 'Sorted by last done';
+  static String bestValue(String value) => 'best $value';
+  static String monthTotals(int workouts, String time) =>
+      '${workouts == 1 ? '1 workout' : '$workouts workouts'} · $time';
+  static String workoutsOnDay(String day) => 'Workouts on $day';
+  static const String noDoneExercises = 'No exercise done yet';
+  static String noDoneMatch(String query) => 'Nothing done matches "$query"';
+  static const String exerciseInfo = 'Exercise details';
+  static String heaviestIn(String unit) => 'Heaviest · $unit';
+  static const String mostRepsTitle = 'Most reps';
+  static const String longestHoldTitle = 'Longest hold';
+  static String allSets(int workouts) =>
+      'All sets · ${workouts == 1 ? '1 workout' : '$workouts workouts'}';
+  static const String noSetsInRange = 'No sets in this period';
+  static const String repsSeries = 'reps';
+  static const String timeSeries = 'time';
+  static String progressLink(String best, int workouts) =>
+      '$best · ${workouts == 1 ? '1 workout' : '$workouts workouts'}';
+  static const String seeProgress = 'Progress';
+  static const String notDoneYet = 'Not done yet';
+
+  // Workout detail
+  static const String deleteWorkout = 'Delete workout';
+  static const String deleteWorkoutTitle = 'Delete this workout?';
+  static const String deleteWorkoutBody =
+      'Its sets are removed from your history, records and charts.';
+  static const String editNote = 'Edit note';
+  static const String addNote = 'Add a note';
+  static const String noteEmpty = 'No note';
+  static const String removeFromWorkout = 'Remove from this workout';
+  static String removeLoggedExerciseTitle(String name) =>
+      'Remove $name from this workout?';
+  static const String removeLoggedExerciseBody =
+      'Its sets are removed from your history, records and charts.';
+  static const String workoutDeleted = 'Workout deleted';
+  static const String workoutNotFound = 'This workout no longer exists.';
 
   // Profile
   static const String profileEmptyTitle = 'No stats yet';
