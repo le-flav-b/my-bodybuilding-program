@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components 4 · Dialogs, sheets, empty states, trophy, forms</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="review">
+<template>
+  <div class="spec-h">Dialog · Leave workout (X in the player)</div>
+  <div class="frame scrim">
+    <div class="dialog">
+      <h2>Leave workout?</h2>
+      <div class="summary"><div><b>38:12</b>elapsed</div><div><b>14</b>sets logged</div><div><b>3 / 6</b>exercises</div></div>
+      <div class="vacts">
+        <button class="btn filled block"><span class="i">flag</span>Finish now</button>
+        <button class="btn outlined block">Keep going</button>
+        <button class="btn text danger block">Discard workout</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="spec-h">Dialog · Resume workout (on launch)</div>
+  <div class="frame scrim">
+    <div class="dialog">
+      <div class="di"><span class="i s40">restore</span></div>
+      <h2 style="text-align:center">Resume workout?</h2>
+      <p style="text-align:center">Push A, started today at 18:04. 14 sets are saved.</p>
+      <div class="vacts">
+        <button class="btn filled block"><span class="i fill">play_arrow</span>Resume</button>
+        <button class="btn outlined block">Finish with what's logged</button>
+        <button class="btn text danger block">Discard</button>
+      </div>
+    </div>
+  </div>
+  <p class="spec-n">Multi-choice dialogs stack full-width buttons (48 dp), safest main action first, destructive last as a red text button. surfaceContainerHigh, radius 28.</p>
+
+  <div class="spec-h">Dialog · Update the program?</div>
+  <div class="frame scrim">
+    <div class="dialog">
+      <h2>Update the program?</h2>
+      <p style="margin-bottom:12px">You changed Push A during this workout:</p>
+      <ul class="changes">
+        <li><span class="i">swap_horiz</span>Incline dumbbell press → Incline bench press</li>
+        <li><span class="i">add</span>Added a 4th set to Dips</li>
+        <li><span class="i">edit</span>Overhead press: 30 → 32.5 kg</li>
+      </ul>
+      <div class="acts"><button class="btn text">No, keep it</button><button class="btn filled">Update</button></div>
+    </div>
+  </div>
+
+  <div class="spec-h">Dialog · Confirm delete / archive</div>
+  <div class="frame scrim">
+    <div class="dialog">
+      <h2>Archive "Leg press"?</h2>
+      <p>It has history, so it can't be deleted. It will be hidden from the catalogue and pickers, and stay in your history and charts. You can restore it any time.</p>
+      <div class="acts"><button class="btn text">Cancel</button><button class="btn text">Archive</button></div>
+    </div>
+  </div>
+  <p class="spec-n">Two-choice dialogs: right-aligned text/filled buttons (M3). Delete wording uses a red "Delete" text button.</p>
+
+  <div class="spec-h">Snackbar · undo</div>
+  <div class="frame" style="padding:16px">
+    <div class="snackbar"><span class="grow">Set 3 removed</span><button class="btn text">Undo</button></div>
+  </div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+
+<div class="review">
+<template>
+  <div class="spec-h">Trophy overlay · new PR</div>
+  <div class="frame trophy">
+    <img src="assets/img/trophy.png" alt="">
+    <div class="k">New record</div>
+    <div class="v">42.5 kg × 10</div>
+    <div class="s">Bench press · heaviest load</div>
+    <div class="was">Previous: 40 kg (12 Oct)</div>
+    <button class="btn big filled" style="background:var(--ctrophy);color:#181B1E;min-width:200px">Nice!</button>
+  </div>
+  <p class="spec-n">Full-screen dark overlay over the player, shown right after the set is logged (the rest timer keeps running behind it). Reuses trophy.png with a short confetti burst. Tap anywhere or "Nice!" to close; auto-closes after 4 s.</p>
+
+  <div class="spec-h">Resume banner (Today, workout in progress)</div>
+  <div class="frame" style="padding:16px">
+    <div class="banner">
+      <div class="body"><div class="s"><span class="pulse"></span>In progress · 38:12</div><div class="t">Push A</div><div class="s">Exercise 3 / 6 · 14 sets logged</div></div>
+      <div class="go"><span class="i fill s32">play_arrow</span></div>
+    </div>
+  </div>
+
+  <div class="spec-h">Empty states</div>
+  <div class="frame">
+    <div class="empty">
+      <div class="ei"><span class="i s40">replay</span></div>
+      <h3>No sessions yet</h3>
+      <p>Your program is a loop of sessions. Create the first one and Today will tell you what's next.</p>
+      <button class="btn filled"><span class="i">add</span>Create your first session</button>
+    </div>
+    <div class="divider"></div>
+    <div class="empty">
+      <div class="ei"><span class="i s40">monitoring</span></div>
+      <h3>No progress yet</h3>
+      <p>Finish a workout and your history, bests and charts appear here.</p>
+    </div>
+    <div class="divider"></div>
+    <div class="empty" style="padding:16px">
+      <div class="ei" style="width:64px;height:64px"><span class="i">search_off</span></div>
+      <h3 style="font-size:16px;line-height:24px">No exercise matches "lag"</h3>
+      <button class="btn text"><span class="i">add</span>Create "lag"</button>
+    </div>
+  </div>
+  <p class="spec-n">Empty states use an icon in a 96 dp circle (no illustration since v1.0.1). Search: offers to create the exercise.</p>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+
+<div class="review">
+<template>
+  <div class="spec-h">Bottom sheet · exercise picker</div>
+  <div class="frame" style="background:var(--csurface-container-low)">
+    <div class="sheet">
+      <div class="grab"></div>
+      <div class="hrow" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0">Swap exercise</h2><button class="btn text"><span class="i">add</span>New</button></div>
+      <div class="search"><span class="i">search</span><span class="grow">Search exercises</span></div>
+      <div class="chips" style="margin:12px 0 4px;flex-wrap:nowrap;overflow:hidden">
+        <span class="chip on"><span class="i">check</span>Chest</span><span class="chip">Back</span><span class="chip">Shoulders</span><span class="chip">Triceps</span><span class="chip">Legs</span>
+      </div>
+      <div class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="last" style="font-size:14px;line-height:20px">Chest · Triceps · Shoulders</div></div></div>
+      <div class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/incline_dumbbell_press.png" alt=""></div><div class="body"><div class="name">Incline dumbbell press</div><div class="last" style="font-size:14px;line-height:20px">Chest · Shoulders</div></div></div>
+      <div class="ex-row"><div class="well" style="width:56px;height:56px"><img src="assets/img/dumbbell_fly.png" alt=""></div><div class="body"><div class="name">Dumbbell fly</div><div class="last" style="font-size:14px;line-height:20px">Chest</div></div></div>
+      <div class="ex-row"><div class="well ph" data-muscle="Chest" style="width:56px;height:56px"><img src="assets/img/placeholder_chest.png" alt=""></div><div class="body"><div class="name">Cable crossover</div><div class="last" style="font-size:14px;line-height:20px">Chest</div></div></div>
+    </div>
+  </div>
+  <p class="spec-n">Modal bottom sheet, radius 28 top, opens at ~90 % height. Title by context: "Add exercise" / "Swap exercise". Search + muscle filter chips (multi-select, scrollable). When swapping, chips start on the current exercise's primary muscle. Tap a row = pick. "New" → Exercise edit, then returns the new exercise.</p>
+
+  <div class="spec-h">Filter chips · search</div>
+  <div class="frame stack" style="padding:16px">
+    <div class="search"><span class="i">search</span><span class="grow" style="color:var(--con-surface)">press</span><span class="i">close</span></div>
+    <div class="chips"><span class="chip on"><span class="i">check</span>Chest</span><span class="chip on"><span class="i">check</span>Shoulders</span><span class="chip">Back</span><span class="chip">Legs</span><span class="chip">Abs</span><span class="chip"><span class="i">inventory_2</span>Archived</span></div>
+  </div>
+
+  <div class="spec-h">Unit editor (dialog)</div>
+  <div class="frame scrim">
+    <div class="dialog" style="--fieldbg:var(--csurface-container-high)">
+      <h2>New unit</h2>
+      <div class="stack" style="gap:20px">
+        <div><div class="field focus"><label>Name</label>level</div><div class="helper">Shown after the value, e.g. "6 level"</div></div>
+        <div class="hrow" style="flex-wrap:nowrap">
+          <div style="flex:1"><div class="field"><label>Step</label>1</div></div>
+          <div style="flex:1.3"><div class="t-label-medium" style="color:var(--con-surface-variant);margin:0 0 4px 4px">Decimals</div><div class="seg"><span class="on">0</span><span>1</span><span>2</span></div></div>
+        </div>
+        <div class="helper" style="margin:-8px 0 0">Preview: 5 → 6 → 7 level</div>
+      </div>
+      <div class="acts" style="margin-top:24px"><button class="btn text">Cancel</button><button class="btn filled">Save</button></div>
+    </div>
+  </div>
+  <p class="spec-n">Same dialog for edit, with an "Archive" text button on the left (kg cannot be archived or renamed).</p>
+
+  <div class="spec-h">Settings list tiles</div>
+  <div class="frame" style="padding:0 16px">
+    <div class="section-label">Workout</div>
+    <div class="list-tile"><span class="lead"><span class="i">timer</span></span><div class="body"><div class="t">Default rest</div></div><span class="trail">1:30<span class="i">chevron_right</span></span></div>
+    <div class="list-tile"><span class="lead"><span class="i">volume_up</span></span><div class="body"><div class="t">Timer sound</div></div><span class="switch on"></span></div>
+    <div class="list-tile"><span class="lead"><span class="i">vibration</span></span><div class="body"><div class="t">Timer vibration</div></div><span class="switch on"></span></div>
+    <div class="list-tile"><span class="lead"><span class="i">light_mode</span></span><div class="body"><div class="t">Keep screen on</div><div class="s">During workouts</div></div><span class="switch"></span></div>
+  </div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>

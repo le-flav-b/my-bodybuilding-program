@@ -1,0 +1,121 @@
+/* GENERATED from design/tokens.json by tools/build_tokens.mjs. Do not edit. */
+@font-face{font-family:Kameron;src:url(assets/fonts/kameron_bold.ttf);font-weight:700}
+@font-face{font-family:Inter;src:url(assets/fonts/Inter-Regular.otf);font-weight:400}
+@font-face{font-family:Inter;src:url(assets/fonts/Inter-Medium.otf);font-weight:500}
+@font-face{font-family:Inter;src:url(assets/fonts/Inter-SemiBold.otf);font-weight:600}
+@font-face{font-family:Inter;src:url(assets/fonts/Inter-Bold.otf);font-weight:700}
+[data-theme="light"]{color-scheme:light;
+  --cprimary:#C23E27;
+  --con-primary:#FCFCFC;
+  --cprimary-container:#FFDAD2;
+  --con-primary-container:#4A1006;
+  --csecondary:#FFC854;
+  --con-secondary:#181B1E;
+  --csecondary-container:#FFEFC7;
+  --con-secondary-container:#3D2A00;
+  --cerror:#BA1A1A;
+  --con-error:#FFFFFF;
+  --cerror-container:#FFDAD6;
+  --con-error-container:#410002;
+  --csurface:#FCFCFC;
+  --con-surface:#181B1E;
+  --con-surface-variant:#5A5F64;
+  --csurface-container-lowest:#FFFFFF;
+  --csurface-container-low:#F6F6F6;
+  --csurface-container:#EEEEEE;
+  --csurface-container-high:#E6E6E6;
+  --csurface-container-highest:#DEDFE0;
+  --coutline:#82878C;
+  --coutline-variant:#D3D5D7;
+  --cinverse-surface:#2D3135;
+  --con-inverse-surface:#EEEEEE;
+  --cinverse-primary:#F68974;
+  --cscrim:#000000;
+  --cbrand:#F55E42;
+  --cbrand-light:#F68974;
+  --ctrophy:#FFC854;
+  --ctrophy-text:#8A5A00;
+  --csuccess:#2E7D4F;
+  --cimage-well:#FCFCFC;
+  --cchart1:#E04A2E;
+  --cchart2:#2F7BC4;
+  --cchart3:#7A55C9;
+  --cchart4:#23885F;
+}
+[data-theme="dark"]{color-scheme:dark;
+  --cprimary:#F68974;
+  --con-primary:#181B1E;
+  --cprimary-container:#6B2416;
+  --con-primary-container:#FFDAD2;
+  --csecondary:#FFC854;
+  --con-secondary:#181B1E;
+  --csecondary-container:#5A4300;
+  --con-secondary-container:#FFEFC7;
+  --cerror:#FFB4AB;
+  --con-error:#690005;
+  --cerror-container:#93000A;
+  --con-error-container:#FFDAD6;
+  --csurface:#181B1E;
+  --con-surface:#EEEEEE;
+  --con-surface-variant:#B4B8BC;
+  --csurface-container-lowest:#121417;
+  --csurface-container-low:#202327;
+  --csurface-container:#2D3135;
+  --csurface-container-high:#373B40;
+  --csurface-container-highest:#42464B;
+  --coutline:#8C9196;
+  --coutline-variant:#43474C;
+  --cinverse-surface:#EEEEEE;
+  --con-inverse-surface:#2D3135;
+  --cinverse-primary:#C23E27;
+  --cscrim:#000000;
+  --cbrand:#F55E42;
+  --cbrand-light:#F68974;
+  --ctrophy:#FFC854;
+  --ctrophy-text:#FFC854;
+  --csuccess:#6FD49B;
+  --cimage-well:#FCFCFC;
+  --cchart1:#F68974;
+  --cchart2:#6CB4F5;
+  --cchart3:#B79BF2;
+  --cchart4:#5FD3A0;
+}
+:root{
+  --s-xxs:2px;
+  --s-xs:4px;
+  --s-sm:8px;
+  --s-md:12px;
+  --s-lg:16px;
+  --s-xl:24px;
+  --s-xxl:32px;
+  --s-xxxl:48px;
+  --r-xs:4px;
+  --r-sm:8px;
+  --r-md:12px;
+  --r-lg:16px;
+  --r-xl:28px;
+  --r-full:999px;
+  --ztouch-target:48px;
+  --zbutton-height:48px;
+  --zbig-button-height:64px;
+  --znav-bar-height:80px;
+  --zapp-bar-height:64px;
+  --zscreen-width:412px;
+  --zscreen-height:915px;
+  --zscreen-padding:16px;
+}
+.t-timer{font-family:Inter, sans-serif;font-size:96px;line-height:104px;font-weight:600;letter-spacing:-2px;font-variant-numeric:tabular-nums;}
+.t-display-small{font-family:Inter, sans-serif;font-size:40px;line-height:48px;font-weight:600;letter-spacing:-0.5px;font-variant-numeric:tabular-nums;}
+.t-headline-large{font-family:Inter, sans-serif;font-size:32px;line-height:40px;font-weight:700;letter-spacing:-0.5px;}
+.t-headline-medium{font-family:Inter, sans-serif;font-size:28px;line-height:36px;font-weight:700;letter-spacing:-0.25px;}
+.t-headline-small{font-family:Inter, sans-serif;font-size:24px;line-height:32px;font-weight:600;letter-spacing:0px;}
+.t-title-large{font-family:Inter, sans-serif;font-size:22px;line-height:28px;font-weight:600;letter-spacing:0px;}
+.t-title-medium{font-family:Inter, sans-serif;font-size:16px;line-height:24px;font-weight:600;letter-spacing:0.1px;}
+.t-title-small{font-family:Inter, sans-serif;font-size:14px;line-height:20px;font-weight:600;letter-spacing:0.1px;}
+.t-body-large{font-family:Inter, sans-serif;font-size:16px;line-height:24px;font-weight:400;letter-spacing:0.15px;}
+.t-body-medium{font-family:Inter, sans-serif;font-size:14px;line-height:20px;font-weight:400;letter-spacing:0.2px;}
+.t-body-small{font-family:Inter, sans-serif;font-size:12px;line-height:16px;font-weight:400;letter-spacing:0.3px;}
+.t-label-large{font-family:Inter, sans-serif;font-size:14px;line-height:20px;font-weight:600;letter-spacing:0.1px;}
+.t-label-medium{font-family:Inter, sans-serif;font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.4px;}
+.t-label-small{font-family:Inter, sans-serif;font-size:11px;line-height:16px;font-weight:600;letter-spacing:0.5px;}
+.t-logo{font-family:Kameron, serif;font-size:22px;line-height:28px;font-weight:700;letter-spacing:0px;}

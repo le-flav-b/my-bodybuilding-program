@@ -1,0 +1,26 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        generate_for:
+          - lib/core/db/**
+        options:
+          # ISO-8601 text keeps millisecond precision (needed for last-write-wins).
+          store_date_time_values_as_text: true
+          databases:
+            app_database: lib/core/db/app_database.dart
+          schema_dir: drift_schemas/
+          test_dir: test/core/db/migrations/
+      freezed:
+        generate_for:
+          - lib/**/domain/**
+          - lib/core/**
+      json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          - lib/**/domain/**
+          - lib/core/**
+      riverpod_generator:
+        generate_for:
+          - lib/**

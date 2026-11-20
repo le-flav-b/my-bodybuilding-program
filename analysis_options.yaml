@@ -1,0 +1,22 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.steps.dart"
+    # Schema snapshots written by `drift_dev schema generate`.
+    - test/core/db/migrations/generated/**
+  errors:
+    # Generated files are not committed; json_serializable/freezed annotations
+    # on fields are valid.
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    # This is an app, not a published package: no API docs requirement.
+    public_member_api_docs: false
+    # `dart format` already keeps code at 80 columns; long UI strings are fine.
+    lines_longer_than_80_chars: false

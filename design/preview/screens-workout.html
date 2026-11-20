@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screens · Workout: preview and player</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="screens review">
+<template>
+  <!-- ============ Session preview ============ -->
+  <div class="shot"><div class="cap">Session preview</div>
+  <div class="phone" data-shot-suffix="preview_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="today_normal" class="iconbtn"><span class="i">arrow_back</span></button><h1>Push A</h1><button class="iconbtn"><span class="i">edit</span></button></div>
+    <div class="content" style="padding-top:0">
+      <div class="meta" style="margin:0 0 12px"><span><span class="i">exercise</span>6 exercises</span><span><span class="i">schedule</span>~55 min</span><span><span class="i">history</span>4 days ago</span></div>
+      <div class="info-line" style="margin-bottom:4px"><span class="i">info</span>Changes here apply to this workout only.</div>
+      <div class="ex-row"><div class="well"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="plan">4 × 10 · 40 kg</div><div class="last"><span class="i">history</span>Last: 10, 10, 9, 8 · 40 kg</div></div><span class="i handle">drag_indicator</span></div>
+      <div class="divider"></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div><div class="body"><div class="name">Incline dumbbell press</div><div class="plan">3 × 12 · 16 kg</div><div class="last"><span class="i">history</span>Last: 12, 11, 10 · 16 kg</div></div><span class="i handle">drag_indicator</span></div>
+      <div class="divider"></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/overhead_press.png" alt=""></div><div class="body"><div class="name">Overhead press</div><div class="plan">3 × 10 · 30 kg</div><div class="last"><span class="i">history</span>Last: 10, 10, 10 · 30 kg</div></div><span class="i handle">drag_indicator</span></div>
+      <div class="divider"></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/dips.png" alt=""></div><div class="body"><div class="name">Dips</div><div class="plan">3 × max</div><div class="last"><span class="i">history</span>Last: 14, 12, 10</div></div><span class="i handle">drag_indicator</span></div>
+      <div class="divider"></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/dumbbell_fly.png" alt=""></div><div class="body"><div class="name">Dumbbell fly</div><div class="plan">3 × 12 · 10 kg</div><div class="last"><span class="i">history</span>Last: 12, 12, 12 · 10 kg</div></div><span class="i handle">drag_indicator</span></div>
+      <div class="divider"></div>
+      <div class="ex-row"><div class="well"><img src="assets/img/triceps_extension.png" alt=""></div><div class="body"><div class="name">Triceps extension</div><div class="plan">3 × 12 · 14 kg</div><div class="last"><span class="i">history</span>Last: 12, 12, 11 · 14 kg</div></div><span class="i handle">drag_indicator</span></div>
+      <button class="btn text"><span class="i">add</span>Add exercise</button>
+    </div>
+    <div class="actionbar"><button data-go="player_reps" class="btn big filled block"><span class="i fill">play_arrow</span>Start workout</button></div>
+    <div class="gesturebar"></div>
+  </div></div>
+
+  <!-- ============ Player · rep-based ============ -->
+  <div class="shot"><div class="cap">Player · rep-based set</div>
+  <div class="phone" data-shot-suffix="player_reps">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="p-head"><button class="iconbtn"><span class="i">close</span></button><div class="mid"><div class="t">Push A</div><div class="s">12:40 · ~42 min left</div></div><button data-go="player_paused" class="iconbtn"><span class="i">pause</span></button><button data-go="workout-list_default" class="iconbtn"><span class="i">view_list</span></button></div>
+    <div class="p-prog"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="content stack" style="gap:12px">
+      <div class="p-ex">
+        <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+        <div class="body">
+          <div class="k">Exercise 1 / 6</div>
+          <h2>Bench press</h2>
+          <div class="mus">Chest · Triceps · Shoulders</div>
+          <div class="acts"><button class="btn text"><span class="i">expand_more</span>Form cues</button><button class="btn text"><span class="i">edit_note</span>Note</button><button class="iconbtn" style="width:36px;height:36px;margin-left:auto"><span class="i">more_vert</span></button></div>
+        </div>
+      </div>
+      <div class="note-chip"><span class="i">push_pin</span>Bench 3rd hole, feet flat, grip on the rings</div>
+      <div class="sets">
+        <div class="set done"><div class="n"><span class="i s18">check</span></div><div class="val">10 × 40<small>kg</small></div><div class="prev">last 10 × 40</div></div>
+        <div class="set done"><div class="n"><span class="i s18">check</span></div><div class="val">10 × 40<small>kg</small></div><div class="prev">last 10 × 40</div></div>
+        <div class="set-current">
+          <div class="head"><div class="n">3</div><div class="t">Target 10 × 40 kg</div><div class="prev"><span class="i">history</span>Last 9 × 40 kg</div></div>
+          <div class="steppers">
+            <div class="stepper"><div class="lbl">Reps</div><div class="ctl"><button><span class="i">remove</span></button><span class="v">10</span><button><span class="i">add</span></button></div></div>
+            <div class="stepper"><div class="lbl">Load <span class="unit-chip">kg<span class="i">arrow_drop_down</span></span></div><div class="ctl"><button><span class="i">remove</span></button><span class="v">40</span><button><span class="i">add</span></button></div></div>
+          </div>
+          <button data-go="player_trophy" class="btn big filled block"><span class="i">check</span>Done</button>
+        </div>
+        <div class="set upcoming"><div class="n">4</div><div class="val">10 × 40<small>kg</small></div><div class="prev">last 8 × 40</div></div>
+        <button class="btn text" style="align-self:flex-start"><span class="i">add</span>Add set</button>
+      </div>
+    </div>
+    <div class="p-foot"><div class="body"><div class="k">Next exercise</div><div class="t">Incline dumbbell press · 3 × 12 · 16 kg</div></div><div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div></div>
+    <div class="gesturebar" style="background:var(--csurface-container-low)"></div>
+  </div></div>
+
+  <!-- ============ Player · resting ============ -->
+  <div class="shot"><div class="cap">Player · resting</div>
+  <div class="phone" data-shot-suffix="player_resting">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="p-head"><button class="iconbtn"><span class="i">close</span></button><div class="mid"><div class="t">Push A</div><div class="s">14:05 · ~40 min left</div></div><button data-go="player_paused" class="iconbtn"><span class="i">pause</span></button><button data-go="workout-list_default" class="iconbtn"><span class="i">view_list</span></button></div>
+    <div class="p-prog"><i class="now"></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="content stack" style="gap:20px">
+      <div class="logged">
+        <div class="status done"><span class="i s18">check</span></div>
+        <div class="body"><div class="t">Set 3 · 10 × 40 kg</div><div class="s">Bench press · logged</div></div>
+        <button class="btn text">Edit</button>
+      </div>
+      <div class="timer" style="margin-top:8px">
+        <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="130" fill="none" stroke-width="12"/>
+          <circle class="prog" cx="140" cy="140" r="130" fill="none" stroke-width="12" stroke-dasharray="816.8" stroke-dashoffset="163.4"/></svg>
+        <div class="center"><div class="lbl">Rest</div><div class="big">1:12</div><div class="sub">of 1:30</div></div>
+      </div>
+      <div class="timer-ctl">
+        <button class="round">−15</button>
+        <button data-go="player_reps" class="btn big tonal" style="min-width:150px"><span class="i fill">skip_next</span>Skip</button>
+        <button class="round">+15</button>
+      </div>
+      <div class="next-up">
+        <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+        <div class="body"><div class="overline">Next · set 4 of 4</div><div class="t">10 × 40 kg</div><div class="s">Bench press · last 8 × 40</div></div>
+      </div>
+    </div>
+    <div class="p-foot"><div class="body"><div class="k">Next exercise</div><div class="t">Incline dumbbell press · 3 × 12 · 16 kg</div></div><div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div></div>
+    <div class="gesturebar" style="background:var(--csurface-container-low)"></div>
+  </div></div>
+
+  <!-- ============ Player · time-based ============ -->
+  <div class="shot"><div class="cap">Player · time-based set (holding)</div>
+  <div class="phone" data-shot-suffix="player_timed">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="p-head"><button class="iconbtn"><span class="i">close</span></button><div class="mid"><div class="t">Core</div><div class="s">08:51 · ~14 min left</div></div><button class="iconbtn"><span class="i">pause</span></button><button data-go="workout-list_default" class="iconbtn"><span class="i">view_list</span></button></div>
+    <div class="p-prog"><i class="done"></i><i class="now"></i><i></i><i></i></div>
+    <div class="content stack" style="gap:16px">
+      <div class="p-ex">
+        <div class="well" style="width:72px;height:72px"><img src="assets/img/plank.png" alt=""></div>
+        <div class="body"><div class="k">Exercise 2 / 4</div><h2>Plank</h2><div class="mus">Abs · Lower back</div></div>
+      </div>
+      <div class="mini-sets"><span class="done"><span class="i">check</span>0:45</span><span class="now">Set 2</span><span>Set 3</span></div>
+      <div class="timer hold" style="margin-top:12px">
+        <svg viewBox="0 0 280 280"><circle class="track" cx="140" cy="140" r="130" fill="none" stroke-width="12"/>
+          <circle class="prog" cx="140" cy="140" r="130" fill="none" stroke-width="12" stroke-dasharray="816.8" stroke-dashoffset="326.7"/></svg>
+        <div class="center"><div class="lbl">Hold</div><div class="big">0:27</div><div class="sub">target 0:45 · last 0:40</div></div>
+      </div>
+      <button class="btn big filled block" style="margin-top:12px"><span class="i fill">stop</span>Stop</button>
+      <p class="spec-n" style="text-align:center;margin:0">Stop early logs the time held. At 0:00 the set is logged and the rest starts.</p>
+    </div>
+    <div class="p-foot"><div class="body"><div class="k">Next exercise</div><div class="t">Side plank · 2 × 30 s</div></div><div class="well"><img src="assets/img/placeholder_abs.png" alt="" style="object-fit:cover"></div></div>
+    <div class="gesturebar" style="background:var(--csurface-container-low)"></div>
+  </div></div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>

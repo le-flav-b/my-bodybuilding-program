@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screens · Progress</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="screens review">
+<template>
+  <div class="shot"><div class="cap">Progress · Calendar</div>
+  <div class="phone" data-shot-suffix="progress_calendar">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar"><h1 style="font:700 28px/36px Inter">Progress</h1></div><div class="tabs"><span class="on">Calendar</span><span data-go="progress_exercises" class="">Exercises</span><span data-go="progress_history" class="">History</span></div>
+    <div class="content stack" style="padding-top:12px;gap:12px">
+      <div class="cal-head">
+      <h3>November 2026</h3>
+      <button class="iconbtn"><span class="i">chevron_left</span></button>
+      <button class="iconbtn" disabled style="opacity:.38"><span class="i">chevron_right</span></button>
+    </div>
+    <div class="cal">
+      <div class="wd">M</div><div class="wd">T</div><div class="wd">W</div><div class="wd">T</div><div class="wd">F</div><div class="wd">S</div><div class="wd">S</div><div class="wd"><span class="i s18" style="vertical-align:middle">local_fire_department</span></div>
+      <div class="c out"><span>26</span></div><div class="c out"><span>27</span></div><div class="c out on"><span>28</span></div><div class="c out"><span>29</span></div><div class="c out on"><span>30</span></div><div class="c out"><span>31</span></div><div class="c on"><span>1</span></div><div class="wk"><span class="i fill">check_circle</span></div>
+      <div class="c on"><span>2</span></div><div class="c "><span>3</span></div><div class="c on"><span>4</span></div><div class="c "><span>5</span></div><div class="c on two"><span>6</span></div><div class="c "><span>7</span></div><div class="c "><span>8</span></div><div class="wk"><span class="i fill">check_circle</span></div>
+      <div class="c "><span>9</span></div><div class="c on"><span>10</span></div><div class="c "><span>11</span></div><div class="c "><span>12</span></div><div class="c "><span>13</span></div><div class="c on"><span>14</span></div><div class="c today"><span>15</span></div><div class="wk miss"><span class="i" style="color:var(--con-surface-variant)">more_horiz</span></div>
+      <div class="c "><span>16</span></div><div class="c "><span>17</span></div><div class="c "><span>18</span></div><div class="c "><span>19</span></div><div class="c "><span>20</span></div><div class="c "><span>21</span></div><div class="c "><span>22</span></div><div class="wk"></div>
+      <div class="c "><span>23</span></div><div class="c "><span>24</span></div><div class="c "><span>25</span></div><div class="c "><span>26</span></div><div class="c "><span>27</span></div><div class="c "><span>28</span></div><div class="c "><span>29</span></div><div class="wk"></div>
+      <div class="c "><span>30</span></div><div class="c out"><span>1</span></div><div class="c out"><span>2</span></div><div class="c out"><span>3</span></div><div class="c out"><span>4</span></div><div class="c out"><span>5</span></div><div class="c out"><span>6</span></div><div class="wk"></div>
+    </div>
+    <div class="hrow" style="margin-top:12px;justify-content:space-between">
+      <span class="streak"><span class="i fill">local_fire_department</span>2 week streak</span>
+      <span class="meta">Best: 11 weeks</span>
+    </div>
+  
+      <div class="tiles"><div class="tile"><div class="k">Workouts in November</div><div class="v">7</div></div><div class="tile"><div class="k">Time in November</div><div class="v">6<small>h</small> 12<small>m</small></div></div></div>
+    </div><nav class="navbar">
+      <a data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a class="on" data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Progress · Exercises</div>
+  <div class="phone" data-shot-suffix="progress_exercises">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar"><h1 style="font:700 28px/36px Inter">Progress</h1></div><div class="tabs"><span data-go="progress_calendar" class="">Calendar</span><span class="on">Exercises</span><span data-go="progress_history" class="">History</span></div>
+    <div class="content" style="padding-top:12px">
+      <div class="search" style="height:48px;margin-bottom:4px"><span class="i">search</span><span class="grow">Search exercises you've done</span></div>
+      <div class="month-h" style="margin-top:8px">Sorted by last done<span>23 exercises</span></div>
+      <div data-go="exercise-progress_default" class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/bench_press.png" alt=""></div><div class="body"><div class="name">Bench press</div><div class="last" style="font-size:13px;line-height:18px">2 days ago · best 42.5 kg</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,24 12,22 22,20 32,16 42,14 52,8 62,8" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/incline_dumbbell_press.png" alt=""></div><div class="body"><div class="name">Incline dumbbell press</div><div class="last" style="font-size:13px;line-height:18px">2 days ago · best 18 kg</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,22 14,22 26,16 38,16 50,12 62,10" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/barbell_row.png" alt=""></div><div class="body"><div class="name">Barbell row</div><div class="last" style="font-size:13px;line-height:18px">Yesterday · best 50 kg</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,20 12,20 22,18 32,14 42,14 52,10 62,6" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/lat_pulldown.png" alt=""></div><div class="body"><div class="name">Lat pulldown</div><div class="last" style="font-size:13px;line-height:18px">Yesterday · best 9 level</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,24 16,20 30,20 44,12 62,12" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/plank.png" alt=""></div><div class="body"><div class="name">Plank</div><div class="last" style="font-size:13px;line-height:18px">Yesterday · best 1:20</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,22 14,18 26,18 38,12 50,10 62,6" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/squat.png" alt=""></div><div class="body"><div class="name">Squat</div><div class="last" style="font-size:13px;line-height:18px">4 days ago · best 70 kg</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,24 14,20 26,18 38,18 50,10 62,8" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div><div class="ex-row" style="min-height:72px"><div class="well" style="width:52px;height:52px"><img src="assets/img/hammer_curl.png" alt=""></div><div class="body"><div class="name">Hammer curl</div><div class="last" style="font-size:13px;line-height:18px">Yesterday · best 14 kg</div></div><svg width="64" height="28" viewBox="0 0 64 28"><polyline points="2,18 14,18 26,14 38,14 50,10 62,10" fill="none" stroke="var(--cchart1)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+    </div><nav class="navbar">
+      <a data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a class="on" data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Progress · History</div>
+  <div class="phone" data-shot-suffix="progress_history">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div><div class="appbar"><h1 style="font:700 28px/36px Inter">Progress</h1></div><div class="tabs"><span data-go="progress_calendar" class="">Calendar</span><span data-go="progress_exercises" class="">Exercises</span><span class="on">History</span></div>
+    <div class="content" style="padding-top:0"><div class="month-h">November 2026<span>7 workouts · 6 h 12 min</span></div><div data-go="workout-detail_default" class="hist"><div class="date"><b>14</b><small>Sat</small></div><div class="body"><div class="t">Pull A <span class="pr-chip"><span class="i fill">trophy</span>1</span></div><div class="s">52 min · 18 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="hist"><div class="date"><b>10</b><small>Tue</small></div><div class="body"><div class="t">Legs</div><div class="s">47 min · 15 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="hist"><div class="date"><b>6</b><small>Fri</small></div><div class="body"><div class="t">Push A <span class="pr-chip"><span class="i fill">trophy</span>2</span></div><div class="s">58 min · 19 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="hist"><div class="date"><b>6</b><small>Fri</small></div><div class="body"><div class="t">Core</div><div class="s">14 min · 8 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="hist"><div class="date"><b>4</b><small>Wed</small></div><div class="body"><div class="t">Pull A</div><div class="s">50 min · 18 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="month-h">October 2026<span>12 workouts · 10 h 05 min</span></div><div class="hist"><div class="date"><b>30</b><small>Fri</small></div><div class="body"><div class="t">Legs</div><div class="s">45 min · 15 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div><div class="hist"><div class="date"><b>28</b><small>Wed</small></div><div class="body"><div class="t">Push A <span class="pr-chip"><span class="i fill">trophy</span>1</span></div><div class="s">55 min · 18 sets</div></div><span class="i" style="color:var(--con-surface-variant)">chevron_right</span></div></div><nav class="navbar">
+      <a data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a class="on" data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Exercise progress (two units)</div>
+  <div class="phone" data-shot-suffix="exercise-progress_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="progress_exercises" class="iconbtn"><span class="i">arrow_back</span></button><h1>Leg press</h1><button data-go="exercise-detail_default" class="iconbtn"><span class="i">info</span></button></div>
+    <div class="content stack" style="gap:12px">
+      <div class="pr-tiles">
+        <div class="pr-tile" style="--c:var(--cchart1)"><div class="k"><span class="i fill">trophy</span>Heaviest · kg</div><div class="v">42.5 kg</div><div class="s">× 10 · 6 Oct</div></div>
+        <div class="pr-tile" style="--c:var(--cchart2)"><div class="k"><span class="i fill">trophy</span>Heaviest · level</div><div class="v">7 level</div><div class="s">× 12 · 10 Nov</div></div>
+      </div>
+      <div class="chips"><span class="chip on"><span class="dot" style="background:var(--cchart1)"></span>kg</span><span class="chip on"><span class="dot" style="background:var(--cchart2)"></span>level</span></div>
+      <div class="chart-card" style="position:relative"><svg class="mu-chart" data-h="190"></svg>
+        <div class="range"><span>1M</span><span class="on">3M</span><span>6M</span><span>1Y</span><span>All</span></div></div>
+      <div>
+        <div class="overline" style="margin:4px 0 0">All sets · 14 workouts</div>
+        <div class="wk-sets"><div class="h">Tue 10 Nov<span>Legs</span></div><div class="r"><span class="setpill u2 pr"><span class="u"></span>12 × 7 <span class='i fill'>trophy</span></span><span class="setpill u2 "><span class="u"></span>12 × 6</span><span class="setpill u2 "><span class="u"></span>10 × 6</span></div></div>
+        <div class="wk-sets"><div class="h">Tue 27 Oct<span>Legs</span></div><div class="r"><span class="setpill u2 "><span class="u"></span>12 × 6</span><span class="setpill u2 "><span class="u"></span>12 × 6</span><span class="setpill u2 "><span class="u"></span>11 × 6</span></div></div>
+        <div class="wk-sets" style="border:0"><div class="h">Thu 15 Oct<span>Legs · old gym</span></div><div class="r"><span class="setpill"><span class="u"></span>12 × 40</span><span class="setpill"><span class="u"></span>12 × 40</span><span class="setpill"><span class="u"></span>10 × 40</span></div></div>
+      </div>
+    </div><div class="gesturebar"></div>
+  </div></div>
+  <div class="shot"><div class="cap">Workout detail (editable)</div>
+  <div class="phone" data-shot-suffix="workout-detail_default">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar back"><button data-go="progress_history" class="iconbtn"><span class="i">arrow_back</span></button><h1>Pull A</h1><button class="iconbtn"><span class="i">more_vert</span></button></div>
+    <div class="content">
+      <div class="meta"><span><span class="i">event</span>Sat 14 Nov · 18:10</span><span><span class="i">schedule</span>52 min</span><span><span class="i">done_all</span>18 sets</span></div>
+      <div class="card" style="margin:12px 0 4px;padding:12px 16px"><div class="hrow" style="justify-content:space-between"><div class="overline">Workout note</div><span class="i s20" style="color:var(--con-surface-variant)">edit</span></div><div class="desc" style="margin-top:2px">Grip felt weak on rows.</div></div>
+      <div class="wd-ex"><div class="top"><div class="well"><img src="assets/img/lat_pulldown.png" alt=""></div><div class="name">Lat pulldown</div><button class="iconbtn"><span class="i">more_vert</span></button></div>
+        <div class="wd-set"><span class="n">1</span><span class="v">12 × 8 level</span><span class="i">edit</span></div><div class="wd-set"><span class="n">2</span><span class="v">10 × 9 level <span class="pr-chip" style="margin-left:6px"><span class="i fill">trophy</span>PR</span></span><span class="i">edit</span></div><div class="wd-set"><span class="n">3</span><span class="v">9 × 9 level</span><span class="i">edit</span></div></div>
+      <div class="wd-ex"><div class="top"><div class="well"><img src="assets/img/barbell_row.png" alt=""></div><div class="name">Barbell row</div><button class="iconbtn"><span class="i">more_vert</span></button></div>
+        <div class="wd-set"><span class="n">1</span><span class="v">10 × 50 kg</span><span class="i">edit</span></div><div class="wd-set"><span class="n">2</span><span class="v">10 × 50 kg</span><span class="i">edit</span></div><div class="wd-set"><span class="n">3</span><span class="v">8 × 50 kg</span><span class="i">edit</span></div></div>
+      <div class="wd-ex" style="border:0"><div class="top"><div class="well"><img src="assets/img/hammer_curl.png" alt=""></div><div class="name">Hammer curl</div><button class="iconbtn"><span class="i">more_vert</span></button></div>
+        <div class="wd-set"><span class="n">1</span><span class="v">12 × 14 kg</span><span class="i">edit</span></div></div>
+    </div><div class="gesturebar"></div>
+  </div></div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+<script src="chart.js"></script>
+</body>
+</html>

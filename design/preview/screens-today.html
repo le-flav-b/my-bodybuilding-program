@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Screens · Today</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="screens review">
+<template>
+  <!-- ============ Today · normal ============ -->
+  <div class="shot"><div class="cap">Today · normal</div>
+  <div class="phone" data-shot-suffix="today_normal">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><span class="logo">My Bodybuilding Program</span></div>
+    <div class="content stack" style="gap:12px">
+      <div class="since" style="padding:0 4px">
+        <div class="body"><div class="datehead">Sunday 15 November</div><div class="t" style="font:600 16px/24px Inter">Last workout yesterday</div></div>
+      </div>
+      <div class="session-card">
+        <div class="overline primary">Next session · 2 of 3</div>
+        <h2 class="name">Push A</h2>
+        <div class="meta">
+          <span><span class="i">exercise</span>6 exercises</span>
+          <span><span class="i">schedule</span>~55 min</span>
+          <span><span class="i">history</span>4 days ago</span>
+        </div>
+        <div class="thumbs">
+          <div class="well"><img src="assets/img/bench_press.png" alt=""></div>
+          <div class="well"><img src="assets/img/incline_dumbbell_press.png" alt=""></div>
+          <div class="well"><img src="assets/img/overhead_press.png" alt=""></div>
+          <div class="well"><img src="assets/img/dips.png" alt=""></div>
+          <div class="well"><img src="assets/img/dumbbell_fly.png" alt=""></div>
+          <div class="more">+1</div>
+        </div>
+        <button data-go="preview_default" class="btn big filled block"><span class="i fill">play_arrow</span>Start</button>
+        <div class="actions">
+          <button data-go="today_pick-session" class="btn text"><span class="i">swap_horiz</span>Other session</button>
+          <button class="btn text"><span class="i">add</span>Empty</button>
+          <button class="btn text"><span class="i">skip_next</span>Skip</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="hrow" style="justify-content:space-between;margin-bottom:12px">
+          <div class="overline">This week · 2 / 3</div>
+          <span class="streak"><span class="i fill">local_fire_department</span>2 weeks</span>
+        </div>
+        <div class="week">
+          <div class="d"><b>9</b>Mon</div><div class="d on"><b>10</b>Tue</div><div class="d"><b>11</b>Wed</div><div class="d"><b>12</b>Thu</div><div class="d"><b>13</b>Fri</div><div class="d on"><b>14</b>Sat</div><div class="d today"><b>15</b>Sun</div>
+        </div>
+      </div>
+      <div data-go="workout-detail_default" class="card since">
+        <div class="ic"><span class="i s20">history</span></div>
+        <div class="body" style="flex:1"><div class="t">Pull A · yesterday</div><div class="s">52 min · 18 sets · 1 PR</div></div>
+        <span class="i" style="color:var(--con-surface-variant)">chevron_right</span>
+      </div>
+    </div>
+    <nav class="navbar">
+      <a class="on" data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+
+  <!-- ============ Today · after the workout (next session advanced) ============ -->
+  <div class="shot"><div class="cap">Today · after the workout (next session advanced)</div>
+  <div class="phone" data-shot-suffix="today_after-workout">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><span class="logo">My Bodybuilding Program</span></div>
+    <div class="content stack" style="gap:12px">
+      <div class="since" style="padding:0 4px">
+        <div class="body"><div class="datehead">Sunday 15 November</div><div class="t" style="font:600 16px/24px Inter">Last workout today</div></div>
+      </div>
+      <div class="session-card">
+        <div class="overline primary">Next session · 3 of 3</div>
+        <h2 class="name">Legs</h2>
+        <div class="meta">
+          <span><span class="i">exercise</span>5 exercises</span>
+          <span><span class="i">schedule</span>~45 min</span>
+          <span><span class="i">history</span>6 days ago</span>
+        </div>
+        <div class="thumbs">
+          <div class="well"><img src="assets/img/squat.png" alt=""></div>
+          <div class="well"><img src="assets/img/leg_curl.png" alt=""></div>
+          <div class="well ph" data-muscle="Legs"><img src="assets/img/placeholder_legs.png" alt=""></div>
+          <div class="well"><img src="assets/img/plank.png" alt=""></div>
+          <div class="well ph" data-muscle="Abs"><img src="assets/img/placeholder_abs.png" alt=""></div>
+        </div>
+        <button data-go="preview_default" class="btn big filled block"><span class="i fill">play_arrow</span>Start</button>
+        <div class="actions">
+          <button class="btn text"><span class="i">swap_horiz</span>Other session</button>
+          <button class="btn text"><span class="i">add</span>Empty</button>
+          <button class="btn text"><span class="i">skip_next</span>Skip</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="hrow" style="justify-content:space-between;margin-bottom:12px">
+          <div class="overline">This week · 3 / 3 ✓</div>
+          <span class="streak"><span class="i fill">local_fire_department</span>3 weeks</span>
+        </div>
+        <div class="week">
+          <div class="d"><b>9</b>Mon</div><div class="d on"><b>10</b>Tue</div><div class="d"><b>11</b>Wed</div><div class="d"><b>12</b>Thu</div><div class="d"><b>13</b>Fri</div><div class="d on"><b>14</b>Sat</div><div class="d on today"><b>15</b>Sun</div>
+        </div>
+      </div>
+      <div class="card since">
+        <div class="ic"><span class="i s20">history</span></div>
+        <div class="body" style="flex:1"><div class="t">Push A · today</div><div class="s">52 min · 18 sets · 2 PRs</div></div>
+        <span class="i" style="color:var(--con-surface-variant)">chevron_right</span>
+      </div>
+    </div>
+    <nav class="navbar">
+      <a class="on" data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+
+  <!-- ============ Today · in progress ============ -->
+  <div class="shot"><div class="cap">Today · workout in progress</div>
+  <div class="phone" data-shot-suffix="today_in-progress">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><span class="logo">My Bodybuilding Program</span></div>
+    <div class="content stack" style="gap:12px">
+      <div class="since" style="padding:0 4px">
+        <div class="body"><div class="datehead">Sunday 15 November</div><div class="t" style="font:600 16px/24px Inter">Workout in progress</div></div>
+      </div>
+      <div data-go="player_reps" class="banner">
+        <div class="body"><div class="s"><span class="pulse"></span>In progress · 38:12</div><div class="t">Push A</div><div class="s">Exercise 3 / 6 · 14 sets logged</div></div>
+        <div class="go"><span class="i fill s32">play_arrow</span></div>
+      </div>
+      <div class="card">
+        <div class="overline" style="margin-bottom:8px">Up next in Push A</div>
+        <div class="ex-row" style="min-height:64px;padding:4px 0"><div class="well" style="width:48px;height:48px"><img src="assets/img/overhead_press.png" alt=""></div><div class="body"><div class="name">Overhead press</div><div class="plan">set 2 of 3 · 10 × 30 kg</div></div></div>
+      </div>
+      <div class="card">
+        <div class="hrow" style="justify-content:space-between;margin-bottom:12px">
+          <div class="overline">This week · 2 / 3</div>
+          <span class="streak"><span class="i fill">local_fire_department</span>2 weeks</span>
+        </div>
+        <div class="week">
+          <div class="d"><b>9</b>Mon</div><div class="d on"><b>10</b>Tue</div><div class="d"><b>11</b>Wed</div><div class="d"><b>12</b>Thu</div><div class="d"><b>13</b>Fri</div><div class="d on"><b>14</b>Sat</div><div class="d today"><b>15</b>Sun</div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar">
+      <a class="on" data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+
+  <!-- ============ Today · empty program ============ -->
+  <div class="shot"><div class="cap">Today · empty program (first launch)</div>
+  <div class="phone" data-shot-suffix="today_empty">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><span class="logo">My Bodybuilding Program</span></div>
+    <div class="content" style="display:flex;flex-direction:column;justify-content:center;padding-bottom:64px">
+      <div class="empty">
+        <div class="ei"><span class="i s40">fitness_center</span></div>
+        <h3 style="font-size:24px;line-height:32px">Welcome!</h3>
+        <p>Your program is a loop of sessions. Create the first one and this screen will always tell you what's next.</p>
+        <button data-go="session-editor_default" class="btn big filled"><span class="i">add</span>Create your first session</button>
+      </div>
+    </div>
+    <nav class="navbar">
+      <a class="on" data-go="today_normal"><span class="ind"><span class="i">today</span></span>Today</a>
+      <a data-go="program_default"><span class="ind"><span class="i">fitness_center</span></span>Program</a>
+      <a data-go="progress_calendar"><span class="ind"><span class="i">monitoring</span></span>Progress</a>
+      <a data-go="profile_default"><span class="ind"><span class="i">person</span></span>Profile</a>
+    </nav>
+    <div class="gesturebar" style="background:var(--csurface-container)"></div>
+  </div></div>
+
+  <!-- ============ Today · pick another session ============ -->
+  <div class="shot"><div class="cap">Today · pick another session (sheet)</div>
+  <div class="phone" data-shot-suffix="today_pick-session">
+    <div class="statusbar"><span>9:41</span><span><span class="i">signal_cellular_alt</span> <span class="i">wifi</span> <span class="i">battery_full</span></span></div>
+    <div class="appbar"><span class="logo">My Bodybuilding Program</span></div>
+    <div class="content stack" style="gap:12px">
+      <div class="since" style="padding:0 4px"><div class="body"><div class="datehead">Sunday 15 November</div><div class="t" style="font:600 16px/24px Inter">Last workout yesterday</div></div></div>
+      <div class="session-card" style="height:420px"><div class="overline primary">Next session · 2 of 3</div><h2 class="name">Push A</h2></div>
+    </div>
+    <div data-go="today_normal" class="scrim-over"></div>
+    <div class="bottom sheet" style="padding-bottom:40px">
+      <div class="grab"></div>
+      <h2>Start another session</h2>
+      <p class="spec-n" style="margin:-6px 0 12px">The next session becomes the one after the one you do.</p>
+      <div class="stack" style="gap:8px">
+        <div class="session-row"><div class="num" style="margin-left:12px">1</div><div class="body"><div class="title">Pull A</div><div class="meta">6 exercises · ~50 min · yesterday</div></div><button class="iconbtn"><span class="i">play_circle</span></button></div>
+        <div data-go="preview_default" class="session-row next"><div class="num" style="margin-left:12px">2</div><div class="body"><div class="title">Push A <span class="badge">Next</span></div><div class="meta">6 exercises · ~55 min · 4 days ago</div></div><button class="iconbtn"><span class="i">play_circle</span></button></div>
+        <div class="session-row"><div class="num" style="margin-left:12px">3</div><div class="body"><div class="title">Legs</div><div class="meta">5 exercises · ~45 min · 6 days ago</div></div><button class="iconbtn"><span class="i">play_circle</span></button></div>
+      </div>
+    </div>
+  </div></div>
+</template>
+<section data-theme="light"></section>
+<section data-theme="dark"></section>
+</div>
+<script src="review.js"></script>
+</body>
+</html>
