@@ -12,8 +12,9 @@ import 'fist_dumbbell_painter.dart';
 /// Run with `flutter test tool/icon` after changing the icon.
 ///
 /// - `mipmap-*/ic_launcher_foreground.png`: a fist (off-white) gripping a
-///   dumbbell (brand yellow) in the 66 dp safe zone of a 108 dp adaptive
-///   layer (transparent); also the Android 12+ splash icon.
+///   dumbbell (brand yellow), 62 dp wide and 2 dp below the centre of a
+///   108 dp adaptive layer (transparent), inside the 66 dp safe zone; also
+///   the Android 12+ splash icon.
 /// - `mipmap-*/ic_launcher_monochrome.png`: same drawing in white, for
 ///   themed icons.
 /// - `mipmap-*/ic_launcher.png`: legacy 48 dp round square on coral.
@@ -74,27 +75,44 @@ void main() {
     });
   }
 
-  /// The drawing in a [box] dp square, nudged up so the whole figure
-  /// (dumbbell on top, wrist below) is centred.
+  /// The drawing, [width] dp wide, moved [down] dp below the centre
+  /// (optical centring: the dumbbell is the heavier part, on top).
+  ///
+  /// In the 108 dp adaptive layer it is 62 dp wide and 2 dp low, inside the
+  /// 66 dp safe zone; launchers show the middle 72 dp, so other sizes keep
+  /// the same proportions of their visible area (see [visible]).
   Widget drawing(
-    double box, {
+    double width, {
+    double down = 0,
     Color dumbbell = yellow,
     Color fist = offWhite,
-    Color? background,
-  }) => Center(
-    child: Transform.translate(
-      offset: Offset(0, -box * 0.035),
-      child: SizedBox.square(
-        dimension: box,
-        child: CustomPaint(
-          painter: FistDumbbellPainter(
-            dumbbell: dumbbell,
-            fist: fist,
-            background: background,
+  }) {
+    final bounds = FistDumbbellPainter.bounds;
+    return Center(
+      child: Transform.translate(
+        offset: Offset(0, down),
+        child: SizedBox(
+          width: width,
+          height: width * bounds.height / bounds.width,
+          child: CustomPaint(
+            painter: FistDumbbellPainter(dumbbell: dumbbell, fist: fist),
           ),
         ),
       ),
-    ),
+    );
+  }
+
+  /// The drawing for a fully visible area [side] dp wide (legacy icon,
+  /// splash circle), in the launcher's proportions.
+  Widget visible(
+    double side, {
+    Color dumbbell = yellow,
+    Color fist = offWhite,
+  }) => drawing(
+    side * 62 / 72,
+    down: side * 2 / 72,
+    dumbbell: dumbbell,
+    fist: fist,
   );
 
   for (final MapEntry(key: name, value: ratio) in densities.entries) {
@@ -102,14 +120,14 @@ void main() {
       // Adaptive layers: 108 dp, drawing inside the 66 dp safe zone.
       await render(
         tester,
-        drawing(60),
+        drawing(62, down: 2),
         108,
         ratio,
         '$res/mipmap-$name/ic_launcher_foreground.png',
       );
       await render(
         tester,
-        drawing(60, dumbbell: Colors.white, fist: Colors.white),
+        drawing(62, down: 2, dumbbell: Colors.white, fist: Colors.white),
         108,
         ratio,
         '$res/mipmap-$name/ic_launcher_monochrome.png',
@@ -119,7 +137,7 @@ void main() {
         tester,
         ClipRRect(
           borderRadius: BorderRadius.circular(11),
-          child: ColoredBox(color: coral, child: drawing(42)),
+          child: ColoredBox(color: coral, child: visible(48)),
         ),
         48,
         ratio,
@@ -132,7 +150,7 @@ void main() {
     await render(
       tester,
       ClipOval(
-        child: ColoredBox(color: coral, child: drawing(86)),
+        child: ColoredBox(color: coral, child: visible(120)),
       ),
       120,
       4,
@@ -155,11 +173,12 @@ void main() {
               dimension: 160,
               child: themed
                   ? drawing(
-                      60 * 160 / 108,
+                      62 * 160 / 108,
+                      down: 2 * 160 / 108,
                       dumbbell: const Color(0xFFD4EAC6),
                       fist: const Color(0xFFD4EAC6),
                     )
-                  : drawing(60 * 160 / 108),
+                  : drawing(62 * 160 / 108, down: 2 * 160 / 108),
             ),
           ),
         ),
@@ -185,7 +204,7 @@ void main() {
             SizedBox.square(
               dimension: 108,
               child: ClipOval(
-                child: ColoredBox(color: coral, child: drawing(78)),
+                child: ColoredBox(color: coral, child: visible(108)),
               ),
             ),
           ],
