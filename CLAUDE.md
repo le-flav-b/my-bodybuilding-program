@@ -15,7 +15,7 @@ The spec describes the *system*. Catalogue content (exercises, muscles, images) 
 
 ## Product constraints (non-negotiable)
 
-- Android only, single user, **English only** (UI, code, comments, commits, asset names).
+- Android only, single user. **English** for code, comments, commits and asset names. The UI is English today; French and Spanish are planned in v1.0.x (Notion > Features > Languages), so keep every UI string in the central strings file.
 - **Offline-first**: every feature works with no network and no account. The UI reads and writes only the local database.
 - No account in v1. Cloud backup (Firebase, optional Google sign-in) comes after v1.0, but all synced-table conventions apply from day one so it needs no migration.
 - **Nothing hard-coded that the user manages**: exercises, muscles and load units are database rows. Only `kg` is a built-in unit.
@@ -66,7 +66,7 @@ assets/
 - Each logged set is persisted immediately (crash safety); a workout must survive app kill and reboot.
 - Seed import: insert new `seed_key`s; update existing seeded rows only if `user_modified` is false; never re-create rows the user deleted.
 - Sync (after v1.0): push dirty rows, pull `updated_at > last_pulled_at`, last write wins per row; Firestore offline cache disabled; paths `users/{uid}/{table}/{id}` and `users/{uid}/images/{id}`.
-- Strings are centralised (one place), English only.
+- Strings are centralised (one place), so they can be translated later.
 
 ## Conventions
 
@@ -110,3 +110,12 @@ Details and status are in the Notion **Development** database.
 2. Work on the assigned branch only; keep the PR to one milestone.
 3. Run `flutter analyze` and `flutter test` before pushing.
 4. Update Notion (spec changes + Development status), then `legacy/HANDOFF.md`, before finishing.
+
+## Waiting for the owner
+
+The owner follows sessions from their phone and is **not** told when a session is waiting. So:
+
+- **Whenever you are about to wait for the owner** (a question, a choice, a file or secret to provide, an approval card such as an environment or network change, or the end of the task), send a push notification with `PushNotification` first, saying in one line what you need. Then wait.
+- If your next action is likely to show the owner an approval prompt (e.g. the first Notion call of the session), send the notification *before* calling it.
+- Never switch to other work while silently waiting: notify, then wait.
+- Notion (search, read, create, update, comments; **no** delete or move) and GitHub tools are pre-allowed in `.claude/settings.json`, so they shouldn't prompt. If one still does, say so in your report. Don't widen that list yourself: the owner approves any change to it.
