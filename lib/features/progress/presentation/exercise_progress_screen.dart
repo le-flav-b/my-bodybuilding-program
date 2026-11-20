@@ -10,15 +10,15 @@ import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
 import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/app/widgets/common.dart';
-import 'package:my_bodybuilding_program/app/widgets/empty_state.dart';
 import 'package:my_bodybuilding_program/core/utils/clock.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/chart_scale.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/chart_series.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/pr_summary_card.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_widgets.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
@@ -30,8 +30,8 @@ String seriesName(SeriesKey key, UnitLookup units) => switch (key) {
   TimeSeries() => Strings.timeSeries,
 };
 
-/// One exercise over time: records per unit, the multi-unit chart and
-/// every set grouped by workout.
+/// One exercise over time: its personal records card, then the training
+/// bests per unit, the multi-unit chart and every set grouped by workout.
 class ExerciseProgressScreen extends ConsumerStatefulWidget {
   const new({required this.exerciseId, super.key});
 
@@ -61,8 +61,8 @@ class _ExerciseProgressScreenState
     final colorOf = {
       for (final (i, s) in all.indexed) s.key: appColors.chartAt(i),
     };
-    final records = Records.current(sets);
-    final recordSetIds = {for (final e in Records.events(sets)) e.setId};
+    final records = Bests.current(sets);
+    final recordSetIds = {for (final e in Bests.events(sets)) e.setId};
     final from = _range.start(now);
     final visible = [
       for (final s in ChartSeriesBuilder.build(sets, from: from))
@@ -81,96 +81,143 @@ class _ExerciseProgressScreenState
           const SizedBox(width: 4),
         ],
       ),
-      body: sets.isEmpty
-          ? const EmptyState(
-              icon: Symbols.monitoring_rounded,
-              title: Strings.notDoneYet,
-              body: Strings.progressEmptyBody,
-            )
-          : ListView(
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          AppSpacing.sm,
+          AppSpacing.lg,
+          AppSpacing.xl,
+        ),
+        children: [
+          // Personal records first: logged on purpose, kept apart
+          // from the training data below.
+          PrSummaryCard(exerciseId: widget.exerciseId),
+          const SizedBox(height: AppSpacing.xl),
+          if (sets.isEmpty)
+            const _NotDoneYet()
+          else ...[
+            Overline(
+              Strings.bests,
+              color: context.colors.onSurfaceVariant,
+              fontSize: 14,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            _RecordTiles(
+              records: [
+                for (final s in all)
+                  ?records.where((r) => r.series == s.key).firstOrNull,
+              ],
+              colorOf: colorOf,
+            ),
+            if (all.length > 1) ...[
+              const SizedBox(height: AppSpacing.md),
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
+                children: [
+                  for (final s in all)
+                    _LegendChip(
+                      label: seriesName(s.key, units),
+                      color: colorOf[s.key]!,
+                      selected: !_hidden.contains(s.key),
+                      onTap: () => setState(() {
+                        if (_hidden.contains(s.key)) {
+                          _hidden.remove(s.key);
+                        } else if (_hidden.length < all.length - 1) {
+                          _hidden.add(s.key);
+                        }
+                      }),
+                    ),
+                ],
+              ),
+            ],
+            const SizedBox(height: AppSpacing.md),
+            Container(
               padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
                 AppSpacing.sm,
                 AppSpacing.lg,
-                AppSpacing.xl,
+                AppSpacing.sm,
+                AppSpacing.sm,
               ),
-              children: [
-                _RecordTiles(
-                  records: [
-                    for (final s in all)
-                      ?records.where((r) => r.series == s.key).firstOrNull,
-                  ],
-                  colorOf: colorOf,
-                ),
-                if (all.length > 1) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
-                    children: [
-                      for (final s in all)
-                        _LegendChip(
-                          label: seriesName(s.key, units),
-                          color: colorOf[s.key]!,
-                          selected: !_hidden.contains(s.key),
-                          onTap: () => setState(() {
-                            if (_hidden.contains(s.key)) {
-                              _hidden.remove(s.key);
-                            } else if (_hidden.length < all.length - 1) {
-                              _hidden.add(s.key);
-                            }
-                          }),
-                        ),
-                    ],
+              decoration: BoxDecoration(
+                color: context.colors.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(AppRadius.xl),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 220,
+                    child: visible.isEmpty
+                        ? Center(
+                            child: Text(
+                              Strings.noSetsInRange,
+                              style: context.text.bodyMedium,
+                            ),
+                          )
+                        : MultiUnitChart(
+                            series: visible,
+                            colorOf: colorOf,
+                            units: units,
+                            from: from,
+                            now: now,
+                          ),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  ChartRangeRow(
+                    value: _range,
+                    onChanged: (r) => setState(() => _range = r),
                   ),
                 ],
-                const SizedBox(height: AppSpacing.md),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.sm,
-                    AppSpacing.lg,
-                    AppSpacing.sm,
-                    AppSpacing.sm,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.colors.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(AppRadius.xl),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 220,
-                        child: visible.isEmpty
-                            ? Center(
-                                child: Text(
-                                  Strings.noSetsInRange,
-                                  style: context.text.bodyMedium,
-                                ),
-                              )
-                            : MultiUnitChart(
-                                series: visible,
-                                colorOf: colorOf,
-                                units: units,
-                                from: from,
-                                now: now,
-                              ),
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      ChartRangeRow(
-                        value: _range,
-                        onChanged: (r) => setState(() => _range = r),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                _AllSets(
-                  sets: sets,
-                  colorOf: colorOf,
-                  recordSetIds: recordSetIds,
-                ),
-              ],
+              ),
             ),
+            const SizedBox(height: AppSpacing.xl),
+            _AllSets(sets: sets, colorOf: colorOf, recordSetIds: recordSetIds),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// No training sets yet: the bests and the chart come with the first
+/// workout.
+class _NotDoneYet extends StatelessWidget {
+  const new();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+      child: Column(
+        children: [
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colors.surfaceContainer,
+            ),
+            child: Icon(
+              Symbols.monitoring_rounded,
+              color: colors.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(Strings.notDoneYet, style: context.text.titleMedium),
+          const SizedBox(height: AppSpacing.xs),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 280),
+            child: Text(
+              Strings.progressEmptyBody,
+              textAlign: TextAlign.center,
+              style: context.text.bodyMedium!.copyWith(
+                color: colors.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -178,14 +225,14 @@ class _ExerciseProgressScreenState
 class _RecordTiles extends ConsumerWidget {
   const new({required this.records, required this.colorOf});
 
-  final List<PersonalRecord> records;
+  final List<TrainingBest> records;
   final Map<SeriesKey, Color> colorOf;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final units = ref.watch(unitLookupProvider);
     final colors = context.colors;
-    Widget tile(PersonalRecord r) {
+    Widget tile(TrainingBest r) {
       final title = switch (r.series) {
         LoadSeries() => Strings.heaviestIn(seriesName(r.series, units)),
         RepsSeries() => Strings.mostRepsTitle,
@@ -581,7 +628,7 @@ class MultiUnitChart extends StatelessWidget {
         ),
         if (point.isRecord)
           TextSpan(
-            text: '  ${Strings.pr}',
+            text: '  ${Strings.best}',
             style: context.text.labelLarge!.copyWith(
               color: context.appColors.trophy,
             ),

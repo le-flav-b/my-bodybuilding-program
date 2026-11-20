@@ -55,7 +55,7 @@ class TodayScreen extends ConsumerWidget {
       body = Padding(
         padding: const EdgeInsets.only(bottom: 64),
         child: EmptyState(
-          artAsset: 'assets/images/sleep.png',
+          icon: Symbols.fitness_center_rounded,
           title: Strings.todayWelcomeTitle,
           body: Strings.todayWelcomeBody,
           largeTitle: true,

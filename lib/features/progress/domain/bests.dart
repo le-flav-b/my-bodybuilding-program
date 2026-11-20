@@ -1,29 +1,29 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
 
-part 'records.freezed.dart';
+part 'bests.freezed.dart';
 
 /// The best value of an exercise in one series (per unit for loads).
 @freezed
-abstract class PersonalRecord with _$PersonalRecord {
+abstract class TrainingBest with _$TrainingBest {
   const factory({
     required String exerciseId,
     required SeriesKey series,
     required double value,
     required LoggedSet set,
-  }) = _PersonalRecord;
+  }) = _TrainingBest;
 }
 
 /// A set that beat a record when it was logged.
 @freezed
-abstract class RecordEvent with _$RecordEvent {
+abstract class BestEvent with _$BestEvent {
   const factory({
     required String exerciseId,
     required SeriesKey series,
     required double value,
     required double previous,
     required LoggedSet set,
-  }) = _RecordEvent;
+  }) = _BestEvent;
   const new _();
 
   String get setId => set.setId;
@@ -35,11 +35,11 @@ abstract class RecordEvent with _$RecordEvent {
 ///
 /// Per exercise: heaviest load per unit (any reps), most reps on sets with
 /// no load, longest hold for time-based exercises.
-abstract final class Records {
+abstract final class Bests {
   /// The current records of every exercise in [sets]. When several sets
   /// share the best value, the earliest holds the record.
-  static List<PersonalRecord> current(Iterable<LoggedSet> sets) {
-    final best = <(String, SeriesKey), PersonalRecord>{};
+  static List<TrainingBest> current(Iterable<LoggedSet> sets) {
+    final best = <(String, SeriesKey), TrainingBest>{};
     for (final set in _sorted(sets)) {
       final keyed = SeriesKey.of(set);
       if (keyed == null) continue;
@@ -47,7 +47,7 @@ abstract final class Records {
       final key = (set.exerciseId, series);
       final holder = best[key];
       if (holder == null || value > holder.value) {
-        best[key] = PersonalRecord(
+        best[key] = TrainingBest(
           exerciseId: set.exerciseId,
           series: series,
           value: value,
@@ -64,8 +64,8 @@ abstract final class Records {
   /// earlier workout and the set beats it, and beats any earlier set of the
   /// same workout. The first workout of an exercise (or of a unit on that
   /// exercise) sets the baseline without a record.
-  static List<RecordEvent> events(Iterable<LoggedSet> sets) {
-    final events = <RecordEvent>[];
+  static List<BestEvent> events(Iterable<LoggedSet> sets) {
+    final events = <BestEvent>[];
     // Best value from earlier workouts, and the workout being scanned.
     final baseline = <(String, SeriesKey), double>{};
     final running = <(String, SeriesKey), double>{};
@@ -98,7 +98,7 @@ abstract final class Records {
             : before;
         if (value > toBeat) {
           events.add(
-            RecordEvent(
+            BestEvent(
               exerciseId: set.exerciseId,
               series: series,
               value: value,
@@ -115,11 +115,11 @@ abstract final class Records {
 
   /// The records beaten during [workoutId], one per exercise and series:
   /// the best value reached, with the record that stood before the workout.
-  static List<RecordEvent> ofWorkout(
-    Iterable<RecordEvent> events,
+  static List<BestEvent> ofWorkout(
+    Iterable<BestEvent> events,
     String workoutId,
   ) {
-    final byKey = <(String, SeriesKey), RecordEvent>{};
+    final byKey = <(String, SeriesKey), BestEvent>{};
     for (final event in events) {
       if (event.workoutId != workoutId) continue;
       final key = (event.exerciseId, event.series);
@@ -132,7 +132,7 @@ abstract final class Records {
   }
 
   /// The most recent record events, newest first.
-  static List<RecordEvent> latest(Iterable<RecordEvent> events, int count) {
+  static List<BestEvent> latest(Iterable<BestEvent> events, int count) {
     final sorted = events.toList()
       ..sort((a, b) => b.achievedAt.compareTo(a.achievedAt));
     return sorted.take(count).toList();

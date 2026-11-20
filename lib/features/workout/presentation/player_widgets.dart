@@ -7,13 +7,13 @@ import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
 import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 
 /// "42.5 kg × 10", "16 reps" or "1:20": a record as text.
 String recordValueText(
-  RecordEvent event,
+  BestEvent event,
   UnitLookup units,
 ) => switch (event.series) {
   LoadSeries(:final unitId) =>
@@ -24,7 +24,7 @@ String recordValueText(
 };
 
 /// The record that was beaten, as text ("40 kg", "14", "1:05").
-String recordPreviousText(RecordEvent event, UnitLookup units) =>
+String recordPreviousText(BestEvent event, UnitLookup units) =>
     switch (event.series) {
       LoadSeries(:final unitId) =>
         PlanFormat.load(event.previous, unitId, units) ?? '',
@@ -292,9 +292,9 @@ class UnitChip extends StatelessWidget {
   }
 }
 
-/// Yellow pill marking a record ("PR").
-class PrChip extends StatelessWidget {
-  const new({this.label = Strings.pr, super.key});
+/// Yellow pill with a trophy: a training best ("Best") or a PR ("Best PR").
+class TrophyChip extends StatelessWidget {
+  const new({this.label = Strings.best, super.key});
 
   final String label;
 

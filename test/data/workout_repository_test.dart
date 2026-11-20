@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/program/domain/set_target.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/plan_diff.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -632,10 +632,10 @@ void main() {
       final logged = await env.history.getLoggedSets();
       expect(logged, hasLength(8));
       final records = {
-        for (final r in Records.current(logged)) r.exerciseId: r.value,
+        for (final r in Bests.current(logged)) r.exerciseId: r.value,
       };
       expect(records, {bench: 42.5, press: 32.5});
-      final events = Records.ofWorkout(Records.events(logged), second);
+      final events = Bests.ofWorkout(Bests.events(logged), second);
       expect(events, hasLength(2));
       expect(events.map((e) => e.previous), containsAll([40, 30]));
 
@@ -678,7 +678,7 @@ void main() {
           includeWorkoutId: id,
         );
         expect(withCurrent, hasLength(3));
-        expect(Records.events(withCurrent).single.setId, set.id);
+        expect(Bests.events(withCurrent).single.setId, set.id);
       },
     );
 
@@ -687,7 +687,7 @@ void main() {
       final typo = await doPush(load: 400);
       await doPush(load: 45);
       var logged = await env.history.getLoggedSets(exerciseId: bench);
-      expect(Records.current(logged).single.value, 400);
+      expect(Bests.current(logged).single.value, 400);
 
       // Fix one set, delete the other.
       final wrong = (await detail(typo)).exercises.first.sets;
@@ -695,8 +695,8 @@ void main() {
       await env.workouts.deleteSet(wrong[1].id);
       logged = await env.history.getLoggedSets(exerciseId: bench);
       expect(logged, hasLength(5));
-      expect(Records.current(logged).single.value, 45);
-      expect(Records.events(logged).single.value, 45);
+      expect(Bests.current(logged).single.value, 45);
+      expect(Bests.events(logged).single.value, 45);
     });
 
     test('deleting a workout removes it from history', () async {

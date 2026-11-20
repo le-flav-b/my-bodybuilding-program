@@ -181,8 +181,11 @@ class CatalogueRepository {
     _clock(),
   );
 
-  Future<bool> exerciseHasHistory(String id) =>
-      _db.historyDao.exerciseHasHistory(id);
+  /// Workouts or personal records: either one means the exercise can only
+  /// be archived and its measure can't change.
+  Future<bool> exerciseHasHistory(String id) async =>
+      await _db.historyDao.exerciseHasHistory(id) ||
+      await _db.personalDao.exerciseHasPersonalRecords(id);
 
   /// Deletes an exercise that has never been done (it is also removed from
   /// the sessions that planned it). One with history can only be archived.

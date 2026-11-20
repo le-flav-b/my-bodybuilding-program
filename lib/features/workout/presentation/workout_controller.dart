@@ -5,9 +5,9 @@ import 'package:my_bodybuilding_program/features/program/domain/program.dart';
 import 'package:my_bodybuilding_program/features/program/domain/set_target.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_controller.dart';
 import 'package:my_bodybuilding_program/features/progress/data/history_repository.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/last_time.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/plan_diff.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -56,7 +56,7 @@ class WorkoutController {
   // ---------------------------------------------------------------- logging
 
   /// Logs [set] as done. Returns the record it beat, if any (trophy).
-  Future<RecordEvent?> logSet(
+  Future<BestEvent?> logSet(
     WorkoutDetail detail,
     WorkoutExercise exercise,
     WorkoutSet set, {
@@ -77,7 +77,7 @@ class WorkoutController {
       exerciseId: exercise.exerciseId,
       includeWorkoutId: detail.workout.id,
     );
-    for (final event in Records.events(sets)) {
+    for (final event in Bests.events(sets)) {
       if (event.setId == set.id) return event;
     }
     return null;

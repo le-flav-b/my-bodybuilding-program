@@ -5,9 +5,9 @@ import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/estimated_duration.dart';
 import 'package:my_bodybuilding_program/features/program/domain/set_target.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/last_time.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -87,7 +87,7 @@ List<LoggedSet> loggedSetsOf(
 ];
 
 /// The records beaten by the sets of [detail], in or out of progress.
-List<RecordEvent> workoutRecordEvents(
+List<BestEvent> workoutRecordEvents(
   WorkoutDetail detail,
   Map<String, List<LoggedSet>> history,
   Map<String, Exercise> exercises,
@@ -100,7 +100,7 @@ List<RecordEvent> workoutRecordEvents(
     ...mine,
   ];
   return [
-    for (final e in Records.events(sets))
+    for (final e in Bests.events(sets))
       if (e.workoutId == detail.workout.id) e,
   ];
 }

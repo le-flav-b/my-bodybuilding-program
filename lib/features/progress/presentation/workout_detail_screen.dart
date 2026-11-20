@@ -18,7 +18,7 @@ import 'package:my_bodybuilding_program/core/utils/date_text.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_widgets.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
@@ -94,7 +94,7 @@ class WorkoutDetailScreen extends ConsumerWidget {
     final workout = detail.workout;
     final colors = context.colors;
     final records = {
-      for (final e in Records.events(
+      for (final e in Bests.events(
         ref.watch(loggedSetsProvider).value ?? const [],
       ))
         if (e.workoutId == workoutId) e.setId,
@@ -428,7 +428,7 @@ class _ExerciseSection extends ConsumerWidget {
                     ),
                     if (records.contains(set.id)) ...[
                       const SizedBox(width: AppSpacing.sm),
-                      const PrChip(),
+                      const TrophyChip(),
                     ],
                     const Spacer(),
                     IconButton(

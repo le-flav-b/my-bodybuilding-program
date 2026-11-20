@@ -15,7 +15,7 @@ import 'package:my_bodybuilding_program/core/utils/date_text.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/program_providers.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
@@ -99,7 +99,7 @@ class _WorkoutSummaryScreenState extends ConsumerState<WorkoutSummaryScreen> {
     }
     final colors = context.colors;
     final workout = detail.workout;
-    final records = Records.ofWorkout(
+    final records = Bests.ofWorkout(
       workoutRecordEvents(
         detail,
         ref.watch(loggedSetsByExerciseProvider),
@@ -191,7 +191,7 @@ class _WorkoutSummaryScreenState extends ConsumerState<WorkoutSummaryScreen> {
               if (records.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.xl),
                 Overline(
-                  Strings.newRecords(records.length),
+                  Strings.newBests(records.length),
                   color: colors.onSurfaceVariant,
                   fontSize: 14,
                 ),
@@ -269,7 +269,7 @@ class _WorkoutSummaryScreenState extends ConsumerState<WorkoutSummaryScreen> {
 class _RecordCard extends ConsumerWidget {
   const new({required this.event});
 
-  final RecordEvent event;
+  final BestEvent event;
 
   static const Color _ink = Color(0xFF181B1E);
 
@@ -314,7 +314,7 @@ class _RecordCard extends ConsumerWidget {
                 ),
                 Text(
                   '${recordValueText(event, units)} ${PlanFormat.dot} '
-                  '${Strings.wasRecord(recordPreviousText(event, units))}',
+                  '${Strings.wasBest(recordPreviousText(event, units))}',
                   style: context.text.bodyMedium!.copyWith(
                     color: colors.onSecondaryContainer,
                     fontFeatures: AppTheme.tabular,

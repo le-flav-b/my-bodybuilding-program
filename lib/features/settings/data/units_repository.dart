@@ -83,13 +83,19 @@ class UnitsRepository {
     await _db.personalDao.softDelete(_db.loadUnits, id, _clock());
   }
 
-  /// Number of exercises each unit is used in (planned or logged).
+  /// Number of exercises each unit is used in (planned, logged or in a
+  /// personal record).
   Future<Map<String, int>> usageByUnit() async {
     final planned = await _db.planDao.exercisesByPlannedUnit();
     final logged = await _db.historyDao.exercisesByLoggedUnit();
+    final records = await _db.personalDao.exercisesByPersonalRecordUnit();
     return {
-      for (final unitId in {...planned.keys, ...logged.keys})
-        unitId: {...?planned[unitId], ...?logged[unitId]}.length,
+      for (final unitId in {...planned.keys, ...logged.keys, ...records.keys})
+        unitId: {
+          ...?planned[unitId],
+          ...?logged[unitId],
+          ...?records[unitId],
+        }.length,
     };
   }
 
@@ -99,6 +105,7 @@ class UnitsRepository {
     _db.workoutSets,
     _db.workoutExercises,
     _db.workouts,
+    _db.personalRecords,
   ], usageByUnit);
 
   void _check(LoadUnitDraft draft) {

@@ -5,8 +5,9 @@ import 'package:my_bodybuilding_program/core/db/tables/personal_tables.dart';
 
 part 'personal_dao.g.dart';
 
-/// Queries of the personal layer: load units, bodyweight and settings.
-@DriftAccessor(tables: [LoadUnits, BodyWeights, Settings])
+/// Queries of the personal layer: load units, bodyweight, settings and
+/// personal records.
+@DriftAccessor(tables: [LoadUnits, BodyWeights, Settings, PersonalRecords])
 class PersonalDao extends DatabaseAccessor<AppDatabase>
     with _$PersonalDaoMixin, SyncedWrites {
   new(super.attachedDatabase);
@@ -31,6 +32,47 @@ class PersonalDao extends DatabaseAccessor<AppDatabase>
             ..where((t) => t.deletedAt.isNull())
             ..orderBy([(t) => OrderingTerm.desc(t.measuredAt)]))
           .get();
+
+  /// Personal records, newest first; only [exerciseId]'s when given.
+  Future<List<PersonalRecordRow>> allPersonalRecords({String? exerciseId}) =>
+      (select(personalRecords)
+            ..where(
+              (t) => exerciseId == null
+                  ? t.deletedAt.isNull()
+                  : t.deletedAt.isNull() & t.exerciseId.equals(exerciseId),
+            )
+            ..orderBy([
+              (t) => OrderingTerm.desc(t.achievedAt),
+              (t) => OrderingTerm.desc(t.createdAt),
+            ]))
+          .get();
+
+  Future<PersonalRecordRow?> personalRecordById(String id) => (select(
+    personalRecords,
+  )..where((t) => t.id.equals(id) & t.deletedAt.isNull())).getSingleOrNull();
+
+  Future<bool> exerciseHasPersonalRecords(String exerciseId) async {
+    final row =
+        await (select(personalRecords)
+              ..where(
+                (t) => t.exerciseId.equals(exerciseId) & t.deletedAt.isNull(),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    return row != null;
+  }
+
+  /// Exercise ids having a PR in each unit.
+  Future<Map<String, Set<String>>> exercisesByPersonalRecordUnit() async {
+    final rows = await (select(
+      personalRecords,
+    )..where((t) => t.deletedAt.isNull() & t.unitId.isNotNull())).get();
+    final result = <String, Set<String>>{};
+    for (final r in rows) {
+      result.putIfAbsent(r.unitId!, () => {}).add(r.exerciseId);
+    }
+    return result;
+  }
 
   Future<Map<String, String>> allSettings() async {
     final rows = await (select(

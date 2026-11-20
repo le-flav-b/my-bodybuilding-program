@@ -18,14 +18,14 @@ import 'package:my_bodybuilding_program/features/profile/domain/body_weight.dart
 import 'package:my_bodybuilding_program/features/profile/presentation/body_weight_providers.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/bodyweight_screen.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/personal_record.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/history_providers.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/personal_records_providers.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/pr_flows.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_widgets.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
-import 'package:my_bodybuilding_program/features/workout/presentation/player_widgets.dart';
 
-/// Tab 4: bodyweight, training stats and the latest records.
+/// Tab 4: bodyweight, training stats and the latest personal records.
 class ProfileScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -35,8 +35,8 @@ class ProfileScreen extends ConsumerWidget {
     final streak = ref.watch(streakProvider);
     final now = ref.watch(clockProvider)().toLocal();
     final lastMonth = DateTime(now.year, now.month - 1);
-    final events = Records.latest(
-      Records.events(ref.watch(loggedSetsProvider).value ?? const []),
+    final prs = PrRule.latest(
+      ref.watch(personalRecordsProvider).value ?? const [],
       5,
     );
     final count = NumberFormat.decimalPattern();
@@ -130,15 +130,15 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           Overline(
-            Strings.latestRecords,
+            Strings.latestPrs,
             color: context.colors.onSurfaceVariant,
             fontSize: 14,
           ),
           const SizedBox(height: AppSpacing.sm),
-          if (events.isEmpty)
-            Text(Strings.noRecordsYet, style: context.text.bodyMedium)
+          if (prs.isEmpty)
+            Text(Strings.noPrsYet, style: context.text.bodyMedium)
           else
-            for (final e in events) _RecordRow(event: e),
+            for (final r in prs) _PrRow(record: r),
         ],
       ),
     );
@@ -336,23 +336,18 @@ class _BodyweightCard extends ConsumerWidget {
   }
 }
 
-class _RecordRow extends ConsumerWidget {
-  const new({required this.event});
+/// One of the latest PRs: trophy, exercise, date, value → its PRs.
+class _PrRow extends ConsumerWidget {
+  const new({required this.record});
 
-  final RecordEvent event;
+  final PersonalRecord record;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = context.colors;
     final units = ref.watch(unitLookupProvider);
-    final name = ref.watch(exerciseProvider(event.exerciseId))?.name ?? '';
-    final type = switch (event.series) {
-      LoadSeries() => Strings.heaviest,
-      RepsSeries() => Strings.mostReps,
-      TimeSeries() => Strings.longestHold,
-    };
+    final name = ref.watch(exerciseProvider(record.exerciseId))?.name ?? '';
     return InkWell(
-      onTap: () => context.push(Routes.exerciseProgress(event.exerciseId)),
+      onTap: () => context.push(Routes.exerciseRecords(record.exerciseId)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
         child: Row(
@@ -362,13 +357,13 @@ class _RecordRow extends ConsumerWidget {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colors.secondaryContainer,
+                color: context.appColors.trophy,
               ),
-              child: Icon(
+              child: const Icon(
                 Symbols.trophy_rounded,
                 size: 22,
                 fill: 1,
-                color: context.appColors.trophyText,
+                color: Color(0xFF181B1E),
               ),
             ),
             const SizedBox(width: AppSpacing.lg),
@@ -377,7 +372,7 @@ class _RecordRow extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$name · $type',
+                    name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: context.text.titleMedium!.copyWith(
@@ -385,7 +380,7 @@ class _RecordRow extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    DateFormat('d MMM').format(event.achievedAt.toLocal()),
+                    DateFormat('d MMM y').format(record.achievedAt.toLocal()),
                     style: context.text.bodyMedium,
                   ),
                 ],
@@ -393,7 +388,7 @@ class _RecordRow extends ConsumerWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              recordValueText(event, units),
+              prValueText(record, units),
               style: context.text.titleMedium!.copyWith(
                 fontFeatures: AppTheme.tabular,
               ),

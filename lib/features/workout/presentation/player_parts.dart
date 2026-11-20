@@ -653,7 +653,7 @@ class SetRow extends ConsumerWidget {
               ),
               if (isRecord) ...[
                 const SizedBox(width: AppSpacing.sm),
-                const PrChip(),
+                const TrophyChip(),
               ],
               const Spacer(),
               if (l != null)

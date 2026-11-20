@@ -15,7 +15,7 @@ void main() {
     setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
     test('a fresh database matches the dumped schema of its version', () async {
-      final connection = await verifier.startAt(1);
+      final connection = await verifier.startAt(2);
       final db = AppDatabase(connection);
       addTearDown(db.close);
       // Fails when the tables change without a new schema version + dump
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('every dumped version has a migration test path', () {
-      expect(GeneratedHelper.versions.last, 1);
+      expect(GeneratedHelper.versions.last, 2);
       final db = AppDatabase(NativeDatabase.memory());
       addTearDown(db.close);
       expect(db.schemaVersion, GeneratedHelper.versions.last);

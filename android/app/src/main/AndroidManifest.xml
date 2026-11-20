@@ -12,6 +12,7 @@
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
+            android:label="My Program"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity=""

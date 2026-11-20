@@ -6,6 +6,7 @@ analyzer:
     - android/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/*.steps.dart"
     # Schema snapshots written by `drift_dev schema generate`.
     - test/core/db/migrations/generated/**
   errors:

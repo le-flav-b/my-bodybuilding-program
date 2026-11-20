@@ -4,7 +4,7 @@
 //
 import 'package:drift/drift.dart';
 
-class Muscles extends Table with TableInfo {
+class Muscles extends Table with TableInfo<Muscles, MusclesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -114,8 +114,50 @@ class Muscles extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  MusclesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MusclesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      hidden: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hidden'],
+      )!,
+      seedKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seed_key'],
+      ),
+      userModified: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_modified'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
   }
 
   @override
@@ -129,7 +171,345 @@ class Muscles extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Exercises extends Table with TableInfo {
+class MusclesData extends DataClass implements Insertable<MusclesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String name;
+  final int hidden;
+  final String? seedKey;
+  final int userModified;
+  final int position;
+  const MusclesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.name,
+    required this.hidden,
+    this.seedKey,
+    required this.userModified,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['name'] = Variable<String>(name);
+    map['hidden'] = Variable<int>(hidden);
+    if (!nullToAbsent || seedKey != null) {
+      map['seed_key'] = Variable<String>(seedKey);
+    }
+    map['user_modified'] = Variable<int>(userModified);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  MusclesCompanion toCompanion(bool nullToAbsent) {
+    return MusclesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      name: Value(name),
+      hidden: Value(hidden),
+      seedKey: seedKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seedKey),
+      userModified: Value(userModified),
+      position: Value(position),
+    );
+  }
+
+  factory MusclesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MusclesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      name: serializer.fromJson<String>(json['name']),
+      hidden: serializer.fromJson<int>(json['hidden']),
+      seedKey: serializer.fromJson<String?>(json['seedKey']),
+      userModified: serializer.fromJson<int>(json['userModified']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'name': serializer.toJson<String>(name),
+      'hidden': serializer.toJson<int>(hidden),
+      'seedKey': serializer.toJson<String?>(seedKey),
+      'userModified': serializer.toJson<int>(userModified),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  MusclesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? name,
+    int? hidden,
+    Value<String?> seedKey = const Value.absent(),
+    int? userModified,
+    int? position,
+  }) => MusclesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    name: name ?? this.name,
+    hidden: hidden ?? this.hidden,
+    seedKey: seedKey.present ? seedKey.value : this.seedKey,
+    userModified: userModified ?? this.userModified,
+    position: position ?? this.position,
+  );
+  MusclesData copyWithCompanion(MusclesCompanion data) {
+    return MusclesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      name: data.name.present ? data.name.value : this.name,
+      hidden: data.hidden.present ? data.hidden.value : this.hidden,
+      seedKey: data.seedKey.present ? data.seedKey.value : this.seedKey,
+      userModified: data.userModified.present
+          ? data.userModified.value
+          : this.userModified,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MusclesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('hidden: $hidden, ')
+          ..write('seedKey: $seedKey, ')
+          ..write('userModified: $userModified, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    name,
+    hidden,
+    seedKey,
+    userModified,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MusclesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.name == this.name &&
+          other.hidden == this.hidden &&
+          other.seedKey == this.seedKey &&
+          other.userModified == this.userModified &&
+          other.position == this.position);
+}
+
+class MusclesCompanion extends UpdateCompanion<MusclesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> name;
+  final Value<int> hidden;
+  final Value<String?> seedKey;
+  final Value<int> userModified;
+  final Value<int> position;
+  final Value<int> rowid;
+  const MusclesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.name = const Value.absent(),
+    this.hidden = const Value.absent(),
+    this.seedKey = const Value.absent(),
+    this.userModified = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MusclesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String name,
+    this.hidden = const Value.absent(),
+    this.seedKey = const Value.absent(),
+    this.userModified = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name);
+  static Insertable<MusclesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? name,
+    Expression<int>? hidden,
+    Expression<String>? seedKey,
+    Expression<int>? userModified,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (name != null) 'name': name,
+      if (hidden != null) 'hidden': hidden,
+      if (seedKey != null) 'seed_key': seedKey,
+      if (userModified != null) 'user_modified': userModified,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MusclesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? name,
+    Value<int>? hidden,
+    Value<String?>? seedKey,
+    Value<int>? userModified,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return MusclesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      name: name ?? this.name,
+      hidden: hidden ?? this.hidden,
+      seedKey: seedKey ?? this.seedKey,
+      userModified: userModified ?? this.userModified,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (hidden.present) {
+      map['hidden'] = Variable<int>(hidden.value);
+    }
+    if (seedKey.present) {
+      map['seed_key'] = Variable<String>(seedKey.value);
+    }
+    if (userModified.present) {
+      map['user_modified'] = Variable<int>(userModified.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MusclesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('hidden: $hidden, ')
+          ..write('seedKey: $seedKey, ')
+          ..write('userModified: $userModified, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Exercises extends Table with TableInfo<Exercises, ExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -256,8 +636,58 @@ class Exercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      image: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image'],
+      ),
+      measure: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}measure'],
+      )!,
+      seedKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}seed_key'],
+      ),
+      userModified: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_modified'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
   }
 
   @override
@@ -271,7 +701,405 @@ class Exercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class ExerciseMuscles extends Table with TableInfo {
+class ExercisesData extends DataClass implements Insertable<ExercisesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String name;
+  final String description;
+  final String? image;
+  final String measure;
+  final String? seedKey;
+  final int userModified;
+  final String? archivedAt;
+  const ExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.name,
+    required this.description,
+    this.image,
+    required this.measure,
+    this.seedKey,
+    required this.userModified,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
+    if (!nullToAbsent || image != null) {
+      map['image'] = Variable<String>(image);
+    }
+    map['measure'] = Variable<String>(measure);
+    if (!nullToAbsent || seedKey != null) {
+      map['seed_key'] = Variable<String>(seedKey);
+    }
+    map['user_modified'] = Variable<int>(userModified);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<String>(archivedAt);
+    }
+    return map;
+  }
+
+  ExercisesCompanion toCompanion(bool nullToAbsent) {
+    return ExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      name: Value(name),
+      description: Value(description),
+      image: image == null && nullToAbsent
+          ? const Value.absent()
+          : Value(image),
+      measure: Value(measure),
+      seedKey: seedKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seedKey),
+      userModified: Value(userModified),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory ExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      image: serializer.fromJson<String?>(json['image']),
+      measure: serializer.fromJson<String>(json['measure']),
+      seedKey: serializer.fromJson<String?>(json['seedKey']),
+      userModified: serializer.fromJson<int>(json['userModified']),
+      archivedAt: serializer.fromJson<String?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'image': serializer.toJson<String?>(image),
+      'measure': serializer.toJson<String>(measure),
+      'seedKey': serializer.toJson<String?>(seedKey),
+      'userModified': serializer.toJson<int>(userModified),
+      'archivedAt': serializer.toJson<String?>(archivedAt),
+    };
+  }
+
+  ExercisesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? name,
+    String? description,
+    Value<String?> image = const Value.absent(),
+    String? measure,
+    Value<String?> seedKey = const Value.absent(),
+    int? userModified,
+    Value<String?> archivedAt = const Value.absent(),
+  }) => ExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    image: image.present ? image.value : this.image,
+    measure: measure ?? this.measure,
+    seedKey: seedKey.present ? seedKey.value : this.seedKey,
+    userModified: userModified ?? this.userModified,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  ExercisesData copyWithCompanion(ExercisesCompanion data) {
+    return ExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      image: data.image.present ? data.image.value : this.image,
+      measure: data.measure.present ? data.measure.value : this.measure,
+      seedKey: data.seedKey.present ? data.seedKey.value : this.seedKey,
+      userModified: data.userModified.present
+          ? data.userModified.value
+          : this.userModified,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('image: $image, ')
+          ..write('measure: $measure, ')
+          ..write('seedKey: $seedKey, ')
+          ..write('userModified: $userModified, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    name,
+    description,
+    image,
+    measure,
+    seedKey,
+    userModified,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.image == this.image &&
+          other.measure == this.measure &&
+          other.seedKey == this.seedKey &&
+          other.userModified == this.userModified &&
+          other.archivedAt == this.archivedAt);
+}
+
+class ExercisesCompanion extends UpdateCompanion<ExercisesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<String?> image;
+  final Value<String> measure;
+  final Value<String?> seedKey;
+  final Value<int> userModified;
+  final Value<String?> archivedAt;
+  final Value<int> rowid;
+  const ExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.image = const Value.absent(),
+    this.measure = const Value.absent(),
+    this.seedKey = const Value.absent(),
+    this.userModified = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExercisesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String name,
+    this.description = const Value.absent(),
+    this.image = const Value.absent(),
+    required String measure,
+    this.seedKey = const Value.absent(),
+    this.userModified = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name),
+       measure = Value(measure);
+  static Insertable<ExercisesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? image,
+    Expression<String>? measure,
+    Expression<String>? seedKey,
+    Expression<int>? userModified,
+    Expression<String>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (image != null) 'image': image,
+      if (measure != null) 'measure': measure,
+      if (seedKey != null) 'seed_key': seedKey,
+      if (userModified != null) 'user_modified': userModified,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? name,
+    Value<String>? description,
+    Value<String?>? image,
+    Value<String>? measure,
+    Value<String?>? seedKey,
+    Value<int>? userModified,
+    Value<String?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return ExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      measure: measure ?? this.measure,
+      seedKey: seedKey ?? this.seedKey,
+      userModified: userModified ?? this.userModified,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (image.present) {
+      map['image'] = Variable<String>(image.value);
+    }
+    if (measure.present) {
+      map['measure'] = Variable<String>(measure.value);
+    }
+    if (seedKey.present) {
+      map['seed_key'] = Variable<String>(seedKey.value);
+    }
+    if (userModified.present) {
+      map['user_modified'] = Variable<int>(userModified.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<String>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('image: $image, ')
+          ..write('measure: $measure, ')
+          ..write('seedKey: $seedKey, ')
+          ..write('userModified: $userModified, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ExerciseMuscles extends Table
+    with TableInfo<ExerciseMuscles, ExerciseMusclesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -370,8 +1198,46 @@ class ExerciseMuscles extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ExerciseMusclesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExerciseMusclesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      muscleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}muscle_id'],
+      )!,
+      role: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}role'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
   }
 
   @override
@@ -385,7 +1251,322 @@ class ExerciseMuscles extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class ExerciseNotes extends Table with TableInfo {
+class ExerciseMusclesData extends DataClass
+    implements Insertable<ExerciseMusclesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String exerciseId;
+  final String muscleId;
+  final String role;
+  final int position;
+  const ExerciseMusclesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.exerciseId,
+    required this.muscleId,
+    required this.role,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['muscle_id'] = Variable<String>(muscleId);
+    map['role'] = Variable<String>(role);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  ExerciseMusclesCompanion toCompanion(bool nullToAbsent) {
+    return ExerciseMusclesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      exerciseId: Value(exerciseId),
+      muscleId: Value(muscleId),
+      role: Value(role),
+      position: Value(position),
+    );
+  }
+
+  factory ExerciseMusclesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExerciseMusclesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      muscleId: serializer.fromJson<String>(json['muscleId']),
+      role: serializer.fromJson<String>(json['role']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'muscleId': serializer.toJson<String>(muscleId),
+      'role': serializer.toJson<String>(role),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  ExerciseMusclesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? exerciseId,
+    String? muscleId,
+    String? role,
+    int? position,
+  }) => ExerciseMusclesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    exerciseId: exerciseId ?? this.exerciseId,
+    muscleId: muscleId ?? this.muscleId,
+    role: role ?? this.role,
+    position: position ?? this.position,
+  );
+  ExerciseMusclesData copyWithCompanion(ExerciseMusclesCompanion data) {
+    return ExerciseMusclesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      muscleId: data.muscleId.present ? data.muscleId.value : this.muscleId,
+      role: data.role.present ? data.role.value : this.role,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExerciseMusclesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('muscleId: $muscleId, ')
+          ..write('role: $role, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    exerciseId,
+    muscleId,
+    role,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExerciseMusclesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.exerciseId == this.exerciseId &&
+          other.muscleId == this.muscleId &&
+          other.role == this.role &&
+          other.position == this.position);
+}
+
+class ExerciseMusclesCompanion extends UpdateCompanion<ExerciseMusclesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> exerciseId;
+  final Value<String> muscleId;
+  final Value<String> role;
+  final Value<int> position;
+  final Value<int> rowid;
+  const ExerciseMusclesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.muscleId = const Value.absent(),
+    this.role = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExerciseMusclesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String exerciseId,
+    required String muscleId,
+    required String role,
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       exerciseId = Value(exerciseId),
+       muscleId = Value(muscleId),
+       role = Value(role);
+  static Insertable<ExerciseMusclesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? exerciseId,
+    Expression<String>? muscleId,
+    Expression<String>? role,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (muscleId != null) 'muscle_id': muscleId,
+      if (role != null) 'role': role,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExerciseMusclesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? exerciseId,
+    Value<String>? muscleId,
+    Value<String>? role,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return ExerciseMusclesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      exerciseId: exerciseId ?? this.exerciseId,
+      muscleId: muscleId ?? this.muscleId,
+      role: role ?? this.role,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (muscleId.present) {
+      map['muscle_id'] = Variable<String>(muscleId.value);
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(role.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExerciseMusclesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('muscleId: $muscleId, ')
+          ..write('role: $role, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class ExerciseNotes extends Table
+    with TableInfo<ExerciseNotes, ExerciseNotesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -466,8 +1647,38 @@ class ExerciseNotes extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ExerciseNotesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExerciseNotesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      )!,
+    );
   }
 
   @override
@@ -481,7 +1692,273 @@ class ExerciseNotes extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class LoadUnits extends Table with TableInfo {
+class ExerciseNotesData extends DataClass
+    implements Insertable<ExerciseNotesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String exerciseId;
+  final String notes;
+  const ExerciseNotesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.exerciseId,
+    required this.notes,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['notes'] = Variable<String>(notes);
+    return map;
+  }
+
+  ExerciseNotesCompanion toCompanion(bool nullToAbsent) {
+    return ExerciseNotesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      exerciseId: Value(exerciseId),
+      notes: Value(notes),
+    );
+  }
+
+  factory ExerciseNotesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExerciseNotesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      notes: serializer.fromJson<String>(json['notes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'notes': serializer.toJson<String>(notes),
+    };
+  }
+
+  ExerciseNotesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? exerciseId,
+    String? notes,
+  }) => ExerciseNotesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    exerciseId: exerciseId ?? this.exerciseId,
+    notes: notes ?? this.notes,
+  );
+  ExerciseNotesData copyWithCompanion(ExerciseNotesCompanion data) {
+    return ExerciseNotesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      notes: data.notes.present ? data.notes.value : this.notes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExerciseNotesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('notes: $notes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    exerciseId,
+    notes,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExerciseNotesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.exerciseId == this.exerciseId &&
+          other.notes == this.notes);
+}
+
+class ExerciseNotesCompanion extends UpdateCompanion<ExerciseNotesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> exerciseId;
+  final Value<String> notes;
+  final Value<int> rowid;
+  const ExerciseNotesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExerciseNotesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String exerciseId,
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       exerciseId = Value(exerciseId);
+  static Insertable<ExerciseNotesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? exerciseId,
+    Expression<String>? notes,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (notes != null) 'notes': notes,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExerciseNotesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? exerciseId,
+    Value<String>? notes,
+    Value<int>? rowid,
+  }) {
+    return ExerciseNotesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      exerciseId: exerciseId ?? this.exerciseId,
+      notes: notes ?? this.notes,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExerciseNotesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('notes: $notes, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class LoadUnits extends Table with TableInfo<LoadUnits, LoadUnitsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -589,8 +2066,50 @@ class LoadUnits extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  LoadUnitsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LoadUnitsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      step: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}step'],
+      )!,
+      decimals: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}decimals'],
+      )!,
+      isBuiltin: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_builtin'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
   }
 
   @override
@@ -604,7 +2123,347 @@ class LoadUnits extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class BodyWeights extends Table with TableInfo {
+class LoadUnitsData extends DataClass implements Insertable<LoadUnitsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String name;
+  final double step;
+  final int decimals;
+  final int isBuiltin;
+  final String? archivedAt;
+  const LoadUnitsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.name,
+    required this.step,
+    required this.decimals,
+    required this.isBuiltin,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['name'] = Variable<String>(name);
+    map['step'] = Variable<double>(step);
+    map['decimals'] = Variable<int>(decimals);
+    map['is_builtin'] = Variable<int>(isBuiltin);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<String>(archivedAt);
+    }
+    return map;
+  }
+
+  LoadUnitsCompanion toCompanion(bool nullToAbsent) {
+    return LoadUnitsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      name: Value(name),
+      step: Value(step),
+      decimals: Value(decimals),
+      isBuiltin: Value(isBuiltin),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory LoadUnitsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LoadUnitsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      name: serializer.fromJson<String>(json['name']),
+      step: serializer.fromJson<double>(json['step']),
+      decimals: serializer.fromJson<int>(json['decimals']),
+      isBuiltin: serializer.fromJson<int>(json['isBuiltin']),
+      archivedAt: serializer.fromJson<String?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'name': serializer.toJson<String>(name),
+      'step': serializer.toJson<double>(step),
+      'decimals': serializer.toJson<int>(decimals),
+      'isBuiltin': serializer.toJson<int>(isBuiltin),
+      'archivedAt': serializer.toJson<String?>(archivedAt),
+    };
+  }
+
+  LoadUnitsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? name,
+    double? step,
+    int? decimals,
+    int? isBuiltin,
+    Value<String?> archivedAt = const Value.absent(),
+  }) => LoadUnitsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    name: name ?? this.name,
+    step: step ?? this.step,
+    decimals: decimals ?? this.decimals,
+    isBuiltin: isBuiltin ?? this.isBuiltin,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  LoadUnitsData copyWithCompanion(LoadUnitsCompanion data) {
+    return LoadUnitsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      name: data.name.present ? data.name.value : this.name,
+      step: data.step.present ? data.step.value : this.step,
+      decimals: data.decimals.present ? data.decimals.value : this.decimals,
+      isBuiltin: data.isBuiltin.present ? data.isBuiltin.value : this.isBuiltin,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoadUnitsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('step: $step, ')
+          ..write('decimals: $decimals, ')
+          ..write('isBuiltin: $isBuiltin, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    name,
+    step,
+    decimals,
+    isBuiltin,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LoadUnitsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.name == this.name &&
+          other.step == this.step &&
+          other.decimals == this.decimals &&
+          other.isBuiltin == this.isBuiltin &&
+          other.archivedAt == this.archivedAt);
+}
+
+class LoadUnitsCompanion extends UpdateCompanion<LoadUnitsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> name;
+  final Value<double> step;
+  final Value<int> decimals;
+  final Value<int> isBuiltin;
+  final Value<String?> archivedAt;
+  final Value<int> rowid;
+  const LoadUnitsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.name = const Value.absent(),
+    this.step = const Value.absent(),
+    this.decimals = const Value.absent(),
+    this.isBuiltin = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LoadUnitsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String name,
+    required double step,
+    required int decimals,
+    this.isBuiltin = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name),
+       step = Value(step),
+       decimals = Value(decimals);
+  static Insertable<LoadUnitsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? name,
+    Expression<double>? step,
+    Expression<int>? decimals,
+    Expression<int>? isBuiltin,
+    Expression<String>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (name != null) 'name': name,
+      if (step != null) 'step': step,
+      if (decimals != null) 'decimals': decimals,
+      if (isBuiltin != null) 'is_builtin': isBuiltin,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LoadUnitsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? name,
+    Value<double>? step,
+    Value<int>? decimals,
+    Value<int>? isBuiltin,
+    Value<String?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return LoadUnitsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      name: name ?? this.name,
+      step: step ?? this.step,
+      decimals: decimals ?? this.decimals,
+      isBuiltin: isBuiltin ?? this.isBuiltin,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (step.present) {
+      map['step'] = Variable<double>(step.value);
+    }
+    if (decimals.present) {
+      map['decimals'] = Variable<int>(decimals.value);
+    }
+    if (isBuiltin.present) {
+      map['is_builtin'] = Variable<int>(isBuiltin.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<String>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LoadUnitsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('step: $step, ')
+          ..write('decimals: $decimals, ')
+          ..write('isBuiltin: $isBuiltin, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class BodyWeights extends Table with TableInfo<BodyWeights, BodyWeightsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -693,8 +2552,42 @@ class BodyWeights extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  BodyWeightsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BodyWeightsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      measuredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}measured_at'],
+      )!,
+      weightKg: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}weight_kg'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
   }
 
   @override
@@ -708,7 +2601,298 @@ class BodyWeights extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Settings extends Table with TableInfo {
+class BodyWeightsData extends DataClass implements Insertable<BodyWeightsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String measuredAt;
+  final double weightKg;
+  final String? note;
+  const BodyWeightsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.measuredAt,
+    required this.weightKg,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['measured_at'] = Variable<String>(measuredAt);
+    map['weight_kg'] = Variable<double>(weightKg);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  BodyWeightsCompanion toCompanion(bool nullToAbsent) {
+    return BodyWeightsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      measuredAt: Value(measuredAt),
+      weightKg: Value(weightKg),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory BodyWeightsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BodyWeightsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      measuredAt: serializer.fromJson<String>(json['measuredAt']),
+      weightKg: serializer.fromJson<double>(json['weightKg']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'measuredAt': serializer.toJson<String>(measuredAt),
+      'weightKg': serializer.toJson<double>(weightKg),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  BodyWeightsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? measuredAt,
+    double? weightKg,
+    Value<String?> note = const Value.absent(),
+  }) => BodyWeightsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    measuredAt: measuredAt ?? this.measuredAt,
+    weightKg: weightKg ?? this.weightKg,
+    note: note.present ? note.value : this.note,
+  );
+  BodyWeightsData copyWithCompanion(BodyWeightsCompanion data) {
+    return BodyWeightsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      measuredAt: data.measuredAt.present
+          ? data.measuredAt.value
+          : this.measuredAt,
+      weightKg: data.weightKg.present ? data.weightKg.value : this.weightKg,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BodyWeightsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('measuredAt: $measuredAt, ')
+          ..write('weightKg: $weightKg, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    measuredAt,
+    weightKg,
+    note,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BodyWeightsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.measuredAt == this.measuredAt &&
+          other.weightKg == this.weightKg &&
+          other.note == this.note);
+}
+
+class BodyWeightsCompanion extends UpdateCompanion<BodyWeightsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> measuredAt;
+  final Value<double> weightKg;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const BodyWeightsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.measuredAt = const Value.absent(),
+    this.weightKg = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BodyWeightsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String measuredAt,
+    required double weightKg,
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       measuredAt = Value(measuredAt),
+       weightKg = Value(weightKg);
+  static Insertable<BodyWeightsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? measuredAt,
+    Expression<double>? weightKg,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (measuredAt != null) 'measured_at': measuredAt,
+      if (weightKg != null) 'weight_kg': weightKg,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BodyWeightsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? measuredAt,
+    Value<double>? weightKg,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return BodyWeightsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      measuredAt: measuredAt ?? this.measuredAt,
+      weightKg: weightKg ?? this.weightKg,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (measuredAt.present) {
+      map['measured_at'] = Variable<String>(measuredAt.value);
+    }
+    if (weightKg.present) {
+      map['weight_kg'] = Variable<double>(weightKg.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BodyWeightsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('measuredAt: $measuredAt, ')
+          ..write('weightKg: $weightKg, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Settings extends Table with TableInfo<Settings, SettingsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -779,8 +2963,34 @@ class Settings extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {key};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SettingsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettingsData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+    );
   }
 
   @override
@@ -794,7 +3004,241 @@ class Settings extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Programs extends Table with TableInfo {
+class SettingsData extends DataClass implements Insertable<SettingsData> {
+  final String key;
+  final String value;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  const SettingsData({
+    required this.key,
+    required this.value,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    return map;
+  }
+
+  SettingsCompanion toCompanion(bool nullToAbsent) {
+    return SettingsCompanion(
+      key: Value(key),
+      value: Value(value),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+    );
+  }
+
+  factory SettingsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SettingsData(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+    };
+  }
+
+  SettingsData copyWith({
+    String? key,
+    String? value,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+  }) => SettingsData(
+    key: key ?? this.key,
+    value: value ?? this.value,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+  );
+  SettingsData copyWithCompanion(SettingsCompanion data) {
+    return SettingsData(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsData(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(key, value, createdAt, updatedAt, deletedAt, dirty);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettingsData &&
+          other.key == this.key &&
+          other.value == this.value &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty);
+}
+
+class SettingsCompanion extends UpdateCompanion<SettingsData> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<int> rowid;
+  const SettingsCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    required String key,
+    required String value,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SettingsData> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SettingsCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<int>? rowid,
+  }) {
+    return SettingsCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Programs extends Table with TableInfo<Programs, ProgramsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -874,8 +3318,38 @@ class Programs extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ProgramsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProgramsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      nextSessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}next_session_id'],
+      ),
+    );
   }
 
   @override
@@ -889,7 +3363,278 @@ class Programs extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Sessions extends Table with TableInfo {
+class ProgramsData extends DataClass implements Insertable<ProgramsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String name;
+  final String? nextSessionId;
+  const ProgramsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.name,
+    this.nextSessionId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || nextSessionId != null) {
+      map['next_session_id'] = Variable<String>(nextSessionId);
+    }
+    return map;
+  }
+
+  ProgramsCompanion toCompanion(bool nullToAbsent) {
+    return ProgramsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      name: Value(name),
+      nextSessionId: nextSessionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextSessionId),
+    );
+  }
+
+  factory ProgramsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProgramsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      name: serializer.fromJson<String>(json['name']),
+      nextSessionId: serializer.fromJson<String?>(json['nextSessionId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'name': serializer.toJson<String>(name),
+      'nextSessionId': serializer.toJson<String?>(nextSessionId),
+    };
+  }
+
+  ProgramsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? name,
+    Value<String?> nextSessionId = const Value.absent(),
+  }) => ProgramsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    name: name ?? this.name,
+    nextSessionId: nextSessionId.present
+        ? nextSessionId.value
+        : this.nextSessionId,
+  );
+  ProgramsData copyWithCompanion(ProgramsCompanion data) {
+    return ProgramsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      name: data.name.present ? data.name.value : this.name,
+      nextSessionId: data.nextSessionId.present
+          ? data.nextSessionId.value
+          : this.nextSessionId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProgramsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('nextSessionId: $nextSessionId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    name,
+    nextSessionId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProgramsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.name == this.name &&
+          other.nextSessionId == this.nextSessionId);
+}
+
+class ProgramsCompanion extends UpdateCompanion<ProgramsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> name;
+  final Value<String?> nextSessionId;
+  final Value<int> rowid;
+  const ProgramsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.name = const Value.absent(),
+    this.nextSessionId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProgramsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String name,
+    this.nextSessionId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name);
+  static Insertable<ProgramsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? name,
+    Expression<String>? nextSessionId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (name != null) 'name': name,
+      if (nextSessionId != null) 'next_session_id': nextSessionId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProgramsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? name,
+    Value<String?>? nextSessionId,
+    Value<int>? rowid,
+  }) {
+    return ProgramsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      name: name ?? this.name,
+      nextSessionId: nextSessionId ?? this.nextSessionId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (nextSessionId.present) {
+      map['next_session_id'] = Variable<String>(nextSessionId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProgramsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('name: $name, ')
+          ..write('nextSessionId: $nextSessionId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Sessions extends Table with TableInfo<Sessions, SessionsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -978,8 +3723,42 @@ class Sessions extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SessionsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SessionsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      programId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}program_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
   }
 
   @override
@@ -993,7 +3772,296 @@ class Sessions extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class SessionExercises extends Table with TableInfo {
+class SessionsData extends DataClass implements Insertable<SessionsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String programId;
+  final String name;
+  final int position;
+  const SessionsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.programId,
+    required this.name,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['program_id'] = Variable<String>(programId);
+    map['name'] = Variable<String>(name);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  SessionsCompanion toCompanion(bool nullToAbsent) {
+    return SessionsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      programId: Value(programId),
+      name: Value(name),
+      position: Value(position),
+    );
+  }
+
+  factory SessionsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SessionsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      programId: serializer.fromJson<String>(json['programId']),
+      name: serializer.fromJson<String>(json['name']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'programId': serializer.toJson<String>(programId),
+      'name': serializer.toJson<String>(name),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  SessionsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? programId,
+    String? name,
+    int? position,
+  }) => SessionsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    programId: programId ?? this.programId,
+    name: name ?? this.name,
+    position: position ?? this.position,
+  );
+  SessionsData copyWithCompanion(SessionsCompanion data) {
+    return SessionsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      programId: data.programId.present ? data.programId.value : this.programId,
+      name: data.name.present ? data.name.value : this.name,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('programId: $programId, ')
+          ..write('name: $name, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    programId,
+    name,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SessionsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.programId == this.programId &&
+          other.name == this.name &&
+          other.position == this.position);
+}
+
+class SessionsCompanion extends UpdateCompanion<SessionsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> programId;
+  final Value<String> name;
+  final Value<int> position;
+  final Value<int> rowid;
+  const SessionsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.programId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String programId,
+    required String name,
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       programId = Value(programId),
+       name = Value(name),
+       position = Value(position);
+  static Insertable<SessionsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? programId,
+    Expression<String>? name,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (programId != null) 'program_id': programId,
+      if (name != null) 'name': name,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? programId,
+    Value<String>? name,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return SessionsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      programId: programId ?? this.programId,
+      name: name ?? this.name,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (programId.present) {
+      map['program_id'] = Variable<String>(programId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('programId: $programId, ')
+          ..write('name: $name, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class SessionExercises extends Table
+    with TableInfo<SessionExercises, SessionExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1091,8 +4159,46 @@ class SessionExercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SessionExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SessionExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      restS: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_s'],
+      )!,
+    );
   }
 
   @override
@@ -1106,7 +4212,322 @@ class SessionExercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class PlannedSets extends Table with TableInfo {
+class SessionExercisesData extends DataClass
+    implements Insertable<SessionExercisesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String sessionId;
+  final String exerciseId;
+  final int position;
+  final int restS;
+  const SessionExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.sessionId,
+    required this.exerciseId,
+    required this.position,
+    required this.restS,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['session_id'] = Variable<String>(sessionId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['position'] = Variable<int>(position);
+    map['rest_s'] = Variable<int>(restS);
+    return map;
+  }
+
+  SessionExercisesCompanion toCompanion(bool nullToAbsent) {
+    return SessionExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      sessionId: Value(sessionId),
+      exerciseId: Value(exerciseId),
+      position: Value(position),
+      restS: Value(restS),
+    );
+  }
+
+  factory SessionExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SessionExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      sessionId: serializer.fromJson<String>(json['sessionId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      restS: serializer.fromJson<int>(json['restS']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'sessionId': serializer.toJson<String>(sessionId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'position': serializer.toJson<int>(position),
+      'restS': serializer.toJson<int>(restS),
+    };
+  }
+
+  SessionExercisesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? sessionId,
+    String? exerciseId,
+    int? position,
+    int? restS,
+  }) => SessionExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    sessionId: sessionId ?? this.sessionId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    position: position ?? this.position,
+    restS: restS ?? this.restS,
+  );
+  SessionExercisesData copyWithCompanion(SessionExercisesCompanion data) {
+    return SessionExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      restS: data.restS.present ? data.restS.value : this.restS,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('restS: $restS')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    sessionId,
+    exerciseId,
+    position,
+    restS,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SessionExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.sessionId == this.sessionId &&
+          other.exerciseId == this.exerciseId &&
+          other.position == this.position &&
+          other.restS == this.restS);
+}
+
+class SessionExercisesCompanion extends UpdateCompanion<SessionExercisesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> sessionId;
+  final Value<String> exerciseId;
+  final Value<int> position;
+  final Value<int> restS;
+  final Value<int> rowid;
+  const SessionExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.restS = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionExercisesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String sessionId,
+    required String exerciseId,
+    required int position,
+    required int restS,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       sessionId = Value(sessionId),
+       exerciseId = Value(exerciseId),
+       position = Value(position),
+       restS = Value(restS);
+  static Insertable<SessionExercisesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? sessionId,
+    Expression<String>? exerciseId,
+    Expression<int>? position,
+    Expression<int>? restS,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (sessionId != null) 'session_id': sessionId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (position != null) 'position': position,
+      if (restS != null) 'rest_s': restS,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? sessionId,
+    Value<String>? exerciseId,
+    Value<int>? position,
+    Value<int>? restS,
+    Value<int>? rowid,
+  }) {
+    return SessionExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      sessionId: sessionId ?? this.sessionId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      position: position ?? this.position,
+      restS: restS ?? this.restS,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (restS.present) {
+      map['rest_s'] = Variable<int>(restS.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('restS: $restS, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class PlannedSets extends Table with TableInfo<PlannedSets, PlannedSetsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1233,8 +4654,58 @@ class PlannedSets extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  PlannedSetsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PlannedSetsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      sessionExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      targetReps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_reps'],
+      ),
+      targetSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_seconds'],
+      ),
+      isMax: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_max'],
+      )!,
+      load: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}load'],
+      ),
+      unitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_id'],
+      ),
+    );
   }
 
   @override
@@ -1248,7 +4719,408 @@ class PlannedSets extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Workouts extends Table with TableInfo {
+class PlannedSetsData extends DataClass implements Insertable<PlannedSetsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String sessionExerciseId;
+  final int position;
+  final int? targetReps;
+  final int? targetSeconds;
+  final int isMax;
+  final double? load;
+  final String? unitId;
+  const PlannedSetsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.sessionExerciseId,
+    required this.position,
+    this.targetReps,
+    this.targetSeconds,
+    required this.isMax,
+    this.load,
+    this.unitId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['session_exercise_id'] = Variable<String>(sessionExerciseId);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || targetReps != null) {
+      map['target_reps'] = Variable<int>(targetReps);
+    }
+    if (!nullToAbsent || targetSeconds != null) {
+      map['target_seconds'] = Variable<int>(targetSeconds);
+    }
+    map['is_max'] = Variable<int>(isMax);
+    if (!nullToAbsent || load != null) {
+      map['load'] = Variable<double>(load);
+    }
+    if (!nullToAbsent || unitId != null) {
+      map['unit_id'] = Variable<String>(unitId);
+    }
+    return map;
+  }
+
+  PlannedSetsCompanion toCompanion(bool nullToAbsent) {
+    return PlannedSetsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      sessionExerciseId: Value(sessionExerciseId),
+      position: Value(position),
+      targetReps: targetReps == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetReps),
+      targetSeconds: targetSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetSeconds),
+      isMax: Value(isMax),
+      load: load == null && nullToAbsent ? const Value.absent() : Value(load),
+      unitId: unitId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unitId),
+    );
+  }
+
+  factory PlannedSetsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PlannedSetsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      sessionExerciseId: serializer.fromJson<String>(json['sessionExerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      targetReps: serializer.fromJson<int?>(json['targetReps']),
+      targetSeconds: serializer.fromJson<int?>(json['targetSeconds']),
+      isMax: serializer.fromJson<int>(json['isMax']),
+      load: serializer.fromJson<double?>(json['load']),
+      unitId: serializer.fromJson<String?>(json['unitId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'sessionExerciseId': serializer.toJson<String>(sessionExerciseId),
+      'position': serializer.toJson<int>(position),
+      'targetReps': serializer.toJson<int?>(targetReps),
+      'targetSeconds': serializer.toJson<int?>(targetSeconds),
+      'isMax': serializer.toJson<int>(isMax),
+      'load': serializer.toJson<double?>(load),
+      'unitId': serializer.toJson<String?>(unitId),
+    };
+  }
+
+  PlannedSetsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? sessionExerciseId,
+    int? position,
+    Value<int?> targetReps = const Value.absent(),
+    Value<int?> targetSeconds = const Value.absent(),
+    int? isMax,
+    Value<double?> load = const Value.absent(),
+    Value<String?> unitId = const Value.absent(),
+  }) => PlannedSetsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    sessionExerciseId: sessionExerciseId ?? this.sessionExerciseId,
+    position: position ?? this.position,
+    targetReps: targetReps.present ? targetReps.value : this.targetReps,
+    targetSeconds: targetSeconds.present
+        ? targetSeconds.value
+        : this.targetSeconds,
+    isMax: isMax ?? this.isMax,
+    load: load.present ? load.value : this.load,
+    unitId: unitId.present ? unitId.value : this.unitId,
+  );
+  PlannedSetsData copyWithCompanion(PlannedSetsCompanion data) {
+    return PlannedSetsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      sessionExerciseId: data.sessionExerciseId.present
+          ? data.sessionExerciseId.value
+          : this.sessionExerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      targetReps: data.targetReps.present
+          ? data.targetReps.value
+          : this.targetReps,
+      targetSeconds: data.targetSeconds.present
+          ? data.targetSeconds.value
+          : this.targetSeconds,
+      isMax: data.isMax.present ? data.isMax.value : this.isMax,
+      load: data.load.present ? data.load.value : this.load,
+      unitId: data.unitId.present ? data.unitId.value : this.unitId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlannedSetsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionExerciseId: $sessionExerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetReps: $targetReps, ')
+          ..write('targetSeconds: $targetSeconds, ')
+          ..write('isMax: $isMax, ')
+          ..write('load: $load, ')
+          ..write('unitId: $unitId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    sessionExerciseId,
+    position,
+    targetReps,
+    targetSeconds,
+    isMax,
+    load,
+    unitId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PlannedSetsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.sessionExerciseId == this.sessionExerciseId &&
+          other.position == this.position &&
+          other.targetReps == this.targetReps &&
+          other.targetSeconds == this.targetSeconds &&
+          other.isMax == this.isMax &&
+          other.load == this.load &&
+          other.unitId == this.unitId);
+}
+
+class PlannedSetsCompanion extends UpdateCompanion<PlannedSetsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> sessionExerciseId;
+  final Value<int> position;
+  final Value<int?> targetReps;
+  final Value<int?> targetSeconds;
+  final Value<int> isMax;
+  final Value<double?> load;
+  final Value<String?> unitId;
+  final Value<int> rowid;
+  const PlannedSetsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.sessionExerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.targetReps = const Value.absent(),
+    this.targetSeconds = const Value.absent(),
+    this.isMax = const Value.absent(),
+    this.load = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PlannedSetsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String sessionExerciseId,
+    required int position,
+    this.targetReps = const Value.absent(),
+    this.targetSeconds = const Value.absent(),
+    this.isMax = const Value.absent(),
+    this.load = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       sessionExerciseId = Value(sessionExerciseId),
+       position = Value(position);
+  static Insertable<PlannedSetsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? sessionExerciseId,
+    Expression<int>? position,
+    Expression<int>? targetReps,
+    Expression<int>? targetSeconds,
+    Expression<int>? isMax,
+    Expression<double>? load,
+    Expression<String>? unitId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (sessionExerciseId != null) 'session_exercise_id': sessionExerciseId,
+      if (position != null) 'position': position,
+      if (targetReps != null) 'target_reps': targetReps,
+      if (targetSeconds != null) 'target_seconds': targetSeconds,
+      if (isMax != null) 'is_max': isMax,
+      if (load != null) 'load': load,
+      if (unitId != null) 'unit_id': unitId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PlannedSetsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? sessionExerciseId,
+    Value<int>? position,
+    Value<int?>? targetReps,
+    Value<int?>? targetSeconds,
+    Value<int>? isMax,
+    Value<double?>? load,
+    Value<String?>? unitId,
+    Value<int>? rowid,
+  }) {
+    return PlannedSetsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      sessionExerciseId: sessionExerciseId ?? this.sessionExerciseId,
+      position: position ?? this.position,
+      targetReps: targetReps ?? this.targetReps,
+      targetSeconds: targetSeconds ?? this.targetSeconds,
+      isMax: isMax ?? this.isMax,
+      load: load ?? this.load,
+      unitId: unitId ?? this.unitId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (sessionExerciseId.present) {
+      map['session_exercise_id'] = Variable<String>(sessionExerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (targetReps.present) {
+      map['target_reps'] = Variable<int>(targetReps.value);
+    }
+    if (targetSeconds.present) {
+      map['target_seconds'] = Variable<int>(targetSeconds.value);
+    }
+    if (isMax.present) {
+      map['is_max'] = Variable<int>(isMax.value);
+    }
+    if (load.present) {
+      map['load'] = Variable<double>(load.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<String>(unitId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlannedSetsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionExerciseId: $sessionExerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetReps: $targetReps, ')
+          ..write('targetSeconds: $targetSeconds, ')
+          ..write('isMax: $isMax, ')
+          ..write('load: $load, ')
+          ..write('unitId: $unitId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Workouts extends Table with TableInfo<Workouts, WorkoutsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1430,8 +5302,82 @@ class Workouts extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  WorkoutsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WorkoutsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      ),
+      sessionName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_name'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ended_at'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      )!,
+      pausedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paused_at'],
+      ),
+      pausedSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}paused_seconds'],
+      )!,
+      lastActivityAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_activity_at'],
+      )!,
+      currentExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}current_exercise_id'],
+      ),
+      restEndsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}rest_ends_at'],
+      ),
+      restTotalSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_total_seconds'],
+      ),
+      planSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}plan_snapshot'],
+      ),
+    );
   }
 
   @override
@@ -1445,7 +5391,575 @@ class Workouts extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class WorkoutExercises extends Table with TableInfo {
+class WorkoutsData extends DataClass implements Insertable<WorkoutsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String? sessionId;
+  final String sessionName;
+  final String startedAt;
+  final String? endedAt;
+  final String status;
+  final String notes;
+  final String? pausedAt;
+  final int pausedSeconds;
+  final String lastActivityAt;
+  final String? currentExerciseId;
+  final String? restEndsAt;
+  final int? restTotalSeconds;
+  final String? planSnapshot;
+  const WorkoutsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    this.sessionId,
+    required this.sessionName,
+    required this.startedAt,
+    this.endedAt,
+    required this.status,
+    required this.notes,
+    this.pausedAt,
+    required this.pausedSeconds,
+    required this.lastActivityAt,
+    this.currentExerciseId,
+    this.restEndsAt,
+    this.restTotalSeconds,
+    this.planSnapshot,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    if (!nullToAbsent || sessionId != null) {
+      map['session_id'] = Variable<String>(sessionId);
+    }
+    map['session_name'] = Variable<String>(sessionName);
+    map['started_at'] = Variable<String>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<String>(endedAt);
+    }
+    map['status'] = Variable<String>(status);
+    map['notes'] = Variable<String>(notes);
+    if (!nullToAbsent || pausedAt != null) {
+      map['paused_at'] = Variable<String>(pausedAt);
+    }
+    map['paused_seconds'] = Variable<int>(pausedSeconds);
+    map['last_activity_at'] = Variable<String>(lastActivityAt);
+    if (!nullToAbsent || currentExerciseId != null) {
+      map['current_exercise_id'] = Variable<String>(currentExerciseId);
+    }
+    if (!nullToAbsent || restEndsAt != null) {
+      map['rest_ends_at'] = Variable<String>(restEndsAt);
+    }
+    if (!nullToAbsent || restTotalSeconds != null) {
+      map['rest_total_seconds'] = Variable<int>(restTotalSeconds);
+    }
+    if (!nullToAbsent || planSnapshot != null) {
+      map['plan_snapshot'] = Variable<String>(planSnapshot);
+    }
+    return map;
+  }
+
+  WorkoutsCompanion toCompanion(bool nullToAbsent) {
+    return WorkoutsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      sessionId: sessionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sessionId),
+      sessionName: Value(sessionName),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+      status: Value(status),
+      notes: Value(notes),
+      pausedAt: pausedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pausedAt),
+      pausedSeconds: Value(pausedSeconds),
+      lastActivityAt: Value(lastActivityAt),
+      currentExerciseId: currentExerciseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(currentExerciseId),
+      restEndsAt: restEndsAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restEndsAt),
+      restTotalSeconds: restTotalSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restTotalSeconds),
+      planSnapshot: planSnapshot == null && nullToAbsent
+          ? const Value.absent()
+          : Value(planSnapshot),
+    );
+  }
+
+  factory WorkoutsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WorkoutsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      sessionId: serializer.fromJson<String?>(json['sessionId']),
+      sessionName: serializer.fromJson<String>(json['sessionName']),
+      startedAt: serializer.fromJson<String>(json['startedAt']),
+      endedAt: serializer.fromJson<String?>(json['endedAt']),
+      status: serializer.fromJson<String>(json['status']),
+      notes: serializer.fromJson<String>(json['notes']),
+      pausedAt: serializer.fromJson<String?>(json['pausedAt']),
+      pausedSeconds: serializer.fromJson<int>(json['pausedSeconds']),
+      lastActivityAt: serializer.fromJson<String>(json['lastActivityAt']),
+      currentExerciseId: serializer.fromJson<String?>(
+        json['currentExerciseId'],
+      ),
+      restEndsAt: serializer.fromJson<String?>(json['restEndsAt']),
+      restTotalSeconds: serializer.fromJson<int?>(json['restTotalSeconds']),
+      planSnapshot: serializer.fromJson<String?>(json['planSnapshot']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'sessionId': serializer.toJson<String?>(sessionId),
+      'sessionName': serializer.toJson<String>(sessionName),
+      'startedAt': serializer.toJson<String>(startedAt),
+      'endedAt': serializer.toJson<String?>(endedAt),
+      'status': serializer.toJson<String>(status),
+      'notes': serializer.toJson<String>(notes),
+      'pausedAt': serializer.toJson<String?>(pausedAt),
+      'pausedSeconds': serializer.toJson<int>(pausedSeconds),
+      'lastActivityAt': serializer.toJson<String>(lastActivityAt),
+      'currentExerciseId': serializer.toJson<String?>(currentExerciseId),
+      'restEndsAt': serializer.toJson<String?>(restEndsAt),
+      'restTotalSeconds': serializer.toJson<int?>(restTotalSeconds),
+      'planSnapshot': serializer.toJson<String?>(planSnapshot),
+    };
+  }
+
+  WorkoutsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    Value<String?> sessionId = const Value.absent(),
+    String? sessionName,
+    String? startedAt,
+    Value<String?> endedAt = const Value.absent(),
+    String? status,
+    String? notes,
+    Value<String?> pausedAt = const Value.absent(),
+    int? pausedSeconds,
+    String? lastActivityAt,
+    Value<String?> currentExerciseId = const Value.absent(),
+    Value<String?> restEndsAt = const Value.absent(),
+    Value<int?> restTotalSeconds = const Value.absent(),
+    Value<String?> planSnapshot = const Value.absent(),
+  }) => WorkoutsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    sessionId: sessionId.present ? sessionId.value : this.sessionId,
+    sessionName: sessionName ?? this.sessionName,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+    status: status ?? this.status,
+    notes: notes ?? this.notes,
+    pausedAt: pausedAt.present ? pausedAt.value : this.pausedAt,
+    pausedSeconds: pausedSeconds ?? this.pausedSeconds,
+    lastActivityAt: lastActivityAt ?? this.lastActivityAt,
+    currentExerciseId: currentExerciseId.present
+        ? currentExerciseId.value
+        : this.currentExerciseId,
+    restEndsAt: restEndsAt.present ? restEndsAt.value : this.restEndsAt,
+    restTotalSeconds: restTotalSeconds.present
+        ? restTotalSeconds.value
+        : this.restTotalSeconds,
+    planSnapshot: planSnapshot.present ? planSnapshot.value : this.planSnapshot,
+  );
+  WorkoutsData copyWithCompanion(WorkoutsCompanion data) {
+    return WorkoutsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      sessionName: data.sessionName.present
+          ? data.sessionName.value
+          : this.sessionName,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+      status: data.status.present ? data.status.value : this.status,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      pausedAt: data.pausedAt.present ? data.pausedAt.value : this.pausedAt,
+      pausedSeconds: data.pausedSeconds.present
+          ? data.pausedSeconds.value
+          : this.pausedSeconds,
+      lastActivityAt: data.lastActivityAt.present
+          ? data.lastActivityAt.value
+          : this.lastActivityAt,
+      currentExerciseId: data.currentExerciseId.present
+          ? data.currentExerciseId.value
+          : this.currentExerciseId,
+      restEndsAt: data.restEndsAt.present
+          ? data.restEndsAt.value
+          : this.restEndsAt,
+      restTotalSeconds: data.restTotalSeconds.present
+          ? data.restTotalSeconds.value
+          : this.restTotalSeconds,
+      planSnapshot: data.planSnapshot.present
+          ? data.planSnapshot.value
+          : this.planSnapshot,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('sessionName: $sessionName, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
+          ..write('pausedAt: $pausedAt, ')
+          ..write('pausedSeconds: $pausedSeconds, ')
+          ..write('lastActivityAt: $lastActivityAt, ')
+          ..write('currentExerciseId: $currentExerciseId, ')
+          ..write('restEndsAt: $restEndsAt, ')
+          ..write('restTotalSeconds: $restTotalSeconds, ')
+          ..write('planSnapshot: $planSnapshot')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    sessionId,
+    sessionName,
+    startedAt,
+    endedAt,
+    status,
+    notes,
+    pausedAt,
+    pausedSeconds,
+    lastActivityAt,
+    currentExerciseId,
+    restEndsAt,
+    restTotalSeconds,
+    planSnapshot,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WorkoutsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.sessionId == this.sessionId &&
+          other.sessionName == this.sessionName &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt &&
+          other.status == this.status &&
+          other.notes == this.notes &&
+          other.pausedAt == this.pausedAt &&
+          other.pausedSeconds == this.pausedSeconds &&
+          other.lastActivityAt == this.lastActivityAt &&
+          other.currentExerciseId == this.currentExerciseId &&
+          other.restEndsAt == this.restEndsAt &&
+          other.restTotalSeconds == this.restTotalSeconds &&
+          other.planSnapshot == this.planSnapshot);
+}
+
+class WorkoutsCompanion extends UpdateCompanion<WorkoutsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String?> sessionId;
+  final Value<String> sessionName;
+  final Value<String> startedAt;
+  final Value<String?> endedAt;
+  final Value<String> status;
+  final Value<String> notes;
+  final Value<String?> pausedAt;
+  final Value<int> pausedSeconds;
+  final Value<String> lastActivityAt;
+  final Value<String?> currentExerciseId;
+  final Value<String?> restEndsAt;
+  final Value<int?> restTotalSeconds;
+  final Value<String?> planSnapshot;
+  final Value<int> rowid;
+  const WorkoutsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.sessionName = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.pausedAt = const Value.absent(),
+    this.pausedSeconds = const Value.absent(),
+    this.lastActivityAt = const Value.absent(),
+    this.currentExerciseId = const Value.absent(),
+    this.restEndsAt = const Value.absent(),
+    this.restTotalSeconds = const Value.absent(),
+    this.planSnapshot = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WorkoutsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    required String sessionName,
+    required String startedAt,
+    this.endedAt = const Value.absent(),
+    required String status,
+    this.notes = const Value.absent(),
+    this.pausedAt = const Value.absent(),
+    this.pausedSeconds = const Value.absent(),
+    required String lastActivityAt,
+    this.currentExerciseId = const Value.absent(),
+    this.restEndsAt = const Value.absent(),
+    this.restTotalSeconds = const Value.absent(),
+    this.planSnapshot = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       sessionName = Value(sessionName),
+       startedAt = Value(startedAt),
+       status = Value(status),
+       lastActivityAt = Value(lastActivityAt);
+  static Insertable<WorkoutsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? sessionId,
+    Expression<String>? sessionName,
+    Expression<String>? startedAt,
+    Expression<String>? endedAt,
+    Expression<String>? status,
+    Expression<String>? notes,
+    Expression<String>? pausedAt,
+    Expression<int>? pausedSeconds,
+    Expression<String>? lastActivityAt,
+    Expression<String>? currentExerciseId,
+    Expression<String>? restEndsAt,
+    Expression<int>? restTotalSeconds,
+    Expression<String>? planSnapshot,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (sessionId != null) 'session_id': sessionId,
+      if (sessionName != null) 'session_name': sessionName,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+      if (status != null) 'status': status,
+      if (notes != null) 'notes': notes,
+      if (pausedAt != null) 'paused_at': pausedAt,
+      if (pausedSeconds != null) 'paused_seconds': pausedSeconds,
+      if (lastActivityAt != null) 'last_activity_at': lastActivityAt,
+      if (currentExerciseId != null) 'current_exercise_id': currentExerciseId,
+      if (restEndsAt != null) 'rest_ends_at': restEndsAt,
+      if (restTotalSeconds != null) 'rest_total_seconds': restTotalSeconds,
+      if (planSnapshot != null) 'plan_snapshot': planSnapshot,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WorkoutsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String?>? sessionId,
+    Value<String>? sessionName,
+    Value<String>? startedAt,
+    Value<String?>? endedAt,
+    Value<String>? status,
+    Value<String>? notes,
+    Value<String?>? pausedAt,
+    Value<int>? pausedSeconds,
+    Value<String>? lastActivityAt,
+    Value<String?>? currentExerciseId,
+    Value<String?>? restEndsAt,
+    Value<int?>? restTotalSeconds,
+    Value<String?>? planSnapshot,
+    Value<int>? rowid,
+  }) {
+    return WorkoutsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      sessionId: sessionId ?? this.sessionId,
+      sessionName: sessionName ?? this.sessionName,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+      status: status ?? this.status,
+      notes: notes ?? this.notes,
+      pausedAt: pausedAt ?? this.pausedAt,
+      pausedSeconds: pausedSeconds ?? this.pausedSeconds,
+      lastActivityAt: lastActivityAt ?? this.lastActivityAt,
+      currentExerciseId: currentExerciseId ?? this.currentExerciseId,
+      restEndsAt: restEndsAt ?? this.restEndsAt,
+      restTotalSeconds: restTotalSeconds ?? this.restTotalSeconds,
+      planSnapshot: planSnapshot ?? this.planSnapshot,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (sessionName.present) {
+      map['session_name'] = Variable<String>(sessionName.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<String>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<String>(endedAt.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (pausedAt.present) {
+      map['paused_at'] = Variable<String>(pausedAt.value);
+    }
+    if (pausedSeconds.present) {
+      map['paused_seconds'] = Variable<int>(pausedSeconds.value);
+    }
+    if (lastActivityAt.present) {
+      map['last_activity_at'] = Variable<String>(lastActivityAt.value);
+    }
+    if (currentExerciseId.present) {
+      map['current_exercise_id'] = Variable<String>(currentExerciseId.value);
+    }
+    if (restEndsAt.present) {
+      map['rest_ends_at'] = Variable<String>(restEndsAt.value);
+    }
+    if (restTotalSeconds.present) {
+      map['rest_total_seconds'] = Variable<int>(restTotalSeconds.value);
+    }
+    if (planSnapshot.present) {
+      map['plan_snapshot'] = Variable<String>(planSnapshot.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('sessionName: $sessionName, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
+          ..write('pausedAt: $pausedAt, ')
+          ..write('pausedSeconds: $pausedSeconds, ')
+          ..write('lastActivityAt: $lastActivityAt, ')
+          ..write('currentExerciseId: $currentExerciseId, ')
+          ..write('restEndsAt: $restEndsAt, ')
+          ..write('restTotalSeconds: $restTotalSeconds, ')
+          ..write('planSnapshot: $planSnapshot, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class WorkoutExercises extends Table
+    with TableInfo<WorkoutExercises, WorkoutExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1581,8 +6095,62 @@ class WorkoutExercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  WorkoutExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WorkoutExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      workoutId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workout_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      restS: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_s'],
+      )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      )!,
+      swappedFrom: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}swapped_from'],
+      ),
+      fromPlan: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}from_plan'],
+      )!,
+    );
   }
 
   @override
@@ -1596,7 +6164,421 @@ class WorkoutExercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class WorkoutSets extends Table with TableInfo {
+class WorkoutExercisesData extends DataClass
+    implements Insertable<WorkoutExercisesData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String workoutId;
+  final String exerciseId;
+  final int position;
+  final int restS;
+  final String status;
+  final String notes;
+  final String? swappedFrom;
+  final int fromPlan;
+  const WorkoutExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.workoutId,
+    required this.exerciseId,
+    required this.position,
+    required this.restS,
+    required this.status,
+    required this.notes,
+    this.swappedFrom,
+    required this.fromPlan,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['workout_id'] = Variable<String>(workoutId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['position'] = Variable<int>(position);
+    map['rest_s'] = Variable<int>(restS);
+    map['status'] = Variable<String>(status);
+    map['notes'] = Variable<String>(notes);
+    if (!nullToAbsent || swappedFrom != null) {
+      map['swapped_from'] = Variable<String>(swappedFrom);
+    }
+    map['from_plan'] = Variable<int>(fromPlan);
+    return map;
+  }
+
+  WorkoutExercisesCompanion toCompanion(bool nullToAbsent) {
+    return WorkoutExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      workoutId: Value(workoutId),
+      exerciseId: Value(exerciseId),
+      position: Value(position),
+      restS: Value(restS),
+      status: Value(status),
+      notes: Value(notes),
+      swappedFrom: swappedFrom == null && nullToAbsent
+          ? const Value.absent()
+          : Value(swappedFrom),
+      fromPlan: Value(fromPlan),
+    );
+  }
+
+  factory WorkoutExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WorkoutExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      workoutId: serializer.fromJson<String>(json['workoutId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      restS: serializer.fromJson<int>(json['restS']),
+      status: serializer.fromJson<String>(json['status']),
+      notes: serializer.fromJson<String>(json['notes']),
+      swappedFrom: serializer.fromJson<String?>(json['swappedFrom']),
+      fromPlan: serializer.fromJson<int>(json['fromPlan']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'workoutId': serializer.toJson<String>(workoutId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'position': serializer.toJson<int>(position),
+      'restS': serializer.toJson<int>(restS),
+      'status': serializer.toJson<String>(status),
+      'notes': serializer.toJson<String>(notes),
+      'swappedFrom': serializer.toJson<String?>(swappedFrom),
+      'fromPlan': serializer.toJson<int>(fromPlan),
+    };
+  }
+
+  WorkoutExercisesData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? workoutId,
+    String? exerciseId,
+    int? position,
+    int? restS,
+    String? status,
+    String? notes,
+    Value<String?> swappedFrom = const Value.absent(),
+    int? fromPlan,
+  }) => WorkoutExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    workoutId: workoutId ?? this.workoutId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    position: position ?? this.position,
+    restS: restS ?? this.restS,
+    status: status ?? this.status,
+    notes: notes ?? this.notes,
+    swappedFrom: swappedFrom.present ? swappedFrom.value : this.swappedFrom,
+    fromPlan: fromPlan ?? this.fromPlan,
+  );
+  WorkoutExercisesData copyWithCompanion(WorkoutExercisesCompanion data) {
+    return WorkoutExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      workoutId: data.workoutId.present ? data.workoutId.value : this.workoutId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      restS: data.restS.present ? data.restS.value : this.restS,
+      status: data.status.present ? data.status.value : this.status,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      swappedFrom: data.swappedFrom.present
+          ? data.swappedFrom.value
+          : this.swappedFrom,
+      fromPlan: data.fromPlan.present ? data.fromPlan.value : this.fromPlan,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('workoutId: $workoutId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('restS: $restS, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
+          ..write('swappedFrom: $swappedFrom, ')
+          ..write('fromPlan: $fromPlan')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    workoutId,
+    exerciseId,
+    position,
+    restS,
+    status,
+    notes,
+    swappedFrom,
+    fromPlan,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WorkoutExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.workoutId == this.workoutId &&
+          other.exerciseId == this.exerciseId &&
+          other.position == this.position &&
+          other.restS == this.restS &&
+          other.status == this.status &&
+          other.notes == this.notes &&
+          other.swappedFrom == this.swappedFrom &&
+          other.fromPlan == this.fromPlan);
+}
+
+class WorkoutExercisesCompanion extends UpdateCompanion<WorkoutExercisesData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> workoutId;
+  final Value<String> exerciseId;
+  final Value<int> position;
+  final Value<int> restS;
+  final Value<String> status;
+  final Value<String> notes;
+  final Value<String?> swappedFrom;
+  final Value<int> fromPlan;
+  final Value<int> rowid;
+  const WorkoutExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.workoutId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.restS = const Value.absent(),
+    this.status = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.swappedFrom = const Value.absent(),
+    this.fromPlan = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WorkoutExercisesCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String workoutId,
+    required String exerciseId,
+    required int position,
+    required int restS,
+    required String status,
+    this.notes = const Value.absent(),
+    this.swappedFrom = const Value.absent(),
+    this.fromPlan = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       workoutId = Value(workoutId),
+       exerciseId = Value(exerciseId),
+       position = Value(position),
+       restS = Value(restS),
+       status = Value(status);
+  static Insertable<WorkoutExercisesData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? workoutId,
+    Expression<String>? exerciseId,
+    Expression<int>? position,
+    Expression<int>? restS,
+    Expression<String>? status,
+    Expression<String>? notes,
+    Expression<String>? swappedFrom,
+    Expression<int>? fromPlan,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (workoutId != null) 'workout_id': workoutId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (position != null) 'position': position,
+      if (restS != null) 'rest_s': restS,
+      if (status != null) 'status': status,
+      if (notes != null) 'notes': notes,
+      if (swappedFrom != null) 'swapped_from': swappedFrom,
+      if (fromPlan != null) 'from_plan': fromPlan,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WorkoutExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? workoutId,
+    Value<String>? exerciseId,
+    Value<int>? position,
+    Value<int>? restS,
+    Value<String>? status,
+    Value<String>? notes,
+    Value<String?>? swappedFrom,
+    Value<int>? fromPlan,
+    Value<int>? rowid,
+  }) {
+    return WorkoutExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      workoutId: workoutId ?? this.workoutId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      position: position ?? this.position,
+      restS: restS ?? this.restS,
+      status: status ?? this.status,
+      notes: notes ?? this.notes,
+      swappedFrom: swappedFrom ?? this.swappedFrom,
+      fromPlan: fromPlan ?? this.fromPlan,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (workoutId.present) {
+      map['workout_id'] = Variable<String>(workoutId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (restS.present) {
+      map['rest_s'] = Variable<int>(restS.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (swappedFrom.present) {
+      map['swapped_from'] = Variable<String>(swappedFrom.value);
+    }
+    if (fromPlan.present) {
+      map['from_plan'] = Variable<int>(fromPlan.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('workoutId: $workoutId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('restS: $restS, ')
+          ..write('status: $status, ')
+          ..write('notes: $notes, ')
+          ..write('swappedFrom: $swappedFrom, ')
+          ..write('fromPlan: $fromPlan, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class WorkoutSets extends Table with TableInfo<WorkoutSets, WorkoutSetsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1768,8 +6750,78 @@ class WorkoutSets extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  WorkoutSetsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WorkoutSetsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      dirty: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}dirty'],
+      )!,
+      workoutExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workout_exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      targetReps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_reps'],
+      ),
+      targetSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_seconds'],
+      ),
+      isMax: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_max'],
+      )!,
+      plannedLoad: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}planned_load'],
+      ),
+      plannedUnitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}planned_unit_id'],
+      ),
+      reps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reps'],
+      ),
+      seconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}seconds'],
+      ),
+      load: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}load'],
+      ),
+      unitId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_id'],
+      ),
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
   }
 
   @override
@@ -1781,6 +6833,548 @@ class WorkoutSets extends Table with TableInfo {
   List<String> get customConstraints => const ['PRIMARY KEY(id)'];
   @override
   bool get dontWriteConstraints => true;
+}
+
+class WorkoutSetsData extends DataClass implements Insertable<WorkoutSetsData> {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? deletedAt;
+  final int dirty;
+  final String workoutExerciseId;
+  final int position;
+  final int? targetReps;
+  final int? targetSeconds;
+  final int isMax;
+  final double? plannedLoad;
+  final String? plannedUnitId;
+  final int? reps;
+  final int? seconds;
+  final double? load;
+  final String? unitId;
+  final String? completedAt;
+  const WorkoutSetsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.dirty,
+    required this.workoutExerciseId,
+    required this.position,
+    this.targetReps,
+    this.targetSeconds,
+    required this.isMax,
+    this.plannedLoad,
+    this.plannedUnitId,
+    this.reps,
+    this.seconds,
+    this.load,
+    this.unitId,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<String>(createdAt);
+    map['updated_at'] = Variable<String>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<String>(deletedAt);
+    }
+    map['dirty'] = Variable<int>(dirty);
+    map['workout_exercise_id'] = Variable<String>(workoutExerciseId);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || targetReps != null) {
+      map['target_reps'] = Variable<int>(targetReps);
+    }
+    if (!nullToAbsent || targetSeconds != null) {
+      map['target_seconds'] = Variable<int>(targetSeconds);
+    }
+    map['is_max'] = Variable<int>(isMax);
+    if (!nullToAbsent || plannedLoad != null) {
+      map['planned_load'] = Variable<double>(plannedLoad);
+    }
+    if (!nullToAbsent || plannedUnitId != null) {
+      map['planned_unit_id'] = Variable<String>(plannedUnitId);
+    }
+    if (!nullToAbsent || reps != null) {
+      map['reps'] = Variable<int>(reps);
+    }
+    if (!nullToAbsent || seconds != null) {
+      map['seconds'] = Variable<int>(seconds);
+    }
+    if (!nullToAbsent || load != null) {
+      map['load'] = Variable<double>(load);
+    }
+    if (!nullToAbsent || unitId != null) {
+      map['unit_id'] = Variable<String>(unitId);
+    }
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<String>(completedAt);
+    }
+    return map;
+  }
+
+  WorkoutSetsCompanion toCompanion(bool nullToAbsent) {
+    return WorkoutSetsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      dirty: Value(dirty),
+      workoutExerciseId: Value(workoutExerciseId),
+      position: Value(position),
+      targetReps: targetReps == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetReps),
+      targetSeconds: targetSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetSeconds),
+      isMax: Value(isMax),
+      plannedLoad: plannedLoad == null && nullToAbsent
+          ? const Value.absent()
+          : Value(plannedLoad),
+      plannedUnitId: plannedUnitId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(plannedUnitId),
+      reps: reps == null && nullToAbsent ? const Value.absent() : Value(reps),
+      seconds: seconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seconds),
+      load: load == null && nullToAbsent ? const Value.absent() : Value(load),
+      unitId: unitId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unitId),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory WorkoutSetsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WorkoutSetsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+      deletedAt: serializer.fromJson<String?>(json['deletedAt']),
+      dirty: serializer.fromJson<int>(json['dirty']),
+      workoutExerciseId: serializer.fromJson<String>(json['workoutExerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      targetReps: serializer.fromJson<int?>(json['targetReps']),
+      targetSeconds: serializer.fromJson<int?>(json['targetSeconds']),
+      isMax: serializer.fromJson<int>(json['isMax']),
+      plannedLoad: serializer.fromJson<double?>(json['plannedLoad']),
+      plannedUnitId: serializer.fromJson<String?>(json['plannedUnitId']),
+      reps: serializer.fromJson<int?>(json['reps']),
+      seconds: serializer.fromJson<int?>(json['seconds']),
+      load: serializer.fromJson<double?>(json['load']),
+      unitId: serializer.fromJson<String?>(json['unitId']),
+      completedAt: serializer.fromJson<String?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+      'deletedAt': serializer.toJson<String?>(deletedAt),
+      'dirty': serializer.toJson<int>(dirty),
+      'workoutExerciseId': serializer.toJson<String>(workoutExerciseId),
+      'position': serializer.toJson<int>(position),
+      'targetReps': serializer.toJson<int?>(targetReps),
+      'targetSeconds': serializer.toJson<int?>(targetSeconds),
+      'isMax': serializer.toJson<int>(isMax),
+      'plannedLoad': serializer.toJson<double?>(plannedLoad),
+      'plannedUnitId': serializer.toJson<String?>(plannedUnitId),
+      'reps': serializer.toJson<int?>(reps),
+      'seconds': serializer.toJson<int?>(seconds),
+      'load': serializer.toJson<double?>(load),
+      'unitId': serializer.toJson<String?>(unitId),
+      'completedAt': serializer.toJson<String?>(completedAt),
+    };
+  }
+
+  WorkoutSetsData copyWith({
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    Value<String?> deletedAt = const Value.absent(),
+    int? dirty,
+    String? workoutExerciseId,
+    int? position,
+    Value<int?> targetReps = const Value.absent(),
+    Value<int?> targetSeconds = const Value.absent(),
+    int? isMax,
+    Value<double?> plannedLoad = const Value.absent(),
+    Value<String?> plannedUnitId = const Value.absent(),
+    Value<int?> reps = const Value.absent(),
+    Value<int?> seconds = const Value.absent(),
+    Value<double?> load = const Value.absent(),
+    Value<String?> unitId = const Value.absent(),
+    Value<String?> completedAt = const Value.absent(),
+  }) => WorkoutSetsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    dirty: dirty ?? this.dirty,
+    workoutExerciseId: workoutExerciseId ?? this.workoutExerciseId,
+    position: position ?? this.position,
+    targetReps: targetReps.present ? targetReps.value : this.targetReps,
+    targetSeconds: targetSeconds.present
+        ? targetSeconds.value
+        : this.targetSeconds,
+    isMax: isMax ?? this.isMax,
+    plannedLoad: plannedLoad.present ? plannedLoad.value : this.plannedLoad,
+    plannedUnitId: plannedUnitId.present
+        ? plannedUnitId.value
+        : this.plannedUnitId,
+    reps: reps.present ? reps.value : this.reps,
+    seconds: seconds.present ? seconds.value : this.seconds,
+    load: load.present ? load.value : this.load,
+    unitId: unitId.present ? unitId.value : this.unitId,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  WorkoutSetsData copyWithCompanion(WorkoutSetsCompanion data) {
+    return WorkoutSetsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      dirty: data.dirty.present ? data.dirty.value : this.dirty,
+      workoutExerciseId: data.workoutExerciseId.present
+          ? data.workoutExerciseId.value
+          : this.workoutExerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      targetReps: data.targetReps.present
+          ? data.targetReps.value
+          : this.targetReps,
+      targetSeconds: data.targetSeconds.present
+          ? data.targetSeconds.value
+          : this.targetSeconds,
+      isMax: data.isMax.present ? data.isMax.value : this.isMax,
+      plannedLoad: data.plannedLoad.present
+          ? data.plannedLoad.value
+          : this.plannedLoad,
+      plannedUnitId: data.plannedUnitId.present
+          ? data.plannedUnitId.value
+          : this.plannedUnitId,
+      reps: data.reps.present ? data.reps.value : this.reps,
+      seconds: data.seconds.present ? data.seconds.value : this.seconds,
+      load: data.load.present ? data.load.value : this.load,
+      unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutSetsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('workoutExerciseId: $workoutExerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetReps: $targetReps, ')
+          ..write('targetSeconds: $targetSeconds, ')
+          ..write('isMax: $isMax, ')
+          ..write('plannedLoad: $plannedLoad, ')
+          ..write('plannedUnitId: $plannedUnitId, ')
+          ..write('reps: $reps, ')
+          ..write('seconds: $seconds, ')
+          ..write('load: $load, ')
+          ..write('unitId: $unitId, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    dirty,
+    workoutExerciseId,
+    position,
+    targetReps,
+    targetSeconds,
+    isMax,
+    plannedLoad,
+    plannedUnitId,
+    reps,
+    seconds,
+    load,
+    unitId,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WorkoutSetsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.dirty == this.dirty &&
+          other.workoutExerciseId == this.workoutExerciseId &&
+          other.position == this.position &&
+          other.targetReps == this.targetReps &&
+          other.targetSeconds == this.targetSeconds &&
+          other.isMax == this.isMax &&
+          other.plannedLoad == this.plannedLoad &&
+          other.plannedUnitId == this.plannedUnitId &&
+          other.reps == this.reps &&
+          other.seconds == this.seconds &&
+          other.load == this.load &&
+          other.unitId == this.unitId &&
+          other.completedAt == this.completedAt);
+}
+
+class WorkoutSetsCompanion extends UpdateCompanion<WorkoutSetsData> {
+  final Value<String> id;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<String?> deletedAt;
+  final Value<int> dirty;
+  final Value<String> workoutExerciseId;
+  final Value<int> position;
+  final Value<int?> targetReps;
+  final Value<int?> targetSeconds;
+  final Value<int> isMax;
+  final Value<double?> plannedLoad;
+  final Value<String?> plannedUnitId;
+  final Value<int?> reps;
+  final Value<int?> seconds;
+  final Value<double?> load;
+  final Value<String?> unitId;
+  final Value<String?> completedAt;
+  final Value<int> rowid;
+  const WorkoutSetsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    this.workoutExerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.targetReps = const Value.absent(),
+    this.targetSeconds = const Value.absent(),
+    this.isMax = const Value.absent(),
+    this.plannedLoad = const Value.absent(),
+    this.plannedUnitId = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.seconds = const Value.absent(),
+    this.load = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WorkoutSetsCompanion.insert({
+    required String id,
+    required String createdAt,
+    required String updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.dirty = const Value.absent(),
+    required String workoutExerciseId,
+    required int position,
+    this.targetReps = const Value.absent(),
+    this.targetSeconds = const Value.absent(),
+    this.isMax = const Value.absent(),
+    this.plannedLoad = const Value.absent(),
+    this.plannedUnitId = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.seconds = const Value.absent(),
+    this.load = const Value.absent(),
+    this.unitId = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       workoutExerciseId = Value(workoutExerciseId),
+       position = Value(position);
+  static Insertable<WorkoutSetsData> custom({
+    Expression<String>? id,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<String>? deletedAt,
+    Expression<int>? dirty,
+    Expression<String>? workoutExerciseId,
+    Expression<int>? position,
+    Expression<int>? targetReps,
+    Expression<int>? targetSeconds,
+    Expression<int>? isMax,
+    Expression<double>? plannedLoad,
+    Expression<String>? plannedUnitId,
+    Expression<int>? reps,
+    Expression<int>? seconds,
+    Expression<double>? load,
+    Expression<String>? unitId,
+    Expression<String>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (dirty != null) 'dirty': dirty,
+      if (workoutExerciseId != null) 'workout_exercise_id': workoutExerciseId,
+      if (position != null) 'position': position,
+      if (targetReps != null) 'target_reps': targetReps,
+      if (targetSeconds != null) 'target_seconds': targetSeconds,
+      if (isMax != null) 'is_max': isMax,
+      if (plannedLoad != null) 'planned_load': plannedLoad,
+      if (plannedUnitId != null) 'planned_unit_id': plannedUnitId,
+      if (reps != null) 'reps': reps,
+      if (seconds != null) 'seconds': seconds,
+      if (load != null) 'load': load,
+      if (unitId != null) 'unit_id': unitId,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WorkoutSetsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? createdAt,
+    Value<String>? updatedAt,
+    Value<String?>? deletedAt,
+    Value<int>? dirty,
+    Value<String>? workoutExerciseId,
+    Value<int>? position,
+    Value<int?>? targetReps,
+    Value<int?>? targetSeconds,
+    Value<int>? isMax,
+    Value<double?>? plannedLoad,
+    Value<String?>? plannedUnitId,
+    Value<int?>? reps,
+    Value<int?>? seconds,
+    Value<double?>? load,
+    Value<String?>? unitId,
+    Value<String?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return WorkoutSetsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      dirty: dirty ?? this.dirty,
+      workoutExerciseId: workoutExerciseId ?? this.workoutExerciseId,
+      position: position ?? this.position,
+      targetReps: targetReps ?? this.targetReps,
+      targetSeconds: targetSeconds ?? this.targetSeconds,
+      isMax: isMax ?? this.isMax,
+      plannedLoad: plannedLoad ?? this.plannedLoad,
+      plannedUnitId: plannedUnitId ?? this.plannedUnitId,
+      reps: reps ?? this.reps,
+      seconds: seconds ?? this.seconds,
+      load: load ?? this.load,
+      unitId: unitId ?? this.unitId,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<String>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<String>(deletedAt.value);
+    }
+    if (dirty.present) {
+      map['dirty'] = Variable<int>(dirty.value);
+    }
+    if (workoutExerciseId.present) {
+      map['workout_exercise_id'] = Variable<String>(workoutExerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (targetReps.present) {
+      map['target_reps'] = Variable<int>(targetReps.value);
+    }
+    if (targetSeconds.present) {
+      map['target_seconds'] = Variable<int>(targetSeconds.value);
+    }
+    if (isMax.present) {
+      map['is_max'] = Variable<int>(isMax.value);
+    }
+    if (plannedLoad.present) {
+      map['planned_load'] = Variable<double>(plannedLoad.value);
+    }
+    if (plannedUnitId.present) {
+      map['planned_unit_id'] = Variable<String>(plannedUnitId.value);
+    }
+    if (reps.present) {
+      map['reps'] = Variable<int>(reps.value);
+    }
+    if (seconds.present) {
+      map['seconds'] = Variable<int>(seconds.value);
+    }
+    if (load.present) {
+      map['load'] = Variable<double>(load.value);
+    }
+    if (unitId.present) {
+      map['unit_id'] = Variable<String>(unitId.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<String>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutSetsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('dirty: $dirty, ')
+          ..write('workoutExerciseId: $workoutExerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetReps: $targetReps, ')
+          ..write('targetSeconds: $targetSeconds, ')
+          ..write('isMax: $isMax, ')
+          ..write('plannedLoad: $plannedLoad, ')
+          ..write('plannedUnitId: $plannedUnitId, ')
+          ..write('reps: $reps, ')
+          ..write('seconds: $seconds, ')
+          ..write('load: $load, ')
+          ..write('unitId: $unitId, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class DatabaseAtV1 extends GeneratedDatabase {

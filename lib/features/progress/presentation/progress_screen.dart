@@ -449,7 +449,7 @@ class _DoneExerciseRow extends ConsumerWidget {
     final name = ref.watch(exerciseProvider(entry.exerciseId))?.name ?? '';
     final units = ref.watch(unitLookupProvider);
     final now = ref.watch(clockProvider)();
-    final record = headlineRecord(sets);
+    final record = headlineBest(sets);
     final when = DateText.relativeDay(entry.lastDone, now);
     final subtitle = record == null
         ? when
@@ -620,7 +620,7 @@ class _HistoryRow extends StatelessWidget {
                       ),
                       if (summary.recordCount > 0) ...[
                         const SizedBox(width: AppSpacing.sm),
-                        RecordCountBadge(count: summary.recordCount),
+                        BestCountBadge(count: summary.recordCount),
                       ],
                     ],
                   ),

@@ -7,6 +7,7 @@ import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/features/profile/data/body_weight_repository.dart';
 import 'package:my_bodybuilding_program/features/profile/domain/body_weight.dart';
 import 'package:my_bodybuilding_program/features/profile/presentation/body_weight_dialog.dart';
+import 'package:my_bodybuilding_program/features/profile/presentation/profile_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/data/settings_repository.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/app_settings.dart';
 
@@ -22,6 +23,7 @@ void main() {
     WidgetTester tester, {
     int weeks = 2,
     bool weights = true,
+    bool prs = true,
   }) async {
     tester.view.physicalSize = const Size(412 * 3, 915 * 3);
     tester.view.devicePixelRatio = 3;
@@ -38,6 +40,10 @@ void main() {
     }
     if (weights) {
       await tester.runAsync(() => data.bodyWeights(days: 30));
+      await app.settle(tester);
+    }
+    if (prs) {
+      await tester.runAsync(data.personalRecords);
       await app.settle(tester);
     }
   }
@@ -79,9 +85,7 @@ void main() {
     expect(parseWeight('abc'), isNull);
   });
 
-  testWidgets('profile: bodyweight card, stats and latest records', (
-    tester,
-  ) async {
+  testWidgets('profile: bodyweight card, stats and latest PRs', (tester) async {
     await start(tester);
     await openProfile(tester);
     expect(
@@ -91,15 +95,37 @@ void main() {
     expect(find.text(Strings.workoutsTile), findsOneWidget);
     expect(find.text(Strings.timeTrained), findsOneWidget);
     expect(find.text(Strings.streakBest), findsOneWidget);
-    expect(find.text(Strings.latestRecords.toUpperCase()), findsOneWidget);
-    expect(find.byIcon(Symbols.trophy_rounded), findsWidgets);
+    expect(find.text(Strings.latestPrs.toUpperCase()), findsOneWidget);
+    // The PRs, newest first; nothing computed from the training sets.
+    await tester.scrollUntilVisible(
+      find.text('100 kg'),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(ProfileScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await app.settle(tester);
+    final values = ['1:30', '15 reps', '5 × 90 kg', '100 kg'];
+    for (final v in values) {
+      expect(find.text(v), findsOneWidget);
+    }
+    final ys = [for (final v in values) tester.getTopLeft(find.text(v)).dy];
+    expect(ys, orderedEquals([...ys]..sort()));
+    expect(find.text('Barbell bench press'), findsNWidgets(2));
+    // A row opens that exercise's personal records.
+    await tapAndSettle(tester, find.text('Pull-up'));
+    expect(find.text(Strings.personalRecords), findsOneWidget);
+    expect(find.text(Strings.bestPr), findsWidgets);
   });
 
   testWidgets('profile with nothing logged', (tester) async {
-    await start(tester, weeks: 0, weights: false);
+    await start(tester, weeks: 0, weights: false, prs: false);
     await openProfile(tester);
     expect(find.text(Strings.noWeighIn), findsOneWidget);
-    expect(find.text(Strings.noRecordsYet), findsOneWidget);
+    expect(find.text(Strings.noPrsYet), findsOneWidget);
   });
 
   testWidgets('log a weight from the profile card', (tester) async {
