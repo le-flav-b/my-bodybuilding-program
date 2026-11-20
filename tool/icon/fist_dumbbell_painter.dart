@@ -135,7 +135,9 @@ class FistDumbbellPainter extends CustomPainter {
       ..lineTo(168, 282)
       ..close();
     final parts = <Path>[
-      Path()..addRRect(_box(168, 172, 247, 300, 22)), // thumb
+      // Thumb: its top edge continues the line under the index fingertip
+      // (182.5 + gap / 2), as in the first icon.
+      Path()..addRRect(_box(168, 187.5, 247, 300, 20)), // thumb
       Path()..addRRect(_box(200, 143, 247, 256, 23.5)), // index
       Path()..addRRect(_box(232, 143, 279, 256, 23.5)), // middle
       Path()..addRRect(_box(264, 158, 311, 256, 23.5)), // ring
