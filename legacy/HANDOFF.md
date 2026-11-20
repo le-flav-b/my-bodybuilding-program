@@ -11,7 +11,7 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 1. **Specifications**: done.
 2. **Design**: done (see "Design session outcome" below).
 3. **Catalogue seed** (data task, separate): done (`assets/seed/`, `tools/seed/`).
-4. **App**: milestones M0–M6 (v1.0) done; later items next, then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma). See "App session: current state / next step" at the end.
+4. **App**: milestones M0–M6 (v1.0) done, then the v1.0.1 fixes; later items next, then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma). See "App session: current state / next step" at the end.
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -44,12 +44,13 @@ A "master" session coordinates the work and the move from one session to the nex
   - Crash-safe, with a resume prompt.
 - **Progress:**
   - Per-exercise timeline chart, with each unit on its own scale/colour on the same chart.
-  - PRs per unit: heaviest load, most reps, longest hold.
+  - Training **bests** per unit (computed): heaviest load, most reps, longest hold. Called "PRs" until v1.0.1.
+  - **Personal records (PRs)**, since v1.0.1: attempts made on purpose, logged by hand in their own table (`personal_records`), never mixed with training sets.
   - Calendar, plus a weekly streak (≥ N workouts per week, default 3).
 - **Navigation:** 4 tabs, Today · Program · Progress · Profile. Settings opens from Profile. The exercise catalogue lives inside Program.
-- **Profile:** bodyweight log + chart, and stats (totals, streaks, last 5 PRs, this month vs last).
+- **Profile:** bodyweight log + chart, stats (totals, streaks, this month vs last) and the latest 5 PRs.
 - **Later (after v1.0):** cloud sync (1.1), progress photos (1.2: pose tags, private, linked bodyweight), reminders (1.3), then supersets, media controls and export.
-- **Dropped:** music, random session, manual max load, fixed weekly split, progression suggestions, variants, equipment, movement patterns, favourites/hidden, warm-up and failure flags, blocks, phases, several programs.
+- **Dropped:** music, random session, ~~manual max load~~ (back in v1.0.1 as personal records), fixed weekly split, progression suggestions, variants, equipment, movement patterns, favourites/hidden, warm-up and failure flags, blocks, phases, several programs.
 
 ## Brief for the DESIGN session
 
@@ -96,7 +97,7 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 4. **Images:**
    - Exercise illustrations in `legacy/some_images/` show the visual style to keep for catalogue images.
    - Exercises without an image get a placeholder by primary muscle; the old `abdominals`, `back_biceps`, `legs` and `pectorals_triceps` images can inspire it.
-   - Reuse `trophy.png` for PRs and `sleep.png` for empty/rest states.
+   - Reuse `trophy.png` for PRs and the old pillow art for empty/rest states (the pillow was removed in v1.0.1: empty states use icons).
 5. **UX priorities:** one-handed use, touch targets ≥ 48 dp, one tap to log a set that matches the target, readable at arm's length, timer visible from a distance.
 6. The old Figma design (Archive page) is not to be read through the API, since that costs read calls. If you need to know what it looked like, ask me for screenshots.
 7. **Prototype flows:**
@@ -146,13 +147,14 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - [x] M4 Progress (v0.5.0)
   - [x] M5 Profile (v0.6.0)
   - [x] M6 Release (v1.0.0)
+- [x] v1.0.1 fixes (launcher label, icon, empty states, personal records, Bests)
 - [ ] Later items (1.1 Cloud sync ← *next*, 1.2 Progress photos, 1.3 Reminders, then supersets, media controls, export/import)
 
 ## App session: current state / next step
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0–M6: v1.0.0 is released.
+**Done so far:** M0–M6 (v1.0.0) and the v1.0.1 fixes are released.
 - M0: 4-tab shell, theme from `design/tokens.json`, CI.
 - M1: Drift database, repositories, seed import, all domain rules with unit tests.
 - M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (`showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session, play → preview), session editor, Settings (Appearance + Library), Load units, Muscles.
@@ -163,6 +165,14 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - M5: Profile tab (`profile/presentation/profile_screen.dart`: bodyweight card with sparkline and +, stat tiles, this month vs last, latest 5 records), Bodyweight (`bodyweight_screen.dart`: value, change over 30 days, trend chart, entries with edit/delete, Log weight; `body_weight_dialog.dart`, `logWeightFlow`), Settings complete (Workout: default rest, sound, vibration, keep screen on; Streak: weekly target 1–7; About: `AppInfo.version`, kept equal to the pubspec version by `test/app/app_info_test.dart`). `ChartRangeRow` moved to `progress_widgets.dart`.
 
 - M6: adaptive launcher icon (brand coral background, white dumbbell; monochrome layer for themed icons; legacy PNGs) and Android 12+ splash (surface colour + icon on a coral circle; `values-v31`, `values-night-v31`, `launch_background.xml` before 12), all rendered by `flutter test tool/icon` (re-run it after changing the icon). README: release and install sections. Version `1.0.0+7`.
+
+- v1.0.1 fixes (after v1.0.0 was installed on the phone):
+  - Launcher label "My Program" (activity `android:label`; the application label and every other place keep "My Bodybuilding Program").
+  - New icon: a fist (off-white) gripping a dumbbell (brand yellow) on coral, flat, parts separated by transparent gaps (`tool/icon/fist_dumbbell_painter.dart`; `flutter test tool/icon` also writes `build/icon_preview.png`). Same drawing on both splashes.
+  - Empty states: no illustration any more (`EmptyState` takes an icon only; `sleep.png` deleted). Today's welcome has no "Push → Pull → Legs" example; the new-session name field has no hint.
+  - **Personal records (PRs)**: table `personal_records` (personal layer, synced columns), **schema v2** (migration adds the table + index only). `PersonalRecord` / `PersonalRecordDraft` (`errorFor(measure)`, `normalizedFor`) and `PrRule` (`bests`, `currentBest`, `latest`, `compare`) in `progress/domain/personal_record.dart`; `PersonalRecordsRepository` (validates against the exercise's measure). UI: `PersonalRecordsScreen` (`/exercises/:id/records`), `PrSummaryCard` (Exercise detail + top of Exercise progress, which now also shows when the exercise has no training), `showPrDialog` + `addPrFlow` / `editPrFlow` / `deletePrFlow` / `prValueText` (`pr_flows.dart`), Profile "Latest PRs". An exercise with PRs counts as having history; a unit used by a PR counts as in use.
+  - The computed records are **Bests** everywhere in the UI ("New best" overlay, "New bests" in the summary, "Bests" tiles, "Best" chips). Code renames: `Records` → `Bests`, `PersonalRecord` (computed) → `TrainingBest`, `RecordEvent` → `BestEvent`, `PrChip` → `TrophyChip`, `RecordCountBadge` → `BestCountBadge`, `headlineRecord` → `headlineBest`; `records.dart` → `bests.dart`.
+  - `design/README.md` updated; new renders in `design/screens/v101_*` (from `tool/screenshots/v101_test.dart`). Version `1.0.1+8`.
 
 **Next step:** the later items, in Notion Development order: **1.1 Cloud sync** (Firebase Auth with Google, Firestore row mirror, Cloud Storage for user images, background sync with workmanager, restore; Settings › Cloud backup section, designed in `design/screens/settings_cloud-*`). The data layer is already sync-ready (`SyncedTable` columns, `dirty` flag, `SyncMerge`). Needs the owner's Firebase project and `google-services.json` (not committed) before anything can be tested on a device; ask before starting. Set its Notion row to In progress first.
 
@@ -181,7 +191,7 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
 - `lib/app/bootstrap.dart`: before the first screen, imports the seed (first launch or new seed version), closes a workout idle for more than 12 h, loads the settings.
 - Derived data (PRs, charts, streak, stats, last time) is never stored: controllers compute it from `HistoryRepository` with the domain rules.
 
-**Changing the database:** edit the tables, bump `schemaVersion`, add the migration step, then run `dart run drift_dev make-migrations` (dumps `drift_schemas/`) and `dart run drift_dev schema generate drift_schemas/app_database test/core/db/migrations/generated/` followed by `dart format`. `test/core/db/app_database_test.dart` fails when the tables and the dump disagree. Write the data-model change in Notion > Data & Sync first.
+**Changing the database:** edit the tables, bump `schemaVersion`, run `dart run drift_dev make-migrations` (dumps `drift_schemas/`, regenerates `lib/core/db/app_database.steps.dart` used by `stepByStep` in `app_database.dart`, and creates `test/core/db/migrations/app_database/`, which we delete), add the `fromNToN+1` step, then `dart run drift_dev schema generate --data-classes --companions drift_schemas/app_database test/core/db/migrations/generated/` followed by `dart format`. `test/core/db/migration_test.dart` migrates every dumped version and checks v1 data survives (extend it with each new version). `test/core/db/app_database_test.dart` fails when the tables and the dump disagree. Write the data-model change in Notion > Data & Sync first.
 
 **Tests:** `test/domain` (pure rules), `test/core/db` (schema, built-ins, seed import with the real seed), `test/data` (repositories on an in-memory database, including the full flow start → log → finish → history/PRs/pointer), `test/app` (widget tests). Helpers: `test/helpers/test_env.dart` (`TestEnv`: in-memory database + every repository + a fake clock) and `test/helpers/test_app.dart` (`TestApp`: the whole app on an in-memory database; call `app.settle(tester)` after anything that writes to the database).
 

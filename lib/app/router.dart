@@ -8,6 +8,7 @@ import 'package:my_bodybuilding_program/features/profile/presentation/profile_sc
 import 'package:my_bodybuilding_program/features/program/presentation/program_screen.dart';
 import 'package:my_bodybuilding_program/features/program/presentation/session_editor_screen.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/exercise_progress_screen.dart';
+import 'package:my_bodybuilding_program/features/progress/presentation/personal_records_screen.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/progress_screen.dart';
 import 'package:my_bodybuilding_program/features/progress/presentation/workout_detail_screen.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/load_units_screen.dart';
@@ -37,6 +38,7 @@ abstract final class Routes {
       : '/exercises/new?name=${Uri.encodeQueryComponent(name)}';
   static String exercise(String id) => '/exercises/$id';
   static String editExercise(String id) => '/exercises/$id/edit';
+  static String exerciseRecords(String id) => '/exercises/$id/records';
   static String session(String id) => '/sessions/$id';
   static String sessionPreview(String sessionId) => '/preview/$sessionId';
   static const String workout = '/workout';
@@ -108,6 +110,11 @@ GoRouter router(Ref ref) {
         path: '/exercises/:id',
         builder: (context, state) =>
             ExerciseDetailScreen(exerciseId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/exercises/:id/records',
+        builder: (context, state) =>
+            PersonalRecordsScreen(exerciseId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: '/exercises/:id/edit',

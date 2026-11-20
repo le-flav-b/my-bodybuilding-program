@@ -8,6 +8,7 @@ import 'package:my_bodybuilding_program/features/profile/data/body_weight_reposi
 import 'package:my_bodybuilding_program/features/program/data/program_repository.dart';
 import 'package:my_bodybuilding_program/features/program/domain/set_target.dart';
 import 'package:my_bodybuilding_program/features/progress/data/history_repository.dart';
+import 'package:my_bodybuilding_program/features/progress/data/personal_records_repository.dart';
 import 'package:my_bodybuilding_program/features/settings/data/settings_repository.dart';
 import 'package:my_bodybuilding_program/features/settings/data/units_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
@@ -35,6 +36,7 @@ class TestEnv {
     program = ProgramRepository(db, this.clock.call, newId);
     workouts = WorkoutRepository(db, program, this.clock.call, newId);
     history = HistoryRepository(db);
+    records = PersonalRecordsRepository(db, this.clock.call, newId);
     seed = SeedImporter(db, this.clock.call, newId);
   }
 
@@ -47,6 +49,7 @@ class TestEnv {
   late final ProgramRepository program;
   late final WorkoutRepository workouts;
   late final HistoryRepository history;
+  late final PersonalRecordsRepository records;
   late final SeedImporter seed;
 
   Future<void> close() => db.close();

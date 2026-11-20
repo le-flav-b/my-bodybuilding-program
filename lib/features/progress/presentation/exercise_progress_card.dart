@@ -22,7 +22,7 @@ class ExerciseProgressCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sets = ref.watch(loggedSetsByExerciseProvider)[exerciseId];
-    final record = sets == null ? null : headlineRecord(sets);
+    final record = sets == null ? null : headlineBest(sets);
     if (sets == null || record == null) return const SizedBox.shrink();
     final colors = context.colors;
     final units = ref.watch(unitLookupProvider);

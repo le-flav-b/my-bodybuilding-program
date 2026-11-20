@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/chart_series.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/last_time.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 
 import '../helpers/fixtures.dart';
 
 void main() {
-  group('Records.current', () {
+  group('Bests.current', () {
     test('heaviest load per unit, whatever the reps', () {
-      final records = Records.current([
+      final records = Bests.current([
         logged('w1', 1, reps: 10, load: 40),
         logged('w2', 3, reps: 3, load: 50),
         logged('w3', 5, reps: 12, load: 6, unit: 'level'),
@@ -23,7 +23,7 @@ void main() {
     });
 
     test('most reps counts only sets with no load', () {
-      final records = Records.current([
+      final records = Bests.current([
         logged('w1', 1, exercise: 'pullup', reps: 8),
         logged('w2', 3, exercise: 'pullup', reps: 11),
         logged('w3', 5, exercise: 'pullup', reps: 20, load: 5),
@@ -34,7 +34,7 @@ void main() {
     });
 
     test('longest hold for time-based exercises', () {
-      final records = Records.current([
+      final records = Bests.current([
         logged('w1', 1, exercise: 'plank', measure: Measure.time, seconds: 60),
         logged('w2', 3, exercise: 'plank', measure: Measure.time, seconds: 80),
       ]);
@@ -44,7 +44,7 @@ void main() {
 
     test('the earliest set holds a tied record', () {
       final first = logged('w1', 1, reps: 5, load: 50, id: 'first');
-      final records = Records.current([
+      final records = Bests.current([
         first,
         logged('w2', 3, reps: 5, load: 50, id: 'second'),
       ]);
@@ -52,7 +52,7 @@ void main() {
     });
 
     test('assisted (negative) loads: less assistance is the record', () {
-      final records = Records.current([
+      final records = Bests.current([
         logged('w1', 1, exercise: 'dip', reps: 8, load: -20),
         logged('w2', 3, exercise: 'dip', reps: 8, load: -10),
       ]);
@@ -60,9 +60,9 @@ void main() {
     });
   });
 
-  group('Records.events', () {
+  group('Bests.events', () {
     test('the first workout sets the baseline without a record', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         logged('w1', 1, reps: 8, load: 45, order: 1),
       ]);
@@ -70,7 +70,7 @@ void main() {
     });
 
     test('beating the previous record is an event with the old value', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         logged('w2', 3, reps: 10, load: 42.5, id: 'pr'),
       ]);
@@ -80,7 +80,7 @@ void main() {
     });
 
     test('equalling a record is not a new record', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         logged('w2', 3, reps: 10, load: 40),
       ]);
@@ -88,7 +88,7 @@ void main() {
     });
 
     test('within a workout each set must beat the earlier ones', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         logged('w2', 3, reps: 10, load: 42.5, id: 'a'),
         logged('w2', 3, reps: 8, load: 42.5, order: 1, id: 'b'),
@@ -99,7 +99,7 @@ void main() {
     });
 
     test('each unit has its own records', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         // First time in levels: baseline only, even though 6 < 40.
         logged('w2', 3, reps: 10, load: 6, unit: 'level'),
@@ -111,7 +111,7 @@ void main() {
     });
 
     test('exercises do not share records', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w1', 1, reps: 10, load: 40),
         logged('w2', 3, exercise: 'squat', reps: 5, load: 100),
       ]);
@@ -119,7 +119,7 @@ void main() {
     });
 
     test('is computed in chronological order whatever the input order', () {
-      final events = Records.events([
+      final events = Bests.events([
         logged('w2', 3, reps: 10, load: 42.5, id: 'pr'),
         logged('w1', 1, reps: 10, load: 40),
       ]);
@@ -132,31 +132,31 @@ void main() {
         logged('w2', 3, reps: 10, load: 50, id: 'typo'),
         logged('w3', 5, reps: 10, load: 45, id: 'real'),
       ];
-      expect(Records.events(sets).map((e) => e.setId), ['typo']);
+      expect(Bests.events(sets).map((e) => e.setId), ['typo']);
       final edited = sets.where((s) => s.setId != 'typo');
-      expect(Records.events(edited).map((e) => e.setId), ['real']);
+      expect(Bests.events(edited).map((e) => e.setId), ['real']);
     });
   });
 
-  test('Records.ofWorkout keeps the best per series with the old record', () {
-    final events = Records.events([
+  test('Bests.ofWorkout keeps the best per series with the old record', () {
+    final events = Bests.events([
       logged('w1', 1, reps: 10, load: 40),
       logged('w2', 3, reps: 10, load: 42.5),
       logged('w2', 3, reps: 6, load: 45, order: 1),
       logged('w2', 3, exercise: 'pullup', reps: 9),
     ]);
-    final ofWorkout = Records.ofWorkout(events, 'w2');
+    final ofWorkout = Bests.ofWorkout(events, 'w2');
     expect(ofWorkout.single.value, 45);
     expect(ofWorkout.single.previous, 40);
-    expect(Records.ofWorkout(events, 'w1'), isEmpty);
+    expect(Bests.ofWorkout(events, 'w1'), isEmpty);
   });
 
-  test('Records.latest returns the newest events first', () {
-    final events = Records.events([
+  test('Bests.latest returns the newest events first', () {
+    final events = Bests.events([
       for (var i = 0; i < 8; i++)
         logged('w$i', 1 + i * 2, reps: 10, load: 40.0 + i),
     ]);
-    final latest = Records.latest(events, 5);
+    final latest = Bests.latest(events, 5);
     expect(latest, hasLength(5));
     expect(latest.first.value, 47);
     expect(latest.last.value, 43);

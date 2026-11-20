@@ -25,7 +25,6 @@ Future<void> createSessionFlow(BuildContext context, WidgetRef ref) async {
     context,
     title: Strings.newSessionTitle,
     label: Strings.sessionNameLabel,
-    helper: Strings.sessionNameHint,
     confirmLabel: Strings.create,
   );
   if (name == null) return;
@@ -69,7 +68,7 @@ class ProgramScreen extends ConsumerWidget {
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: EmptyState(
-                      artAsset: 'assets/images/sleep.png',
+                      icon: Symbols.replay_rounded,
                       title: Strings.programNoSessionsTitle,
                       body: Strings.programNoSessionsBody,
                       action: FilledButton.icon(

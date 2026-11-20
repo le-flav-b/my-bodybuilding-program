@@ -12,7 +12,7 @@ import 'package:my_bodybuilding_program/app/widgets/big_button.dart';
 import 'package:my_bodybuilding_program/app/widgets/common.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout_clock.dart';
@@ -160,7 +160,7 @@ class TrophyOverlay extends ConsumerWidget {
     super.key,
   });
 
-  final RecordEvent event;
+  final BestEvent event;
   final WorkoutDetail detail;
   final VoidCallback onClose;
 
@@ -194,7 +194,7 @@ class TrophyOverlay extends ConsumerWidget {
                           Image.asset('assets/images/trophy.png', width: 260),
                           const SizedBox(height: AppSpacing.lg),
                           Overline(
-                            Strings.newRecord,
+                            Strings.newBest,
                             color: trophy,
                             fontSize: 16,
                           ),
@@ -225,7 +225,7 @@ class TrophyOverlay extends ConsumerWidget {
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
-                            Strings.previousRecord(
+                            Strings.previousBest(
                               recordPreviousText(event, units),
                             ),
                             style: context.text.bodyMedium!.copyWith(

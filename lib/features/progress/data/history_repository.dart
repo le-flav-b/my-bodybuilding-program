@@ -1,8 +1,8 @@
 import 'package:my_bodybuilding_program/core/db/app_database.dart';
 import 'package:my_bodybuilding_program/core/db/daos/history_dao.dart';
 import 'package:my_bodybuilding_program/core/db/database_provider.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/stats.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -56,7 +56,7 @@ class HistoryRepository {
       exercises.putIfAbsent(set.workoutId, () => {}).add(set.exerciseId);
     }
     final records = <String, Set<Object>>{};
-    for (final event in Records.events(sets)) {
+    for (final event in Bests.events(sets)) {
       records.putIfAbsent(event.workoutId, () => {}).add((
         event.exerciseId,
         event.series,

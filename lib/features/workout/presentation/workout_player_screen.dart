@@ -13,7 +13,7 @@ import 'package:my_bodybuilding_program/app/widgets/empty_state.dart';
 import 'package:my_bodybuilding_program/core/notifications/device_feedback.dart';
 import 'package:my_bodybuilding_program/features/catalogue/domain/catalogue.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
 import 'package:my_bodybuilding_program/features/workout/presentation/player_overlays.dart';
@@ -35,7 +35,7 @@ class WorkoutPlayerScreen extends ConsumerStatefulWidget {
 }
 
 class _WorkoutPlayerScreenState extends ConsumerState<WorkoutPlayerScreen> {
-  RecordEvent? _trophy;
+  BestEvent? _trophy;
   Timer? _trophyTimer;
   bool _logging = false;
   late final DeviceFeedback _feedback;
@@ -82,7 +82,7 @@ class _WorkoutPlayerScreenState extends ConsumerState<WorkoutPlayerScreen> {
     }
   }
 
-  void _showTrophy(RecordEvent event) {
+  void _showTrophy(BestEvent event) {
     _trophyTimer?.cancel();
     setState(() => _trophy = event);
     _trophyTimer = Timer(const Duration(seconds: 4), _closeTrophy);

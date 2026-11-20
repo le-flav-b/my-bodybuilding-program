@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
+import 'package:my_bodybuilding_program/core/db/app_database.steps.dart';
 import 'package:my_bodybuilding_program/core/db/daos/catalogue_dao.dart';
 import 'package:my_bodybuilding_program/core/db/daos/history_dao.dart';
 import 'package:my_bodybuilding_program/core/db/daos/personal_dao.dart';
@@ -25,6 +26,7 @@ part 'app_database.g.dart';
     LoadUnits,
     BodyWeights,
     Settings,
+    PersonalRecords,
     Programs,
     Sessions,
     SessionExercises,
@@ -52,11 +54,18 @@ class AppDatabase extends _$AppDatabase {
   final Clock _clock;
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) => m.createAll(),
+    onUpgrade: stepByStep(
+      // v1.0.1: personal records. Adds a table; every v1 row stays.
+      from1To2: (m, schema) async {
+        await m.createTable(schema.personalRecords);
+        await m.createIndex(schema.personalRecordsExercise);
+      },
+    ),
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
       await _ensureBuiltIns();

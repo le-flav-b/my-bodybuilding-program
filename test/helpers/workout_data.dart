@@ -2,6 +2,8 @@ import 'package:my_bodybuilding_program/core/utils/ids.dart';
 import 'package:my_bodybuilding_program/features/catalogue/data/catalogue_repository.dart';
 import 'package:my_bodybuilding_program/features/profile/data/body_weight_repository.dart';
 import 'package:my_bodybuilding_program/features/program/data/program_repository.dart';
+import 'package:my_bodybuilding_program/features/progress/data/personal_records_repository.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/personal_record.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout_draft.dart';
@@ -154,6 +156,38 @@ class WorkoutData {
       );
     }
   }
+
+  /// Personal records, apart from the training: bench 1-rep max 100 kg
+  /// (10 days ago), bench 5 × 90 kg (5 days ago), 15 pull-ups (3 days ago)
+  /// and a 1:30 plank (yesterday, "new mat").
+  Future<void> personalRecords() async {
+    final repo = app.container.read(personalRecordsRepositoryProvider);
+    final now = app.clock.now;
+    DateTime ago(int days) => now.subtract(Duration(days: days));
+    await repo.addRecord(
+      demo.ex('barbell_bench_press'),
+      PersonalRecordDraft(achievedAt: ago(10), load: 100, unitId: kgUnit),
+    );
+    await repo.addRecord(
+      demo.ex('barbell_bench_press'),
+      PersonalRecordDraft(
+        achievedAt: ago(5),
+        load: 90,
+        unitId: kgUnit,
+        reps: 5,
+      ),
+    );
+    await repo.addRecord(
+      demo.ex('pull_up'),
+      PersonalRecordDraft(achievedAt: ago(3), reps: 15),
+    );
+    await repo.addRecord(
+      demo.ex('plank'),
+      PersonalRecordDraft(achievedAt: ago(1), seconds: 90, note: 'new mat'),
+    );
+  }
+
+  static const String kgUnit = FixedIds.kgUnit;
 
   Future<String> startPush() => _start(demo.pushId);
 

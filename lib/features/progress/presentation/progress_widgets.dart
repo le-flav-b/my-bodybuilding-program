@@ -6,9 +6,9 @@ import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
 import 'package:my_bodybuilding_program/app/theme/app_tokens.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/chart_series.dart';
 import 'package:my_bodybuilding_program/features/progress/domain/logged_set.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
 
 /// "November 2026".
 String monthTitle(DateTime month) => DateFormat('MMMM yyyy').format(month);
@@ -33,9 +33,9 @@ String seriesValueText(SeriesKey series, double value, UnitLookup units) =>
 
 /// The headline record of an exercise: the record of the series it was
 /// done in last ("42.5 kg"), or null when nothing is logged.
-PersonalRecord? headlineRecord(List<LoggedSet> sets) {
+TrainingBest? headlineBest(List<LoggedSet> sets) {
   if (sets.isEmpty) return null;
-  final records = Records.current(sets);
+  final records = Bests.current(sets);
   if (records.isEmpty) return null;
   final lastKey = SeriesKey.of(sets.last)?.$1;
   for (final r in records) {
@@ -205,7 +205,7 @@ List<(String, String?)> durationParts(int seconds) {
 }
 
 /// Yellow pill with a trophy and a count (history rows).
-class RecordCountBadge extends StatelessWidget {
+class BestCountBadge extends StatelessWidget {
   const new({required this.count, super.key});
 
   final int count;

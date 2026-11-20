@@ -368,9 +368,7 @@ body { margin: 0; font-family: Inter, sans-serif; -webkit-font-smoothing: antial
 .since .t { font: 600 14px/20px Inter; }
 .since .s { font: 400 12px/16px Inter; color: var(--con-surface-variant); }
 .datehead { font: 600 12px/16px Inter; letter-spacing: .6px; text-transform: uppercase; color: var(--con-surface-variant); }
-.empty img.art { background: var(--cimage-well); border-radius: 50%; padding: 24px; box-shadow: inset 0 0 0 1px var(--coutline-variant); }
-[data-theme="light"] .empty img.art { background: var(--csurface-container-low); }
-
+[data-theme="light"] 
 /* ---------- Workout player ---------- */
 .p-head { height: 56px; flex: none; display: flex; align-items: center; gap: 4px; padding: 0 4px; }
 .p-head .mid { flex: 1; text-align: left; min-width: 0; padding-left: 4px; }

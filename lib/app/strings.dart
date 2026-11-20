@@ -13,7 +13,7 @@ abstract final class Strings {
   // Today
   static const String todayWelcomeTitle = 'Welcome!';
   static const String todayWelcomeBody =
-      'Your program is a loop of sessions, like Push → Pull → Legs. '
+      'Your program is a loop of sessions. '
       "Create the first one and this screen will always tell you what's next.";
   static const String todayCreateFirstSession = 'Create your first session';
   static const String todayComingTitle = 'Your program is ready';
@@ -23,7 +23,7 @@ abstract final class Strings {
   // Progress
   static const String progressEmptyTitle = 'Nothing to show yet';
   static const String progressEmptyBody =
-      'Your calendar, charts and records appear here after your first '
+      'Your calendar, charts and bests appear here after your first '
       'workout.';
   static const String calendarTab = 'Calendar';
   static const String exercisesTab = 'Exercises';
@@ -66,7 +66,7 @@ abstract final class Strings {
   static const String deleteWorkout = 'Delete workout';
   static const String deleteWorkoutTitle = 'Delete this workout?';
   static const String deleteWorkoutBody =
-      'Its sets are removed from your history, records and charts.';
+      'Its sets are removed from your history, bests and charts.';
   static const String editNote = 'Edit note';
   static const String addNote = 'Add a note';
   static const String noteEmpty = 'No note';
@@ -74,7 +74,7 @@ abstract final class Strings {
   static String removeLoggedExerciseTitle(String name) =>
       'Remove $name from this workout?';
   static const String removeLoggedExerciseBody =
-      'Its sets are removed from your history, records and charts.';
+      'Its sets are removed from your history, bests and charts.';
   static const String workoutDeleted = 'Workout deleted';
   static const String workoutNotFound = 'This workout no longer exists.';
 
@@ -104,10 +104,11 @@ abstract final class Strings {
   static String timeMonth(String month) => 'Time · $month';
   static String vsMonth(String diff, String month, String value) =>
       '$diff vs $month ($value)';
-  static const String latestRecords = 'Latest records';
+  static const String latestPrs = 'Latest PRs';
   static const String heaviest = 'heaviest';
   static String todayAt(String time) => 'Today $time';
-  static const String noRecordsYet = 'Records appear here as you beat them.';
+  static const String noPrsYet =
+      'Your personal records appear here. Add one from an exercise.';
 
   // Common
   static const String cancel = 'Cancel';
@@ -152,7 +153,6 @@ abstract final class Strings {
       "will tell you what's next.";
   static const String newSessionTitle = 'New session';
   static const String sessionNameLabel = 'Session name';
-  static const String sessionNameHint = 'e.g. Push A';
   static const String create = 'Create';
 
   // Session editor
@@ -345,9 +345,9 @@ abstract final class Strings {
   static const String startAnotherSession = 'Start another session';
   static const String pointerFollows =
       'The program continues after the session you actually do.';
-  static String sessionSummary(String duration, int sets, int records) =>
+  static String sessionSummary(String duration, int sets, int bests) =>
       '$duration · ${setCount(sets)}'
-      '${records == 0 ? '' : ' · $records ${records == 1 ? 'PR' : 'PRs'}'}';
+      '${bests == 0 ? '' : ' · $bests ${bests == 1 ? 'best' : 'bests'}'}';
   static const String nothingLoggedDiscarded =
       'Nothing was logged, so the workout was discarded.';
   static const String sessionHasNoExercises =
@@ -421,16 +421,49 @@ abstract final class Strings {
   static const String tapToGo = 'Go to the next exercise';
   static const String everythingLogged = 'Everything is logged';
 
-  // Records
-  static const String newRecord = 'New record';
+  // Training bests (computed from the logged sets)
+  static const String newBest = 'New best';
   static const String nice = 'Nice!';
   static const String heaviestLoad = 'heaviest load';
   static const String mostReps = 'most reps';
   static const String longestHold = 'longest hold';
-  static String previousRecord(String value) => 'Previous: $value';
-  static String wasRecord(String value) => 'was $value';
+  static String previousBest(String value) => 'Previous best: $value';
+  static String wasBest(String value) => 'was $value';
   static String repsCount(int n) => n == 1 ? '1 rep' : '$n reps';
+  static const String best = 'Best';
+  static const String bests = 'Bests';
+
+  // Personal records (PRs): logged by hand, apart from training
   static const String pr = 'PR';
+  static const String personalRecord = 'Personal record';
+  static const String personalRecords = 'Personal records';
+  static const String bestPr = 'Best PR';
+  static const String addPr = 'Add PR';
+  static const String editPr = 'Edit PR';
+  static const String deletePr = 'Delete PR';
+  static const String deletePrTitle = 'Delete this PR?';
+  static const String deletePrBody =
+      'It leaves your personal records. Your training history is not '
+      'affected.';
+  static const String prSaved = 'PR saved';
+  static const String prDeleted = 'PR deleted';
+  static const String noPrYet = 'No PR yet';
+  static const String noPrBody =
+      'A PR is an attempt you make on purpose, when you want. It stays '
+      'apart from your training sets and their bests.';
+  static String prHistory(int n) => 'History · $n';
+  static const String prDate = 'Date';
+  static const String prLoadOptional = 'Load (optional)';
+  static const String prReps = 'Reps';
+  static const String prTime = 'Time';
+  static const String prTimeHelper = 'Minutes:seconds, or seconds';
+  static const String prRepsOrLoadHelper = 'A load, reps, or both.';
+  static const String prRepsOrLoadNeeded = 'Enter a load, reps or both.';
+  static const String prRepsInvalid = 'Enter a whole number of reps.';
+  static const String prLoadInvalid = 'Enter a number.';
+  static const String prTimeNeeded = 'Enter the time held.';
+  static const String prTimeInvalid = 'Enter a time such as 1:20.';
+  static const String prOtherUnits = 'In other units';
 
   // List view
   static String exercisesOf(String session) => '$session · exercises';
@@ -475,7 +508,7 @@ abstract final class Strings {
   static const String duration = 'Duration';
   static const String sets = 'Sets';
   static const String exercisesTile = 'Exercises';
-  static String newRecords(int n) => 'New records · $n';
+  static String newBests(int n) => 'New bests · $n';
   static const String workoutNote = 'Workout note';
   static const String workoutNoteHint = 'Felt strong, shoulder OK…';
   static const String nextSessionLabel = 'Next session:';

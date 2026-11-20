@@ -7,7 +7,7 @@ import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/core/notifications/workout_notifier.dart';
 import 'package:my_bodybuilding_program/features/program/data/program_repository.dart';
 import 'package:my_bodybuilding_program/features/progress/data/history_repository.dart';
-import 'package:my_bodybuilding_program/features/progress/domain/records.dart';
+import 'package:my_bodybuilding_program/features/progress/domain/bests.dart';
 import 'package:my_bodybuilding_program/features/workout/data/workout_repository.dart';
 import 'package:my_bodybuilding_program/features/workout/domain/workout.dart';
 
@@ -96,6 +96,15 @@ void main() {
       await start(tester, program: false);
       expect(find.text(Strings.todayWelcomeTitle), findsOneWidget);
       expect(find.text(Strings.todayCreateFirstSession), findsOneWidget);
+      // v1.0.1: no illustration, no example in the text.
+      expect(find.byType(Image), findsNothing);
+      expect(find.byIcon(Symbols.fitness_center_rounded), findsWidgets);
+      expect(find.textContaining('Push'), findsNothing);
+      // The new-session name field has no example either.
+      await tester.tap(find.text(Strings.todayCreateFirstSession));
+      await app.settle(tester);
+      expect(find.text(Strings.newSessionTitle), findsOneWidget);
+      expect(find.textContaining('e.g.'), findsNothing);
     });
 
     testWidgets('in progress: resume banner opens the player', (tester) async {
@@ -151,10 +160,10 @@ void main() {
       final set = (await active(tester))!.exercises.first.sets.first;
       expect(set.reps, 9);
       expect(set.load, 40.5);
-      expect(find.text(Strings.newRecord.toUpperCase()), findsOneWidget);
+      expect(find.text(Strings.newBest.toUpperCase()), findsOneWidget);
       expect(find.text('40.5 kg × 9'), findsOneWidget);
       await tapAndSettle(tester, find.text(Strings.nice));
-      expect(find.text(Strings.newRecord.toUpperCase()), findsNothing);
+      expect(find.text(Strings.newBest.toUpperCase()), findsNothing);
     });
 
     testWidgets('the rest timer ends by itself with a beep', (tester) async {
@@ -353,7 +362,7 @@ void main() {
       expect(find.text(Strings.allDoneTitle), findsOneWidget);
       await tapAndSettle(tester, find.text(Strings.finishWorkout));
       expect(find.text(Strings.updateProgramTitle), findsNothing);
-      expect(find.text(Strings.newRecords(1).toUpperCase()), findsOneWidget);
+      expect(find.text(Strings.newBests(1).toUpperCase()), findsOneWidget);
       await tapAndSettle(tester, find.text(Strings.done));
 
       final history = app.container.read(historyRepositoryProvider);
@@ -362,7 +371,7 @@ void main() {
         () => history.getLoggedSets(exerciseId: demo.ex('barbell_bench_press')),
       );
       expect(sets.where((s) => s.load == 42.5), hasLength(2));
-      final records = Records.current(sets);
+      final records = Bests.current(sets);
       expect(records.single.value, 42.5);
       final overview = await db(tester, program.getOverview);
       expect(overview.nextSession!.session.id, demo.legsId);

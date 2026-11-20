@@ -39,3 +39,18 @@ class Settings extends Table {
   @override
   Set<Column<Object>> get primaryKey => {key};
 }
+
+/// Personal records (PRs): attempts made on purpose, kept apart from the
+/// training sets (v1.0.1, schema v2). What is filled depends on the
+/// exercise's measure; the repository checks it.
+@DataClassName('PersonalRecordRow')
+@TableIndex(name: 'personal_records_exercise', columns: {#exerciseId})
+class PersonalRecords extends Table with SyncedTable {
+  TextColumn get exerciseId => text().references(Exercises, #id)();
+  DateTimeColumn get achievedAt => dateTime()();
+  RealColumn get load => real().nullable()();
+  TextColumn get unitId => text().nullable().references(LoadUnits, #id)();
+  IntColumn get reps => integer().nullable()();
+  IntColumn get seconds => integer().nullable()();
+  TextColumn get note => text().nullable()();
+}
