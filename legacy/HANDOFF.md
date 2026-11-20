@@ -148,13 +148,14 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - [x] M5 Profile (v0.6.0)
   - [x] M6 Release (v1.0.0)
 - [x] v1.0.1 fixes (launcher label, icon, empty states, personal records, Bests)
+- [x] v1.0.2 icon (the first icon's hand, chosen from proposals)
 - [ ] Later items (1.1 Cloud sync ← *next*, 1.2 Progress photos, 1.3 Reminders, then supersets, media controls, export/import)
 
 ## App session: current state / next step
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0–M6 (v1.0.0) and the v1.0.1 fixes are released.
+**Done so far:** M0–M6 (v1.0.0), the v1.0.1 fixes and the v1.0.2 icon are released.
 - M0: 4-tab shell, theme from `design/tokens.json`, CI.
 - M1: Drift database, repositories, seed import, all domain rules with unit tests.
 - M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (`showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session, play → preview), session editor, Settings (Appearance + Library), Load units, Muscles.
@@ -173,6 +174,7 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - **Personal records (PRs)**: table `personal_records` (personal layer, synced columns), **schema v2** (migration adds the table + index only). `PersonalRecord` / `PersonalRecordDraft` (`errorFor(measure)`, `normalizedFor`) and `PrRule` (`bests`, `currentBest`, `latest`, `compare`) in `progress/domain/personal_record.dart`; `PersonalRecordsRepository` (validates against the exercise's measure). UI: `PersonalRecordsScreen` (`/exercises/:id/records`), `PrSummaryCard` (Exercise detail + top of Exercise progress, which now also shows when the exercise has no training), `showPrDialog` + `addPrFlow` / `editPrFlow` / `deletePrFlow` / `prValueText` (`pr_flows.dart`), Profile "Latest PRs". An exercise with PRs counts as having history; a unit used by a PR counts as in use.
   - The computed records are **Bests** everywhere in the UI ("New best" overlay, "New bests" in the summary, "Bests" tiles, "Best" chips). Code renames: `Records` → `Bests`, `PersonalRecord` (computed) → `TrainingBest`, `RecordEvent` → `BestEvent`, `PrChip` → `TrophyChip`, `RecordCountBadge` → `BestCountBadge`, `headlineRecord` → `headlineBest`; `records.dart` → `bests.dart`.
   - `design/README.md` updated; new renders in `design/screens/v101_*` (from `tool/screenshots/v101_test.dart`). Version `1.0.1+8`.
+- v1.0.2 icon: the owner reviewed proposals (A–R, rendered outside the repo) and chose the first app's hand, redrawn flat and white, slimmer (85 %) and 8 % bigger, gripping a yellow two-plate dumbbell with a visible bar; then lowered 2 dp and enlarged to 62 dp in the 108 dp layer (optical centring, still inside the 66 dp safe zone). `tool/icon/fist_dumbbell_painter.dart` holds the geometry, measured in the first icon's 512 px units; `flutter test tool/icon` re-renders every layer and `build/icon_preview.png`. Version `1.0.2+9`. The owner decides the icon from preview images: always send one before changing it.
 
 **Next step:** the later items, in Notion Development order: **1.1 Cloud sync** (Firebase Auth with Google, Firestore row mirror, Cloud Storage for user images, background sync with workmanager, restore; Settings › Cloud backup section, designed in `design/screens/settings_cloud-*`). The data layer is already sync-ready (`SyncedTable` columns, `dirty` flag, `SyncMerge`). Needs the owner's Firebase project and `google-services.json` (not committed) before anything can be tested on a device; ask before starting. Set its Notion row to In progress first.
 
