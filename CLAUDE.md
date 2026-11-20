@@ -117,3 +117,4 @@ The owner follows sessions from their phone and is **not** told when a session i
 - **Whenever you are about to wait for the owner** (a question, a choice, a file or secret to provide, an approval card such as an environment or network change, or the end of the task), send a push notification with `PushNotification` first, saying in one line what you need. Then wait.
 - If your next action is likely to show the owner an approval prompt (e.g. the first Notion call of the session), send the notification *before* calling it.
 - Never switch to other work while silently waiting: notify, then wait.
+- Notion (search, read, create, update, comments; **no** delete or move) and GitHub tools are pre-allowed in `.claude/settings.json`, so they shouldn't prompt. If one still does, say so in your report. Don't widen that list yourself: the owner approves any change to it.
