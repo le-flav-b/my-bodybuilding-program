@@ -5,6 +5,7 @@ import 'package:my_bodybuilding_program/app/router.dart';
 import 'package:my_bodybuilding_program/app/strings.dart';
 import 'package:my_bodybuilding_program/app/theme/app_colors.dart';
 import 'package:my_bodybuilding_program/app/theme/app_theme.dart';
+import 'package:my_bodybuilding_program/features/settings/presentation/reminder_runtime.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
 import 'package:my_bodybuilding_program/features/workout/presentation/workout_runtime.dart';
 
@@ -31,7 +32,10 @@ class App extends ConsumerWidget {
 
     // Follows the workout in progress (notification, rest timer) from now
     // on. Started here, in the app's zone, so its timers are the app's.
-    ref.watch(workoutRuntimeProvider);
+    ref
+      ..watch(workoutRuntimeProvider)
+      // Keeps the training and weigh-in reminders scheduled.
+      ..watch(reminderRuntimeProvider);
 
     return MaterialApp.router(
       title: Strings.appName,

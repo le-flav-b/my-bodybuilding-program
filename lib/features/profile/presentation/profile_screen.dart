@@ -42,6 +42,15 @@ class ProfileScreen extends ConsumerWidget {
     final count = NumberFormat.decimalPattern();
     final thisShort = DateFormat('MMM').format(now);
     final lastShort = DateFormat('MMM').format(lastMonth);
+    if (ref.watch(weighInRequestProvider)) {
+      // Opened from the weigh-in reminder: log a weight right away.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!context.mounted) return;
+        if (ref.read(weighInRequestProvider.notifier).take()) {
+          unawaited(logWeightFlow(context, ref));
+        }
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:my_bodybuilding_program/features/settings/domain/reminders.dart';
 
 part 'app_settings.freezed.dart';
 
@@ -13,6 +14,14 @@ abstract final class SettingKeys {
   static const String timerVibration = 'timer_vibration';
   static const String keepScreenOn = 'keep_screen_on';
   static const String weeklyTarget = 'weekly_target';
+
+  /// Reminders (v1.0.4): see [ReminderSettings].
+  static const String trainingReminder = 'reminder.training.enabled';
+  static const String trainingReminderDays = 'reminder.training.days';
+  static const String trainingReminderTime = 'reminder.training.time';
+  static const String weighInReminder = 'reminder.weigh_in.enabled';
+  static const String weighInAfterDays = 'reminder.weigh_in.after_days';
+  static const String weighInReminderTime = 'reminder.weigh_in.time';
 
   /// Last imported seed version and every seed key ever imported.
   static const String seedVersion = 'seed.version';
@@ -29,6 +38,7 @@ abstract class AppSettings with _$AppSettings {
     @Default(true) bool timerVibration,
     @Default(true) bool keepScreenOn,
     @Default(AppSettings.defaultWeeklyTarget) int weeklyTarget,
+    @Default(ReminderSettings()) ReminderSettings reminders,
   }) = _AppSettings;
   const new _();
 
@@ -39,6 +49,8 @@ abstract class AppSettings with _$AppSettings {
       'false' => false,
       _ => fallback,
     };
+    int number(String key, int fallback) =>
+        int.tryParse(values[key] ?? '') ?? fallback;
     return AppSettings(
       themeMode: AppThemeMode.values.firstWhere(
         (m) => m.name == values[SettingKeys.themeMode],
@@ -55,6 +67,31 @@ abstract class AppSettings with _$AppSettings {
           (int.tryParse(values[SettingKeys.weeklyTarget] ?? '') ??
                   defaultWeeklyTarget)
               .clamp(minWeeklyTarget, maxWeeklyTarget),
+      reminders: ReminderSettings(
+        trainingEnabled: flag(SettingKeys.trainingReminder, fallback: false),
+        trainingDays: ReminderSettings.parseDays(
+          values[SettingKeys.trainingReminderDays],
+        ),
+        trainingMinutes: ReminderSettings.clampMinutes(
+          number(
+            SettingKeys.trainingReminderTime,
+            ReminderSettings.defaultTrainingMinutes,
+          ),
+        ),
+        weighInEnabled: flag(SettingKeys.weighInReminder, fallback: false),
+        weighInAfterDays: ReminderSettings.clampAfterDays(
+          number(
+            SettingKeys.weighInAfterDays,
+            ReminderSettings.defaultWeighInAfterDays,
+          ),
+        ),
+        weighInMinutes: ReminderSettings.clampMinutes(
+          number(
+            SettingKeys.weighInReminderTime,
+            ReminderSettings.defaultWeighInMinutes,
+          ),
+        ),
+      ),
     );
   }
 

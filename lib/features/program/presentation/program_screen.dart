@@ -68,7 +68,7 @@ class ProgramScreen extends ConsumerWidget {
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: EmptyState(
-                      icon: Symbols.replay_rounded,
+                      icon: Symbols.repeat_rounded,
                       title: Strings.programNoSessionsTitle,
                       body: Strings.programNoSessionsBody,
                       action: FilledButton.icon(

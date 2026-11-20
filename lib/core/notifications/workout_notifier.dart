@@ -1,7 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:my_bodybuilding_program/core/notifications/notification_center.dart';
 import 'package:my_bodybuilding_program/core/utils/app_logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
 part 'workout_notifier.g.dart';
@@ -64,32 +64,20 @@ abstract interface class WorkoutNotifier {
 
 /// [WorkoutNotifier] on `flutter_local_notifications`.
 class LocalWorkoutNotifier implements WorkoutNotifier {
-  new([FlutterLocalNotificationsPlugin? plugin])
-    : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
+  new([NotificationCenter? center])
+    : _center = center ?? NotificationCenter.instance;
 
   static const int statusId = 1;
   static const int alertId = 2;
   static const String _statusChannel = 'workout_status';
-  static const String _icon = '@mipmap/ic_launcher';
 
-  final FlutterLocalNotificationsPlugin _plugin;
-  bool _ready = false;
+  final NotificationCenter _center;
 
-  AndroidFlutterLocalNotificationsPlugin? get _android => _plugin
-      .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin
-      >();
+  FlutterLocalNotificationsPlugin get _plugin => _center.plugin;
 
-  Future<void> _ensureReady() async {
-    if (_ready) return;
-    tz_data.initializeTimeZones();
-    await _plugin.initialize(
-      settings: const InitializationSettings(
-        android: AndroidInitializationSettings(_icon),
-      ),
-    );
-    _ready = true;
-  }
+  AndroidFlutterLocalNotificationsPlugin? get _android => _center.android;
+
+  Future<void> _ensureReady() => _center.ensureReady();
 
   Future<void> _guard(Future<void> Function() action) async {
     try {

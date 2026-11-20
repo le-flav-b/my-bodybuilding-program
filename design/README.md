@@ -1,6 +1,6 @@
 # Design: My Bodybuilding Program
 
-Approved design (design session, 2026-11-15; v1.0.1 changes: manual personal records, "Bests" naming, no empty-state art, new app icon). **This folder is what app sessions read.** Figma mirrors it for viewing only (not updated for v1.0.1).
+Approved design (design session, 2026-11-15; v1.0.1 changes: manual personal records, "Bests" naming, no empty-state art, new app icon; v1.0.4: Settings › Reminders, `repeat` icon on Program's empty state). **This folder is what app sessions read.** Figma mirrors it for viewing only (not updated for v1.0.1).
 
 Since v1.0.1, "PR" means only a personal record logged by hand; the records computed from the training sets are called **Bests**. The HTML previews and the older screenshots still show the v1.0 labels ("New record", "PR" chips); where they differ, this file and the `screens/v101_*` renders win.
 
@@ -11,6 +11,7 @@ Since v1.0.1, "PR" means only a personal record logged by hand; the records comp
 | Clickable prototype (all flows) | [`preview/prototype.html`](preview/prototype.html) |
 | Screenshots `<screen>_<state>_<theme>.png` + component sheets | [`screens/`](screens/) |
 | v1.0.1 screens rendered from the app (`flutter test tool/screenshots`) | [`screens/v101_*.png`](screens/) |
+| v1.0.4 screens rendered from the app (Settings › Reminders, Program empty) | [`screens/v104_*.png`](screens/) |
 | What is in Figma and what is left there | [`figma.md`](figma.md) |
 
 Behaviour is specified in Notion (Features, Screens & Navigation). This file covers **visuals and layout**: what each screen is made of, sizes, states and interactions. Where a screen detail added during the design changed the spec, Notion was updated first.
@@ -44,7 +45,7 @@ Every number that changes live (timers, steppers, stats) uses tabular figures (`
 - Touch targets ≥ 48. Buttons 48 high; **big** buttons 64 high / 18 sp for the one main action of a screen (Start, Done, Finish, Stop, Resume). App bar 64, nav bar 80.
 
 ### Icons
-Material Symbols **Rounded** → Flutter `Icons.<name>_rounded` (no extra package). Filled variant for the active nav tab and for play/trophy/fire. Names used: `today`, `fitness_center`, `monitoring` (→ `Icons.insights_rounded` if missing), `person`, `play_arrow`, `pause`, `stop`, `check`, `close`, `add`, `remove`, `history`, `schedule`, `timer`, `skip_next`, `swap_horiz`, `view_list`, `drag_indicator`, `more_vert`, `edit`, `edit_note`, `push_pin`, `trophy` (→ `Icons.emoji_events_rounded`), `local_fire_department`, `flag`, `block`, `delete`, `inventory_2`, `restore`, `straighten`, `accessibility_new`, `settings`, `contrast`, `cloud_upload`, `sync`, `add_a_photo`, `photo_camera`, `image`, `exercise` (→ `Icons.fitness_center_rounded`), `done_all`, `menu_book`, `replay`, `visibility_off`, `lock`, `info`.
+Material Symbols **Rounded** → Flutter `Icons.<name>_rounded` (no extra package). Filled variant for the active nav tab and for play/trophy/fire. Names used: `today`, `fitness_center`, `monitoring` (→ `Icons.insights_rounded` if missing), `person`, `play_arrow`, `pause`, `stop`, `check`, `close`, `add`, `remove`, `history`, `schedule`, `timer`, `skip_next`, `swap_horiz`, `view_list`, `drag_indicator`, `more_vert`, `edit`, `edit_note`, `push_pin`, `trophy` (→ `Icons.emoji_events_rounded`), `local_fire_department`, `flag`, `block`, `delete`, `inventory_2`, `restore`, `straighten`, `accessibility_new`, `settings`, `contrast`, `cloud_upload`, `sync`, `add_a_photo`, `photo_camera`, `image`, `exercise` (→ `Icons.fitness_center_rounded`), `done_all`, `menu_book`, `repeat` (the loop; was `replay` until v1.0.4, which read as "retry"), `replay` (undo a skip in the workout list), `visibility_off`, `lock`, `info`, and for the reminders (v1.0.4) `notifications`, `monitor_weight`, `event_repeat`.
 Fallbacks where the Symbols name has no `Icons` constant: `monitoring` → `insights`, `trophy` → `emoji_events`, `exercise` → `fitness_center`. If the coding session prefers exact glyphs, adding `material_symbols_icons` is a dependency decision (Notion > Technical).
 
 ### Images
@@ -88,6 +89,7 @@ See `screens/components_1..4.png` and `preview/components-*.html`.
 | **Filter chips / search** | Chips 32 high radius 8, outlined; selected `primaryContainer` with check. "Archived" chip with `inventory_2`. |
 | **Unit editor** | Dialog: Name (outlined field, helper "Shown after the value"), Step field, Decimals segmented 0/1/2, live preview "5 → 6 → 7 level". Edit adds "Archive" on the left. kg is locked. |
 | **Settings tiles** | 56+ list tiles: leading icon, title/subtitle, trailing value + chevron, M3 switch, or inline − n + stepper. Section labels `titleSmall` in `primary`. |
+| **Weekday picker** (v1.0.4) | One row of 7 round toggles Monday → Sunday, 40 circles in 48 touch targets, spread across the width (16 side padding), single letter `labelLarge` (M T W T F S S; screen readers say the full day). Selected: `primary` fill, `onPrimary` letter. Not selected: 1 px `outline` ring, `onSurfaceVariant` letter. The last selected day can't be turned off. |
 
 ---
 
@@ -120,7 +122,7 @@ Back (to player), "Push A · exercises", "18:22 · 2 / 6 done", pause. Exercise 
 2. Summary: "WORKOUT COMPLETE" overline, session name, date and time range; 3 tiles (Duration, Sets, Exercises x / y); "New bests · n" with best items (trophy circle, exercise · best type, value + "was …"); Workout note field; info line "Next session: Legs"; sticky big **Done** → Today.
 
 ### Program (tab 2) · `screens-program.html`
-Title "Program". "Exercises" entry card (→ catalogue, count). "SESSIONS · LOOP OF 3" + "Drag to reorder". Session rows (tap body → editor, play → preview). Loop note "After Legs, back to Pull A". Extended FAB "Add session" → name dialog (label "Session name", no example hint). No sessions: icon empty state (`replay`, the loop) with "Create your first session".
+Title "Program". "Exercises" entry card (→ catalogue, count). "SESSIONS · LOOP OF 3" + "Drag to reorder". Session rows (tap body → editor, play → preview). Loop note "After Legs, back to Pull A". Extended FAB "Add session" → name dialog (label "Session name", no example hint). No sessions: icon empty state (`repeat`, the loop arrows, since v1.0.4; `screens/v104_program_empty_*`) with "Create your first session".
 
 ### Session editor
 Back, "Edit session", ⋮ (delete session). Name field. Exercise **cards** (drag handle, well 48, name, one-line summary "4 × 10 · 40 kg · rest 2:00", expand chevron). Expanded card: set table (# · Reps/Time · Load · Unit · ✕), 40-high value boxes ("max" in primary, "Body" grey, "+5"/"−10"), "Add set" (copies last), rest chip "Rest 1:30", delete exercise. Tonal block "Add exercise" (→ picker).
@@ -157,7 +159,12 @@ Title + gear (→ Settings). Bodyweight card (radius 28: "BODYWEIGHT · TODAY", 
 Back, "Bodyweight". Value 40 sp + change over 30 days (neutral colour). Trend chart (single `primary` line, last point dot, range row). Entries: value, date (+ note), change from previous, ⋮ (edit / delete). Extended FAB "Log weight" (dialog: date/time, kg, note).
 
 ### Settings, Load units, Muscles
-- **Settings**: Appearance (Theme segmented System / Light / Dark) · Library (Load units with count + list, Muscles with count) · Workout (Default rest, Timer sound, Timer vibration, Keep screen on) · Streak (Weekly target − n +) · About (Version).
+- **Settings**: Appearance (Theme segmented System / Light / Dark) · Library (Load units with count + list, Muscles with count) · Workout (Default rest, Timer sound, Timer vibration, Keep screen on) · Streak (Weekly target − n +) · Reminders (v1.0.4, below) · About (Version).
+- **Reminders** (v1.0.4, `screens/v104_settings_*`): section label "Reminders" after Streak. Two switch tiles, both off by default:
+  - **Training reminder** (`notifications`). Subtitle "Off", or when on the days and time: "Mon, Wed, Fri · 18:00" ("Every day · 18:00" with all 7). When on, below it: the weekday picker (default Mon, Wed, Fri) and a "Time" tile (`schedule`, trailing "18:00 ›") → Material time picker, 24-hour.
+  - **Weigh-in reminder** (`monitor_weight`). Subtitle "Off", or "After 14 days · 08:00". When on, below it: "Remind me after" (`event_repeat`, subtitle "Days without a weigh-in", trailing "14 days ›") → number dialog "Days without a weigh-in" (− / +, 1–60, presets 7 / 14 / 30, Cancel / OK), and a "Time" tile (default 08:00) → time picker.
+  - Turning a switch on asks for the notification permission first. **Refused**: the switch stays off and a dialog explains (no icon): title "Notifications are off", body "Reminders need notifications. Allow them for My Bodybuilding Program in Android settings (Apps › My Bodybuilding Program › Notifications), then turn the reminder on again.", filled "OK".
+  - Notifications (own "Reminders" channel, app icon): training "Time for Push A" / "Your next session is ready. Tap to open Today." (empty program: "Time to train" / "Create your first session and start your program."); weigh-in "Time to weigh in" / "Your last weigh-in was 15 days ago." ("…was yesterday."; none yet: "Log your bodyweight to follow your trend."). Tap: training → Today; weigh-in → Profile with the log-weight dialog open.
 - **Load units**: info line "Loads are never converted between units." Rows: kg (lock, "Built in · step 0.5 · 1 decimal"), custom units ("Step 1 · 0 decimals · used in 2 exercises", edit → unit editor). "Archived" section with Restore. FAB "Add unit".
 - **Muscles**: rows with exercise count + edit (rename); "Hidden" section (visibility_off). FAB "Add muscle".
 - **Cloud backup (v1.1, not in v1)**: first Settings section. Signed out: card with `cloud_upload`, "Back up your training", explanation, outlined "Sign in with Google". Signed in: avatar, name, email, "Backed up 2 min ago" (`success`), Sync now (tonal) + Sign out (outlined).

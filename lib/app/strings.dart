@@ -272,6 +272,41 @@ abstract final class Strings {
   static const String streakSection = 'Streak';
   static const String weeklyTarget = 'Weekly target';
   static const String workoutsPerWeek = 'Workouts per week';
+
+  // Reminders (Settings)
+  static const String remindersSection = 'Reminders';
+  static const String trainingReminder = 'Training reminder';
+  static const String weighInReminder = 'Weigh-in reminder';
+  static const String reminderOff = 'Off';
+  static const String reminderTime = 'Time';
+  static const String reminderDays = 'Days';
+  static const String remindAfter = 'Remind me after';
+  static const String remindAfterSubtitle = 'Days without a weigh-in';
+  static const String remindAfterTitle = 'Days without a weigh-in';
+  static const String everyDay = 'Every day';
+  static String dayCount(int n) => n == 1 ? '1 day' : '$n days';
+  static String weighInSummary(int days, String time) =>
+      'After ${dayCount(days)} · $time';
+  static const String notificationsOffTitle = 'Notifications are off';
+  static const String notificationsOffBody =
+      'Reminders need notifications. Allow them for My Bodybuilding Program '
+      'in Android settings (Apps › My Bodybuilding Program › Notifications), '
+      'then turn the reminder on again.';
+
+  // Reminder notifications
+  static String reminderTrainingTitle(String session) => 'Time for $session';
+  static const String reminderTrainingBody =
+      'Your next session is ready. Tap to open Today.';
+  static const String reminderTrainTitle = 'Time to train';
+  static const String reminderTrainBody =
+      'Create your first session and start your program.';
+  static const String reminderWeighInTitle = 'Time to weigh in';
+  static String reminderWeighInBody(int days) => days == 1
+      ? 'Your last weigh-in was yesterday.'
+      : 'Your last weigh-in was $days days ago.';
+  static const String reminderFirstWeighInBody =
+      'Log your bodyweight to follow your trend.';
+
   static const String about = 'About';
   static const String version = 'Version';
 

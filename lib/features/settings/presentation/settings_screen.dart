@@ -12,9 +12,11 @@ import 'package:my_bodybuilding_program/app/widgets/value_dialogs.dart';
 import 'package:my_bodybuilding_program/features/catalogue/presentation/catalogue_providers.dart';
 import 'package:my_bodybuilding_program/features/program/domain/plan_format.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/app_settings.dart';
+import 'package:my_bodybuilding_program/features/settings/presentation/reminders_section.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_controller.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/settings_providers.dart';
 import 'package:my_bodybuilding_program/features/settings/presentation/units_providers.dart';
+import 'package:my_bodybuilding_program/features/settings/presentation/value_chevron.dart';
 
 /// Settings, behind the gear icon of the Profile.
 class SettingsScreen extends ConsumerWidget {
@@ -100,7 +102,7 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Symbols.timer_rounded),
             title: const Text(Strings.defaultRest),
-            trailing: _ValueChevron(
+            trailing: ValueChevron(
               PlanFormat.clock(settings.defaultRestSeconds),
             ),
             onTap: () async {
@@ -148,6 +150,7 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: controller.setWeeklyTarget,
             ),
           ),
+          const RemindersSection(),
           const SettingsSectionLabel(Strings.about),
           ListTile(
             leading: const Icon(Symbols.info_rounded),
@@ -200,30 +203,6 @@ class _CountChevron extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text('$count', style: context.text.bodyMedium!.copyWith(color: color)),
-        Icon(Symbols.chevron_right_rounded, color: color),
-      ],
-    );
-  }
-}
-
-class _ValueChevron extends StatelessWidget {
-  const new(this.value);
-
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = context.colors.onSurfaceVariant;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          value,
-          style: context.text.bodyMedium!.copyWith(
-            color: color,
-            fontFeatures: AppTheme.tabular,
-          ),
-        ),
         Icon(Symbols.chevron_right_rounded, color: color),
       ],
     );
