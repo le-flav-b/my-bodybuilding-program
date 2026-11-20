@@ -33,7 +33,7 @@ The spec describes the *system*. Catalogue content (exercises, muscles, images) 
 | Models | `freezed` + `json_serializable` |
 | Cloud (after v1.0) | Firebase Auth (Google), Cloud Firestore (row mirror), Cloud Storage (user images) |
 | Background (after v1.0) | `workmanager` (periodic sync) |
-| Notifications | `flutter_local_notifications` (rest timer: ongoing countdown + alert at the end) |
+| Notifications | `flutter_local_notifications` (rest timer: ongoing countdown + alert at the end; reminders: one-shot alarms in their own channel) |
 | Charts | `fl_chart` |
 | Images | `image_picker` + compression (max 1080 px, JPEG) |
 | Other | `wakelock_plus`, `uuid` (v7), `intl` |
@@ -100,8 +100,9 @@ Details and status are in the Notion **Development** database.
 | 0.5 | M4 Progress | History + edit, multi-unit charts, PRs + trophy, calendar + streak |
 | 0.6 | M5 Profile | Bodyweight, stats summary, complete Settings |
 | 1.0 | M6 Release | Icon, splash, polish, signed APK in a GitHub release, README build section |
+| 1.0.x | Fixes and small changes | 1.0.1 fixes, 1.0.2 icon, 1.0.4 Reminders (training + weigh-in, Settings › Reminders); the line stays open |
 | 1.1 | Cloud sync | Auth, sync, image storage, background sync, restore |
-| 1.2+ | Later | Progress photos → reminders → supersets, media controls, export/import |
+| 1.2+ | Later | Progress photos → supersets, media controls, export/import |
 
 ## Session workflow
 

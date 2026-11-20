@@ -11,6 +11,7 @@ import 'package:my_bodybuilding_program/core/db/app_database.dart';
 import 'package:my_bodybuilding_program/core/db/database_provider.dart';
 import 'package:my_bodybuilding_program/core/images/image_storage.dart';
 import 'package:my_bodybuilding_program/core/notifications/device_feedback.dart';
+import 'package:my_bodybuilding_program/core/notifications/reminder_scheduler.dart';
 import 'package:my_bodybuilding_program/core/notifications/workout_notifier.dart';
 import 'package:my_bodybuilding_program/core/utils/clock.dart';
 
@@ -30,6 +31,7 @@ class TestApp {
         imageStorageProvider.overrideWith((ref) async => images),
         workoutNotificationsProvider.overrideWithValue(notifier),
         deviceFeedbackProvider.overrideWithValue(feedback),
+        reminderSchedulerProvider.overrideWithValue(reminders),
         ...overrides,
       ],
     );
@@ -40,6 +42,7 @@ class TestApp {
   late final ImageStorage images;
   final FakeWorkoutNotifier notifier = FakeWorkoutNotifier();
   final FakeDeviceFeedback feedback = FakeDeviceFeedback();
+  final FakeReminderScheduler reminders = FakeReminderScheduler();
   late final ProviderContainer container;
 
   Widget get widget =>

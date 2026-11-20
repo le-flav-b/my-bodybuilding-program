@@ -2,6 +2,7 @@ import 'package:my_bodybuilding_program/core/db/app_database.dart';
 import 'package:my_bodybuilding_program/core/db/database_provider.dart';
 import 'package:my_bodybuilding_program/core/utils/clock.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/app_settings.dart';
+import 'package:my_bodybuilding_program/features/settings/domain/reminders.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'settings_repository.g.dart';
@@ -44,6 +45,33 @@ class SettingsRepository {
   Future<void> setWeeklyTarget(int target) => putRaw(
     SettingKeys.weeklyTarget,
     '${target.clamp(AppSettings.minWeeklyTarget, AppSettings.maxWeeklyTarget)}',
+  );
+
+  Future<void> setTrainingReminder({required bool enabled}) =>
+      putRaw(SettingKeys.trainingReminder, '$enabled');
+
+  /// ISO weekdays; an empty list keeps the default days.
+  Future<void> setTrainingReminderDays(Iterable<int> days) => putRaw(
+    SettingKeys.trainingReminderDays,
+    ReminderSettings.parseDays(days.join(',')).join(','),
+  );
+
+  Future<void> setTrainingReminderMinutes(int minutes) => putRaw(
+    SettingKeys.trainingReminderTime,
+    '${ReminderSettings.clampMinutes(minutes)}',
+  );
+
+  Future<void> setWeighInReminder({required bool enabled}) =>
+      putRaw(SettingKeys.weighInReminder, '$enabled');
+
+  Future<void> setWeighInAfterDays(int days) => putRaw(
+    SettingKeys.weighInAfterDays,
+    '${ReminderSettings.clampAfterDays(days)}',
+  );
+
+  Future<void> setWeighInReminderMinutes(int minutes) => putRaw(
+    SettingKeys.weighInReminderTime,
+    '${ReminderSettings.clampMinutes(minutes)}',
   );
 }
 

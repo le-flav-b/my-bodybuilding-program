@@ -11,7 +11,7 @@ An Android app (Flutter) to plan my training, guide me through each workout, and
 1. **Specifications**: done.
 2. **Design**: done (see "Design session outcome" below).
 3. **Catalogue seed** (data task, separate): done (`assets/seed/`, `tools/seed/`).
-4. **App**: milestones M0–M6 (v1.0) done, then the v1.0.1 fixes; later items next, then the later items, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma). See "App session: current state / next step" at the end.
+4. **App**: milestones M0–M6 (v1.0) done, then the 1.0.x line (v1.0.1 fixes, v1.0.2 icon, v1.0.4 reminders); the later items next, one branch + PR each, following `CLAUDE.md`, Notion and `design/` (never Figma). See "App session: current state / next step" at the end.
 
 A "master" session coordinates the work and the move from one session to the next.
 
@@ -49,7 +49,7 @@ A "master" session coordinates the work and the move from one session to the nex
   - Calendar, plus a weekly streak (≥ N workouts per week, default 3).
 - **Navigation:** 4 tabs, Today · Program · Progress · Profile. Settings opens from Profile. The exercise catalogue lives inside Program.
 - **Profile:** bodyweight log + chart, stats (totals, streaks, this month vs last) and the latest 5 PRs.
-- **Later (after v1.0):** cloud sync (1.1), progress photos (1.2: pose tags, private, linked bodyweight), reminders (1.3), then supersets, media controls and export.
+- **Later (after v1.0):** reminders (v1.0.4, done: moved before sync), cloud sync (1.1), progress photos (1.2: pose tags, private, linked bodyweight), then supersets, media controls and export. The 1.0.x line stays open for fixes and small changes.
 - **Dropped:** music, random session, ~~manual max load~~ (back in v1.0.1 as personal records), fixed weekly split, progression suggestions, variants, equipment, movement patterns, favourites/hidden, warm-up and failure flags, blocks, phases, several programs.
 
 ## Brief for the DESIGN session
@@ -149,13 +149,14 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - [x] M6 Release (v1.0.0)
 - [x] v1.0.1 fixes (launcher label, icon, empty states, personal records, Bests)
 - [x] v1.0.2 icon (the first icon's hand, chosen from proposals)
-- [ ] Later items (1.1 Cloud sync ← *next*, 1.2 Progress photos, 1.3 Reminders, then supersets, media controls, export/import)
+- [x] v1.0.4 Reminders (training + weigh-in) and the Program empty-state icon (`repeat`)
+- [ ] Later items (1.1 Cloud sync ← *next*, 1.2 Progress photos, then supersets, media controls, export/import)
 
 ## App session: current state / next step
 
 *Updated at the end of every milestone. A fresh session resumes from `main` plus this section.*
 
-**Done so far:** M0–M6 (v1.0.0), the v1.0.1 fixes and the v1.0.2 icon are released.
+**Done so far:** M0–M6 (v1.0.0), the v1.0.1 fixes, the v1.0.2 icon and the v1.0.4 reminders are released.
 - M0: 4-tab shell, theme from `design/tokens.json`, CI.
 - M1: Drift database, repositories, seed import, all domain rules with unit tests.
 - M2: catalogue (search, muscle filter, archived), exercise detail (my notes edited in place) and create/edit (photo from camera or gallery, muscles primary/secondary, Delete / Archive / Restore), exercise picker sheet (`showExercisePicker(replacing: …, initialMuscleIds: …)`), Program tab (loop, next session, drag to reorder, add session, play → preview), session editor, Settings (Appearance + Library), Load units, Muscles.
@@ -175,8 +176,17 @@ Goal: the design for this spec, approved by me screen by screen, saved in the re
   - The computed records are **Bests** everywhere in the UI ("New best" overlay, "New bests" in the summary, "Bests" tiles, "Best" chips). Code renames: `Records` → `Bests`, `PersonalRecord` (computed) → `TrainingBest`, `RecordEvent` → `BestEvent`, `PrChip` → `TrophyChip`, `RecordCountBadge` → `BestCountBadge`, `headlineRecord` → `headlineBest`; `records.dart` → `bests.dart`.
   - `design/README.md` updated; new renders in `design/screens/v101_*` (from `tool/screenshots/v101_test.dart`). Version `1.0.1+8`.
 - v1.0.2 icon: the owner reviewed proposals (A–R, rendered outside the repo) and chose the first app's hand, redrawn flat and white, slimmer (85 %) and 8 % bigger, gripping a yellow two-plate dumbbell with a visible bar; then lowered 2 dp and enlarged to 62 dp in the 108 dp layer (optical centring, still inside the 66 dp safe zone). `tool/icon/fist_dumbbell_painter.dart` holds the geometry, measured in the first icon's 512 px units; `flutter test tool/icon` re-renders every layer and `build/icon_preview.png`. Version `1.0.2+9`. The owner decides the icon from preview images: always send one before changing it.
+- v1.0.4 reminders (moved before cloud sync; Notion Development version 1.04; there is no 1.0.3):
+  - **Settings › Reminders** (`settings/presentation/reminders_section.dart`, after Streak): Training reminder (weekday picker, default Mon/Wed/Fri, last day can't be turned off; time, default 18:00) and Weigh-in reminder ("Remind me after" N days, 1–60, default 14; time, default 08:00). Both off by default. Turning one on goes through `SettingsController.setReminder`, which asks the permission first; refused → stays off + "Notifications are off" dialog. `ValueChevron` moved to its own file.
+  - **Storage**: settings rows `reminder.training.enabled/days/time`, `reminder.weigh_in.enabled/after_days/time` (times in minutes after midnight), parsed into `ReminderSettings` (`AppSettings.reminders`). No schema change.
+  - **Rule** (pure, `settings/domain/reminders.dart`): `ReminderPlanner.plan(settings, facts, now, location)` → one-shot `ReminderOccurrence`s up to 56 days ahead, local wall-clock times via the `timezone` package (DST-safe). Training skips today if a completed workout ended today (local day) or one is in progress. Weigh-in fires each day once the last entry is ≥ N calendar days old (or none), with the day count. Ids = kind base (1e8 / 2e8) + yyyymmdd, so a re-plan only touches what changed.
+  - **Runtime** (`settings/presentation/reminder_runtime.dart`, started from `App.build` next to `WorkoutRuntime`): `reminderFactsProvider` watches only the data of enabled reminders (program next session, active workout, workout summaries, bodyweights); the plan is re-applied on any change, on app resume (time zone re-read) and at launch (first apply reschedules everything: a force-stop drops alarms while the plugin still lists them). Taps: payload `training@…` → `router.go(Routes.today)`, `weighIn@…` → Profile + `weighInRequestProvider` (Profile opens `logWeightFlow`); also from a cold start (`takeLaunchPayload`).
+  - **Platform** (`core/notifications/`): `NotificationCenter` = the one plugin instance, initialised once (shared with `LocalWorkoutNotifier`, single tap stream). `ReminderScheduler` interface + `LocalReminderScheduler` (diff against `pendingNotificationRequests`, exact alarms when allowed, channel `reminders`, scheduled in UTC because the instant is computed in Dart). Device time-zone id from MainActivity's `com.leflavb.mybodybuildingprogram/time` channel. Manifest: `RECEIVE_BOOT_COMPLETED` + the plugin's `ScheduledNotificationBootReceiver` (boot, package replaced). Tests use `FakeReminderScheduler` (`test/helpers/fakes.dart`, wired in `TestApp` as `app.reminders`; `tap(payload)`, `launchPayload`, `grantPermission`).
+  - Why one-shots: the plugin's repeating schedules (`matchDateTimeComponents`) always fire the next match from now (can't skip a day) and can't change text. Trade-off: reminders stop if the app isn't opened for 8 weeks.
+  - Program empty state icon `replay` → `repeat` (the loop note under the session list still uses `replay`; only the empty state was in scope).
+  - Tests: `test/domain/reminders_test.dart` (24), `test/widgets/v104_reminders_test.dart` (9); renders `tool/screenshots/v104_test.dart` → `design/screens/v104_*`. Version `1.0.4+10`.
 
-**Next step:** the later items, in Notion Development order: **1.1 Cloud sync** (Firebase Auth with Google, Firestore row mirror, Cloud Storage for user images, background sync with workmanager, restore; Settings › Cloud backup section, designed in `design/screens/settings_cloud-*`). The data layer is already sync-ready (`SyncedTable` columns, `dirty` flag, `SyncMerge`). Needs the owner's Firebase project and `google-services.json` (not committed) before anything can be tested on a device; ask before starting. Set its Notion row to In progress first.
+**Next step:** the later items, in Notion Development order (fixes and small changes go on the 1.0.x line, e.g. 1.0.5): **1.1 Cloud sync** (Firebase Auth with Google, Firestore row mirror, Cloud Storage for user images, background sync with workmanager, restore; Settings › Cloud backup section, designed in `design/screens/settings_cloud-*`). The data layer is already sync-ready (`SyncedTable` columns, `dirty` flag, `SyncMerge`). Needs the owner's Firebase project and `google-services.json` (not committed) before anything can be tested on a device; ask before starting. Set its Notion row to In progress first.
 
 **UI building blocks (M2):** `lib/app/widgets/`: `ImageWell`, `ExerciseImageView` / `ExerciseThumb` (seed image, user photo or muscle placeholder), `Overline`, `InfoLine`, `PillBadge`, `TabTitle`, `SearchField`, `AppFilterChip`, `BigButton`, `EmptyState`, dialogs (`showConfirmDialog`, `showTextPrompt`, `showAppSnackBar`), value dialogs (`showGoalDialog` for reps/seconds/rest with optional "max", `showLoadDialog`). Tonal buttons use `AppTheme.tonal(colors)` (the M3 `FilledButton.tonal` would be yellow here). App bars: back-arrow screens use the theme's title spacing (title at 56 dp); tab screens set `titleSpacing: AppSpacing.lg`. Strings are all in `lib/app/strings.dart`.
 

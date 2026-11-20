@@ -1,7 +1,9 @@
+import 'package:my_bodybuilding_program/core/notifications/reminder_scheduler.dart';
 import 'package:my_bodybuilding_program/features/settings/data/settings_repository.dart';
 import 'package:my_bodybuilding_program/features/settings/data/units_repository.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/app_settings.dart';
 import 'package:my_bodybuilding_program/features/settings/domain/load_unit.dart';
+import 'package:my_bodybuilding_program/features/settings/domain/reminders.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'settings_controller.g.dart';
@@ -30,6 +32,35 @@ class SettingsController {
       _settings.setKeepScreenOn(enabled: enabled);
 
   Future<void> setWeeklyTarget(int target) => _settings.setWeeklyTarget(target);
+
+  /// Turns a reminder on (after asking for the notification permission) or
+  /// off. Returns false when the permission is refused: the reminder then
+  /// stays off.
+  Future<bool> setReminder(ReminderKind kind, {required bool enabled}) async {
+    if (enabled &&
+        !await _ref.read(reminderSchedulerProvider).requestPermission()) {
+      return false;
+    }
+    switch (kind) {
+      case ReminderKind.training:
+        await _settings.setTrainingReminder(enabled: enabled);
+      case ReminderKind.weighIn:
+        await _settings.setWeighInReminder(enabled: enabled);
+    }
+    return true;
+  }
+
+  Future<void> setTrainingReminderDays(Iterable<int> days) =>
+      _settings.setTrainingReminderDays(days);
+
+  Future<void> setTrainingReminderMinutes(int minutes) =>
+      _settings.setTrainingReminderMinutes(minutes);
+
+  Future<void> setWeighInAfterDays(int days) =>
+      _settings.setWeighInAfterDays(days);
+
+  Future<void> setWeighInReminderMinutes(int minutes) =>
+      _settings.setWeighInReminderMinutes(minutes);
 
   /// Creates ([unitId] null) or updates a custom unit.
   Future<void> saveUnit(String? unitId, LoadUnitDraft draft) async {

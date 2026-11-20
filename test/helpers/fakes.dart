@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:my_bodybuilding_program/core/notifications/device_feedback.dart';
+import 'package:my_bodybuilding_program/core/notifications/reminder_scheduler.dart';
 import 'package:my_bodybuilding_program/core/notifications/workout_notifier.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 /// Records what the app asked the notification system to do.
 class FakeWorkoutNotifier implements WorkoutNotifier {
@@ -57,4 +61,51 @@ class FakeDeviceFeedback implements DeviceFeedback {
 
   @override
   Future<void> keepScreenOn({required bool on}) async => screenOn = on;
+}
+
+/// Records the reminders the app schedules; grants or refuses the
+/// permission; can simulate a tap on a reminder.
+class FakeReminderScheduler implements ReminderScheduler {
+  new({tz.Location? location}) : location = location ?? tz.UTC;
+
+  tz.Location location;
+  bool grantPermission = true;
+  int permissionRequests = 0;
+  int applyCount = 0;
+  bool lastRescheduleAll = false;
+  List<ReminderNotification> scheduled = const [];
+  String? launchPayload;
+  final StreamController<String> _taps = StreamController.broadcast();
+
+  @override
+  Future<bool> requestPermission() async {
+    permissionRequests++;
+    return grantPermission;
+  }
+
+  @override
+  Future<tz.Location> localLocation() async => location;
+
+  @override
+  Future<void> apply(
+    List<ReminderNotification> notifications, {
+    bool rescheduleAll = false,
+  }) async {
+    applyCount++;
+    lastRescheduleAll = rescheduleAll;
+    scheduled = List.unmodifiable(notifications);
+  }
+
+  @override
+  Stream<String> get taps => _taps.stream;
+
+  /// As if the user tapped the reminder with [payload].
+  void tap(String payload) => _taps.add(payload);
+
+  @override
+  Future<String?> takeLaunchPayload() async {
+    final payload = launchPayload;
+    launchPayload = null;
+    return payload;
+  }
 }

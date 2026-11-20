@@ -12,10 +12,12 @@ import android.os.VibratorManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.util.TimeZone
 
 /**
- * Hosts the Flutter app and the small "feedback" channel used by the workout
- * timers: a beep (ToneGenerator) and a vibration. No extra dependency.
+ * Hosts the Flutter app and two small channels: "feedback" for the workout
+ * timers (a beep with ToneGenerator and a vibration) and "time" for the
+ * device's time-zone id used by the reminders. No extra dependency.
  */
 class MainActivity : FlutterActivity() {
     private var toneGenerator: ToneGenerator? = null
@@ -37,6 +39,15 @@ class MainActivity : FlutterActivity() {
                     vibrate(durationMs.toLong())
                     result.success(null)
                 }
+                else -> result.notImplemented()
+            }
+        }
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            "com.leflavb.mybodybuildingprogram/time",
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "timeZone" -> result.success(TimeZone.getDefault().id)
                 else -> result.notImplemented()
             }
         }
